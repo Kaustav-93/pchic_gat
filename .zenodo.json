@@ -1,0 +1,21 @@
+{
+  "title": "pchic_gat: Contact Topology Alone — A Promoter-Centred Sequence-Structure Fusion Network for Multi-Task Prediction of Gene Regulatory State from Promoter Capture Hi-C Loop Calls",
+  "description": "Promoter-anchored PCHi-C / Hi-C subgraphs + promoter sequence + histone marks fused into two embedding spaces, evaluated across four supervised heads with 5-fold gene-grouped cross-validation. Companion code for the paper of the same name.",
+  "creators": [
+    {
+      "name": "Sengupta, Kaustav",
+      "affiliation": ""
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "keywords": [
+    "promoter capture Hi-C",
+    "graph attention network",
+    "gene regulation",
+    "Hi-C",
+    "genomics",
+    "HyenaDNA"
+  ],
+  "access_right": "open"
+}

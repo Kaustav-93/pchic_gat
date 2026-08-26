@@ -1,0 +1,16 @@
+representation,class variable,n,n classes,silhouette,kNN purity,majority baseline,purity lift
+topology,tissue,5000,10,-0.056,0.422,0.325,0.097
+topology,expressed,4269,2,0.008,0.524,0.552,-0.027
+topology,tau class,4864,2,0.013,0.584,0.682,-0.099
+histone,tissue,5000,10,0.109,0.77,0.325,0.445
+histone,expressed,4269,2,0.029,0.644,0.552,0.092
+histone,tau class,4864,2,0.012,0.666,0.682,-0.017
+sequence,tissue,5000,10,-0.042,0.165,0.232,-0.067
+sequence,expressed,4298,2,0.054,0.659,0.622,0.037
+sequence,tau class,4975,2,0.091,0.759,0.754,0.005
+expression,tissue,5000,10,-0.055,0.193,0.328,-0.135
+expression,expressed,4341,2,0.324,0.846,0.544,0.302
+expression,tau class,4969,2,0.25,0.915,0.68,0.235
+input_all,tissue,5000,10,0.053,0.782,0.325,0.457
+input_all,expressed,4269,2,0.016,0.606,0.552,0.054
+input_all,tau class,4864,2,0.014,0.64,0.682,-0.042

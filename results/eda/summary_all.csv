@@ -1,0 +1,6 @@
+representation,source,dims,PC1 %,PCs for 80%,effective dim,ARI (kmeans/tissue),NMI (kmeans/tissue),purity (kmeans/tissue),kNN purity (tissue),probe F1 (tissue),kNN purity (expressed),probe F1 (expressed),kNN purity (tau class),probe F1 (tau class)
+topology,input,19,25.8,5,7.0,0.125,0.187,0.444,0.422,0.266,0.524,0.51,0.584,0.416
+histone,input,14,28.6,5,7.3,0.333,0.563,0.71,0.77,0.546,0.644,0.717,0.666,0.64
+sequence,input,256,30.8,51,14.6,0.001,0.006,0.234,0.165,0.06,0.659,0.697,0.759,0.678
+expression,input,43,71.7,3,4.2,-0.001,0.004,0.325,0.193,0.062,0.846,0.89,0.915,0.92
+input_all,input,33,17.2,9,13.3,0.288,0.422,0.658,0.782,0.719,0.606,0.719,0.64,0.655

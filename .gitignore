@@ -1,0 +1,39 @@
+# --- Raw / bulk external data (regenerate via download_data.sh & the fetch_*.py scripts) ---
+/reference/
+/cache/
+/rna_seq/
+/interection_data/
+/hic/*
+!/hic/HIC_manifest.csv
+/histone/*
+!/histone/DOWNLOAD_manifest.csv
+!/histone/MULTISOURCE_manifest.csv
+/grubert_cohesin/*
+!/grubert_cohesin/manifest.tsv
+!/grubert_cohesin/download_log.tsv
+
+# Raw source archive (91MB, messy Drive-export name) - kept out of git history
+/Gene_Annotated_PCHIC_Loops_Selected BEST TO USE-20260803T231327Z-1-001.zip
+
+# Large derived artifact regenerable from the pipeline notebooks (>100MB, breaks GitHub's file limit)
+/results/embeddings.parquet
+
+# Non-code material kept out of the repo for a clean code+results tree
+# (writeups/slides live elsewhere; this repo is the pipeline + its outputs)
+/paper/
+/thesis/
+/slides/
+/.claude/
+
+# Notebook / editor / OS cruft
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+# Scratch / untitled notebooks
+Untitled*.ipynb
+untitled.txt
+
+# Local Claude Code project settings
+.claude/settings.local.json

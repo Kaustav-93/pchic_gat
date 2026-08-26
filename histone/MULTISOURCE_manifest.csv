@@ -1,0 +1,47 @@
+sample_id,tissue,mark,source,assembly,status,provenance,url
+0002,Embryo - Trophoblast,CTCF,,,not-found,,
+0008,Muscle - Skeletal,CTCF,,,not-found,,
+0012,Embryo - Mesendoderm,H3K9me3,roadmap,hg19,downloaded,Roadmap E005 (H1 BMP4 Derived Mesendoderm Cultured Cells) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E005-H3K9me3.fc.signal.bigwig
+0012,Embryo - Mesendoderm,CTCF,,,not-found,,
+0013,Cells - Mesenchymal Stem Cell,CTCF,,,not-found,,
+0025,Bladder,H3K27me3,geo,unverified,downloaded-native,GEO GSM8709495,https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8709nnn/GSM8709495/suppl/GSM8709495_MUTZ3_EVI1V5AIDGFP_TIR1_CL9_H3K27ME3_RPKM.bigwig
+0025,Bladder,H3K9me3,geo,unverified,downloaded-native,GEO GSM8709496,https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8709nnn/GSM8709496/suppl/GSM8709496_MUTZ3_EVI1V5AIDGFP_TIR1_CL9_H3K9ME3_RPKM.bigwig
+0025,Bladder,CTCF,,,not-found,,
+0026,Artery - Aorta,CTCF,,,not-found,,
+0028,Brain - Hippocampus,CTCF,,,not-found,,
+0032,Cells - Neuron,H3K4me1,roadmap,hg19,downloaded,Roadmap E053 (Cortex derived primary cultured neurospheres) [proxy],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E053-H3K4me1.fc.signal.bigwig
+0045,Bone Marrow,H3K4me1,roadmap,hg19,downloaded,Roadmap E035 (Primary hematopoietic stem cells) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E035-H3K4me1.fc.signal.bigwig
+0045,Bone Marrow,H3K4me3,roadmap,hg19,downloaded,Roadmap E035 (Primary hematopoietic stem cells) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E035-H3K4me3.fc.signal.bigwig
+0045,Bone Marrow,H3K27ac,,,not-found,,
+0045,Bone Marrow,H3K27me3,roadmap,hg19,downloaded,Roadmap E035 (Primary hematopoietic stem cells) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E035-H3K27me3.fc.signal.bigwig
+0045,Bone Marrow,H3K36me3,roadmap,hg19,downloaded,Roadmap E035 (Primary hematopoietic stem cells) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E035-H3K36me3.fc.signal.bigwig
+0045,Bone Marrow,H3K9me3,roadmap,hg19,downloaded,Roadmap E035 (Primary hematopoietic stem cells) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E035-H3K9me3.fc.signal.bigwig
+0045,Bone Marrow,CTCF,,,not-found,,
+0047,Cells - Leukocyte,CTCF,,,not-found,,
+0057,Thymus,CTCF,,,not-found,,
+0069,Blood - Naive B Cells,H3K4me1,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K4me1.fc.signal.bigwig
+0069,Blood - Naive B Cells,H3K4me3,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K4me3.fc.signal.bigwig
+0069,Blood - Naive B Cells,H3K27ac,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K27ac.fc.signal.bigwig
+0069,Blood - Naive B Cells,H3K27me3,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K27me3.fc.signal.bigwig
+0069,Blood - Naive B Cells,H3K36me3,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K36me3.fc.signal.bigwig
+0069,Blood - Naive B Cells,H3K9me3,roadmap,hg19,downloaded,Roadmap E032 (Primary B cells from peripheral blood) [close],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E032-H3K9me3.fc.signal.bigwig
+0069,Blood - Naive B Cells,CTCF,,,not-found,,
+0072,Blood - Activated CD4+ Cells,H3K4me1,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K4me1.fc.signal.bigwig
+0072,Blood - Activated CD4+ Cells,H3K4me3,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K4me3.fc.signal.bigwig
+0072,Blood - Activated CD4+ Cells,H3K27ac,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K27ac.fc.signal.bigwig
+0072,Blood - Activated CD4+ Cells,H3K27me3,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K27me3.fc.signal.bigwig
+0072,Blood - Activated CD4+ Cells,H3K36me3,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K36me3.fc.signal.bigwig
+0072,Blood - Activated CD4+ Cells,H3K9me3,roadmap,hg19,downloaded,Roadmap E041 (Primary T helper cells PMA-I stimulated) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E041-H3K9me3.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K4me1,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K4me1.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K4me3,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K4me3.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K27ac,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K27ac.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K27me3,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K27me3.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K36me3,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K36me3.fc.signal.bigwig
+0074,Adipose - Subcutaneous,H3K9me3,roadmap,hg19,downloaded,Roadmap E063 (Adipose Nuclei) [exact],https://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/E063-H3K9me3.fc.signal.bigwig
+0079,Cervix - Ectocervix,H3K4me1,,,not-found,,
+0079,Cervix - Ectocervix,H3K4me3,,,not-found,,
+0079,Cervix - Ectocervix,H3K27ac,,,not-found,,
+0079,Cervix - Ectocervix,H3K27me3,,,not-found,,
+0079,Cervix - Ectocervix,H3K36me3,,,not-found,,
+0079,Cervix - Ectocervix,H3K9me3,,,not-found,,
+0079,Cervix - Ectocervix,CTCF,,,not-found,,

@@ -1,0 +1,6 @@
+representation,best k (silhouette),silhouette@best,true n tissues,silhouette@true k
+topology,3,0.312,10,0.201
+histone,5,0.311,10,0.283
+sequence,2,0.241,10,0.116
+expression,2,0.476,10,0.27
+input_all,2,0.193,10,0.159
