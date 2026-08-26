@@ -14,6 +14,7 @@ from _nb_tools import load_base, replace_cell, drop_cells, append_cells, build_i
 import _nb_edits as E
 
 ROOT = Path(__file__).parent
+NB_DIR = ROOT.parent / "notebooks"
 cells = load_base()
 
 BANNER = '''# Variant note — this notebook adds validation strategies
@@ -74,5 +75,5 @@ append_cells(cells, [
     ("code", E.PART3_CODE_COMPARE),
 ])
 
-build_ipynb(cells, ROOT / "pangenomic_gat_pipeline_pchic_only_validations.ipynb",
+build_ipynb(cells, NB_DIR / "pangenomic_gat_pipeline_pchic_only_validations.ipynb",
            title="Pangenomic AI - PCHi-C only + validation strategies")

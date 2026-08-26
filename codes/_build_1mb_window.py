@@ -26,6 +26,7 @@ from _nb_tools import load_base, replace_cell, drop_cells, append_cells, build_i
 import _nb_edits as E
 
 ROOT = Path(__file__).parent
+NB_DIR = ROOT.parent / "notebooks"
 
 PREFLIGHT_CODE = '''# ---- preflight: this window size makes sequence storage the binding
 # resource, not compute -- print the expected footprint before spending
@@ -176,7 +177,7 @@ them) — both are called out again at the point you'd edit them.'''}'''
         ("code", E.PART3_CODE_COMPARE),
     ])
 
-    build_ipynb(cells, ROOT / f"pangenomic_gat_pipeline_1mb_window_{mode}.ipynb",
+    build_ipynb(cells, NB_DIR / f"pangenomic_gat_pipeline_1mb_window_{mode}.ipynb",
                title=f"Pangenomic AI - PCHi-C only, 1Mb window ({mode})")
 
 

@@ -58,7 +58,7 @@ nb = {
     "nbformat_minor": 5,
 }
 
-out = Path(__file__).parent / "pangenomic_gat_pipeline.ipynb"
+out = Path(__file__).parent.parent / "notebooks" / "pangenomic_gat_pipeline.ipynb"
 out.write_text(json.dumps(nb, indent=1))
 
 n_md = sum(1 for k, _ in cells if k == "markdown")

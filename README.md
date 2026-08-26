@@ -10,9 +10,18 @@ gene-grouped cross-validation.
 bash setup_env.sh          # conda env + every dependency, then verifies them
 bash download_data.sh      # genome, TSS, liftOver chains, ENCODE histone, ENCODE/4DN Hi-C
 conda activate pangenomic-gat
-jupyter lab pangenomic_gat_pipeline.ipynb
+jupyter lab notebooks/pangenomic_gat_pipeline.ipynb
 # Kernel -> Change Kernel -> "Python (pangenomic-gat)"
 ```
+
+`.py` sources live in `codes/`, notebooks in `notebooks/`; `setup_env.sh` and
+`download_data.sh` stay at the repo root. Notebooks resolve the project root
+by walking upward from their own directory for `setup_env.sh` (see
+`_find_project_root` in the first code cell) rather than assuming their
+working directory is the repo root, so launch Jupyter from anywhere and open
+a notebook from `notebooks/` — it still finds `results/`, `cache/`,
+`reference/`, etc. at the repo root. Override with the `PANGENOMIC_ROOT` env
+var if you need to point somewhere else.
 
 `setup_env.sh --verify-only` re-checks the environment at any time. The notebook
 refuses to run outside the `pangenomic-gat` env, because a partially satisfied
@@ -23,12 +32,12 @@ dependency set produces silently wrong features rather than a clean error.
 | file | what it does |
 |---|---|
 | `setup_env.sh` | Creates the conda env, installs PyTorch/PyG/genomics/UCSC tools, registers the Jupyter kernel, then imports and *functionally tests* every dependency. |
-| `download_data.sh` | hg19.2bit, refGene, both liftOver chains, then calls the two fetchers. |
-| `fetch_histone_encode.py` | Maps each tissue to an ENCODE biosample and downloads the best bigWig per mark. Prefers hg19, falls back to GRCh38. `--liftover-tracks` rebuilds real hg19 tracks. |
-| `fetch_hic.py` | Queries ENCODE then 4DN for real Juicer `.hic` archives; stubs anything unavailable. |
-| `pangenomic_gat_pipeline.ipynb` | The pipeline. 63 cells, every code cell preceded by markdown explaining it. |
-| `_nb_cells_part{1,2,3}.py`, `_build_notebook.py` | Cell sources and the assembler. Edit these and re-run `python _build_notebook.py` rather than hand-editing the `.ipynb`. |
-| `_verify.py` | Test harness. Pulls functions out of the shipped notebook and exercises them against the real data. |
+| `download_data.sh` | hg19.2bit, refGene, both liftOver chains, then calls the two fetchers in `codes/`. |
+| `codes/fetch_histone_encode.py` | Maps each tissue to an ENCODE biosample and downloads the best bigWig per mark. Prefers hg19, falls back to GRCh38. `--liftover-tracks` rebuilds real hg19 tracks. |
+| `codes/fetch_hic.py` | Queries ENCODE then 4DN for real Juicer `.hic` archives; stubs anything unavailable. |
+| `notebooks/pangenomic_gat_pipeline.ipynb` | The pipeline. 63 cells, every code cell preceded by markdown explaining it. |
+| `codes/_nb_cells_part{1,2,3}.py`, `codes/_build_notebook.py` | Cell sources and the assembler. Edit these and re-run `python codes/_build_notebook.py` rather than hand-editing the `.ipynb`. |
+| `codes/_verify.py` | Test harness. Pulls functions out of the shipped notebook and exercises them against the real data. |
 
 ## The sequence tower
 

@@ -55,8 +55,8 @@ CELL36_OLD = '''import inspect
 print("NaN-safe" if "n_nonfinite_dropped" in inspect.getsource(binary_metrics)
       else "*** ORIGINAL — re-run the NaN-safe metrics cell first ***")
 
-torch.save({"graphs": GRAPHS, "meta": META}, "cache/graphs_repaired.pt")
-print("saved -> cache/graphs_repaired.pt")'''
+torch.save({"graphs": GRAPHS, "meta": META}, CACHE_DIR / "graphs_repaired.pt")
+print("saved ->", CACHE_DIR / "graphs_repaired.pt")'''
 
 CELL36_NEW = '''# Re-save the cache now that the sanitise/repair patches above have run, so
 # a reload from GRAPH_CACHE_PATH (cell 9) always yields clean tensors -- the

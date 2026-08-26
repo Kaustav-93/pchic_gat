@@ -14,6 +14,7 @@ from _nb_tools import load_base, replace_cell, drop_cells, append_cells, build_i
 import _nb_edits as E
 
 ROOT = Path(__file__).parent
+NB_DIR = ROOT.parent / "notebooks"
 SCRATCH = Path("/tmp/claude-1009/-mnt-raid-ksengupta-pic-hic-ml/a229cc82-8991-40c9-bca5-7311abab7598/scratchpad")
 
 cell26_new_tail = (SCRATCH / "cell26_new_tail.py").read_text()
@@ -103,7 +104,7 @@ replace_cell(cells, i_config, "CFG = Config()",
 i_build = find_cell_idx(cells, "GRAPHS, META, _hist_deltas = build_graphs_parallel(")
 replace_cell(cells, i_build, E.CELL18_OLD_BUILD_CALL, E.CELL18_NEW_BUILD_CALL)
 
-i_cache36 = find_cell_idx(cells, "cache/graphs_repaired.pt")
+i_cache36 = find_cell_idx(cells, "graphs_repaired.pt")
 replace_cell(cells, i_cache36, E.CELL36_OLD, E.CELL36_NEW)
 
 # drop the two broken interactive-debug cells
@@ -283,5 +284,5 @@ replace_cell(cells, i_dhl,
             "_, _, z, _, _ = model.encode(batch, seq_bank)",
             "_, _, _, z, _, _ = model.encode(batch, seq_bank)")
 
-build_ipynb(cells, ROOT / "pangenomic_gat_pipeline_trimodal.ipynb",
+build_ipynb(cells, NB_DIR / "pangenomic_gat_pipeline_trimodal.ipynb",
            title="Pangenomic AI - PCHi-C only, trimodal (seq + structure + epigenomic)")

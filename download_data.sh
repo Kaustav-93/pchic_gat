@@ -138,7 +138,7 @@ if [[ $SKIP_HISTONE -eq 0 ]]; then
     HIST_ARGS+=(--liftover-tracks)
     warn "--liftover-tracks: expect ~10-30 GB scratch and minutes per track"
   fi
-  python "${ROOT}/fetch_histone_encode.py" "${HIST_ARGS[@]}"
+  python "${ROOT}/codes/fetch_histone_encode.py" "${HIST_ARGS[@]}"
 else
   say "4/5  --skip-histone given"
 fi
@@ -152,7 +152,7 @@ if [[ $SKIP_HIC -eq 0 ]]; then
   echo "  Almost all are GRCh38: a .hic matrix cannot be lifted without"
   echo "  re-running Juicer, so the notebook lifts the query coordinates."
   # shellcheck disable=SC2086
-  python "${ROOT}/fetch_hic.py" \
+  python "${ROOT}/codes/fetch_hic.py" \
       --interactions "${INT_DIR}" \
       --out "${HIC_DIR}" \
       --sources ${HIC_SOURCES} \

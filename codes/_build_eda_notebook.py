@@ -33,7 +33,7 @@ nb = {
     },
     "nbformat": 4, "nbformat_minor": 5,
 }
-out = Path(__file__).parent / "pangenomic_exploratory_analysis.ipynb"
+out = Path(__file__).parent.parent / "notebooks" / "pangenomic_exploratory_analysis.ipynb"
 out.write_text(json.dumps(nb, indent=1))
 n_md = sum(1 for k, _ in cells if k == "markdown")
 n_code = sum(1 for k, _ in cells if k == "code")

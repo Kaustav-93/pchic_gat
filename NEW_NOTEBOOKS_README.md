@@ -74,13 +74,16 @@ modalities, etc.) — that is the authoritative description, not this file.
 
 ## How these were built
 
-`_nb_base_cells.py` is a verbatim cell-by-cell dump of
-`pangenomic_gat_pipeline_pchic_only.ipynb`. `_nb_tools.py` and
-`_nb_edits.py` hold shared helpers and the reusable Part III validation
-cells. `_build_pchic_only_validations.py`, `_build_1mb_window.py`, and
-`_build_trimodal.py` each assemble one (or two) of the notebooks above from
-that base plus targeted, anchor-verified edits, and `ast`-check every code
-cell before writing the `.ipynb` — same convention the original
-`_build_notebook.py` / `_nb_cells_part*.py` already used in this repo.
-Re-run any of the three build scripts after editing its edits to regenerate
-that notebook.
+Notebooks live in `notebooks/`, their Python sources in `codes/`.
+
+`codes/_nb_base_cells.py` is a verbatim cell-by-cell dump of
+`pangenomic_gat_pipeline_pchic_only.ipynb`. `codes/_nb_tools.py` and
+`codes/_nb_edits.py` hold shared helpers and the reusable Part III validation
+cells. `codes/_build_pchic_only_validations.py`, `codes/_build_1mb_window.py`,
+and `codes/_build_trimodal.py` each assemble one (or two) of the notebooks
+above from that base plus targeted, anchor-verified edits, and `ast`-check
+every code cell before writing the `.ipynb` into `notebooks/` — same
+convention the original `codes/_build_notebook.py` / `codes/_nb_cells_part*.py`
+already used in this repo. Re-run any of the three build scripts (e.g.
+`python codes/_build_trimodal.py` from the repo root) after editing its
+edits to regenerate that notebook.

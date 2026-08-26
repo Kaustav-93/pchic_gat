@@ -8,8 +8,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).parent
-NB = json.loads((ROOT / "pangenomic_gat_pipeline.ipynb").read_text())
+ROOT = Path(__file__).parent.parent  # repo root: this script lives in codes/
+NB = json.loads((ROOT / "notebooks" / "pangenomic_gat_pipeline.ipynb").read_text())
 CODE = ["".join(c["source"]) for c in NB["cells"] if c["cell_type"] == "code"]
 FAIL = []
 

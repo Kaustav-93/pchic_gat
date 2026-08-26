@@ -94,7 +94,17 @@ from sklearn.neighbors import NearestNeighbors
 warnings.filterwarnings("ignore")
 
 # ---------------------------------------------------------------- paths
-PROJECT_ROOT = Path(os.environ.get("PANGENOMIC_ROOT", Path.cwd())).resolve()
+def _find_project_root(start: Path) -> Path:
+    """Notebooks live in notebooks/, one level below the repo root, so
+    Path.cwd() (Jupyter sets it to the notebook's own directory) is no
+    longer the project root by itself. Walk upward for the marker that
+    identifies the root instead of assuming a fixed number of parent hops."""
+    for p in (start, *start.parents):
+        if (p / "setup_env.sh").exists():
+            return p
+    return start
+
+PROJECT_ROOT = Path(os.environ.get("PANGENOMIC_ROOT", _find_project_root(Path.cwd()))).resolve()
 INTERACT_DIR = PROJECT_ROOT / "interection_data"
 HISTONE_DIR  = PROJECT_ROOT / "histone"
 RNASEQ_DIR   = PROJECT_ROOT / "rna_seq"
