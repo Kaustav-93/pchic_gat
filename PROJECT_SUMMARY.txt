@@ -1,0 +1,382 @@
+================================================================================
+PROJECT: PANGENOMIC GAT (Graph Attention Network for Gene Regulation Prediction)
+Date Created: 2026-08-27
+================================================================================
+
+EXECUTIVE SUMMARY
+================================================================================
+This is a multi-modal graph neural network for predicting gene regulation in
+promoter regions by fusing three complementary data sources:
+1. 3D Genome Topology (Hi-C contact maps and PCHi-C promoter-capture interactions)
+2. Promoter DNA Sequence (±1–8 kb around transcription start sites)
+3. Histone Modifications (ENCODE epigenomic ChIP-seq marks)
+
+The model simultaneously predicts four regulatory outcomes (link strength,
+expression, tissue-specificity, tissue identity) validated with gene-grouped
+cross-validation to prevent data leakage.
+
+================================================================================
+DETAILED WORKFLOW & DATA FLOW
+================================================================================
+
+PHASE 1: ENVIRONMENT & DATA ACQUISITION
+----------------------------------------
+bash setup_env.sh
+  └─ Creates conda environment (Python 3.10, PyTorch 2.5.1+cu121, PyTorch
+     Geometric 2.8)
+  └─ Installs 100+ dependencies (bedtools, pysam, sklearn, jupyter, etc.)
+  └─ Verifies installation via _verify.py test harness
+
+bash download_data.sh
+  ├─ Reference Data (reference/):
+  │  ├─ hg19.2bit — UCSC reference genome sequence
+  │  ├─ refGene_hg19.txt — RefSeq gene annotations & canonical TSS
+  │  └─ liftOver chains — Convert coordinates hg19↔ GRCh38
+  │
+  ├─ Epigenomics (histone/):
+  │  ├─ fetch_histone_encode.py maps tissues → ENCODE biosamples
+  │  └─ Downloads bigWig files for H3K27ac, H3K4me1, etc. (prefers hg19)
+  │
+  ├─ 3D Chromatin (hic/):
+  │  ├─ fetch_hic.py queries ENCODE & 4DN for Juicer .hic files
+  │  └─ Creates stubs for missing tissues
+  │
+  └─ Gene Expression (rna_seq/):
+     └─ TPM matrices per tissue (RNA-seq) — used to label tissue-specific genes
+
+PHASE 2: FEATURE ENGINEERING (Notebook Part 1)
+-----------------------------------------------
+Load raw data (loops, sequences, histones, Hi-C)
+  ↓
+[Cell 3–8: Loop Parsing & Validation]
+  • Parse PCHi-C loop files (*_merged_loop.txt)
+  • Filter by CHiCAGO score (≥ 5.0)
+  • Verify genes fall inside bait fragments (hg19 assembly check)
+  • Filter for expressed genes (TPM ≥ 1.0)
+  ↓
+[Cell 9–11: Promoter Sequence Extraction]
+  • Extract ±1 kb (or ±8 kb in 1Mb variant) around canonical TSS
+  • Cache as uint8 one-hot encoding ([A/C/G/T] per position)
+  • Memory-aware: large windows stored as uint8, cast to float32 per batch
+  ↓
+[Cell 12–14: Histone & Hi-C Aggregation]
+  • Query ENCODE bigWigs for histone marks at bait fragments
+  • Use liftOver chains to lift coordinates (hg19 → GRCh38) for queries
+  • Query Juicer .hic files for contact frequencies
+  • Mask missing data (never zero-fill):
+    - Absent histone → signal=0, mask=0
+    - Missing tissue Hi-C → has_hic=0
+  ↓
+[Cell 15–18: Graph Construction]
+  • Per promoter × tissue: build contact subgraph
+  • Anchor node: bait fragment (the promoter)
+  • Edges: top-k prey fragments by CHiCAGO score (max 32 neighbors)
+  • Node features: sequence, histone marks, CTCF, degree
+  • Edge features: CHiCAGO score, Hi-C contact frequency, distance
+  ↓
+[Cell 19–20: Train/Test Stratification]
+  • Gene-grouped 5-fold CV (not random rows)
+  • Prevents leakage: same gene never appears in both train & test
+  • Label (tau = tissue-restriction) is constant per gene
+  ↓
+[Cell 21: Data Audit]
+  • Check variance, class balance, missing values, feature ranges
+  ↓
+Processed feature tensors (sequence, graphs, embeddings)
+
+PHASE 3: MODEL ARCHITECTURE (Notebook Part 2)
+----------------------------------------------
+TWO-TOWER ENCODER (or THREE-TOWER in Trimodal Variant):
+
+TOWER A: Sequence Encoder (HyenaDNA-style)
+  Input: 16 kb (or 1 Mb) DNA sequence as one-hot [A/C/G/T]
+  • Implicit long-convolution with learnable filter (O(L log L) via FFT)
+  • Positional encoding → MLP generates filter coefficients
+  • Reverse-complement equivariant: z(seq) = z(reverse_complement(seq))
+  Output: z_seq (sequence embedding)
+
+TOWER B: Structure + Epigenomics (Graph Attention Network)
+  Input: Subgraph (nodes = fragments, edges = CHiCAGO/Hi-C)
+  • Graph Attention Layers: learnable edge attention
+  • Per-node features: histone marks, CTCF, position, degree
+  • Mean pooling over all nodes
+  Output: z_struct (structure embedding)
+
+[TRIMODAL ONLY] TOWER C: Epigenomics Encoder
+  Input: Histone/CTCF at anchor fragment only
+  • Separate EpiEncoder network
+  Output: z_epi (epigenomic embedding)
+
+FUSION LAYER:
+  • 2-tower: FiLM fusion (z_seq modulates z_struct)
+  • 3-tower: GatedFusion (learned per-modality gates) + InfoNCE alignment
+  Output: z_fused (combined embedding)
+
+FOUR SUPERVISED PREDICTION HEADS:
+  Head 1 (Link Prediction):
+    Target: CHiCAGO ≥ threshold (1/0)
+    Loss: BCE + focal weighting
+
+  Head 2 (Expression):
+    Target: TPM ≥ 1.0 (1/0)
+    Loss: BCE + focal weighting
+
+  Head 3 (Tissue-Restriction):
+    Target: tau ≥ 0.85 (1/0)
+    Loss: BCE + focal weighting
+
+  Head 4 (Tissue Classification):
+    Target: Multi-class over 46 tissues
+    Loss: Cross-entropy
+
+TRAINING CONFIGURATION:
+  • Optimizer: Adam with gradient clipping
+  • Epochs: 40 (standard), 5 (fast_mode)
+  • Validation: on held-out fold; metrics = AUROC, AUPRC, F1, calibration error
+  • Checkpointing: best model per fold saved
+
+ABLATION STUDIES (same config, different data):
+  • GAT-only: z_seq removed, use only z_struct
+  • Sequence-only: z_struct removed, use only z_seq + histones
+  • Combined (baseline): both towers active
+  • DHL Ensemble: frozen embeddings fed to logistic regression + SVM/RF/kNN/GB
+
+PHASE 4: VALIDATION (Notebook Part 3)
+--------------------------------------
+After 5-fold gene-grouped CV, run additional validations:
+
+1. CHROMOSOME-BLOCK CV
+   For each chromosome:
+     • Train on all other chromosomes
+     • Test on held-out chromosome
+     → Measures generalization across genomic regions
+
+2. LEAVE-ONE-TISSUE-OUT (LOTO)
+   For each of 46 tissues:
+     • Train without that tissue
+     • Test on that tissue
+     → Measures generalization across cell types
+
+3. BLOOD-AS-TEST
+   • Train on all non-blood tissues
+   • Test on blood samples
+   → External hold-out proxy for real-world generalization
+
+4. DHL HYBRID ENSEMBLE
+   • Freeze embeddings from main model
+   • Train classical ML algorithms (logistic/SVM/RF/kNN/GB)
+   • Evaluate on test fold
+   → Validates if learned embeddings transfer to non-neural models
+
+================================================================================
+PROJECT STRUCTURE & COMPONENTS
+================================================================================
+
+PYTHON CODE MODULES (codes/)
+-----------------------------
+Data Fetchers:
+  • download_snyder_cohasin.py (442 L): Parallel downloader for ENCODE publications
+  • fetch_histone_encode.py (477 L): Map tissues → biosamples, download histone bigWigs
+  • fetch_hic.py (333 L): Query & download Juicer .hic files
+
+Notebook Builders (generate .ipynb from Python source):
+  • _build_notebook.py (70 L): Assemble main pipeline (Part 1+2+3)
+  • _build_pchic_only_validations.py (79 L): Add Part III validations to base
+  • _build_1mb_window.py (185 L): Generate 1 Mb promoter window variant
+  • _build_trimodal.py (288 L): Generate 3-modality variant
+
+Notebook Cell Sources (Python definitions of notebook cells):
+  • _nb_cells_part1.py (1,786 L): Data loading, feature engineering
+  • _nb_cells_part2.py (1,665 L): Model architecture, training, evaluation
+  • _nb_cells_part3.py (568 L): Advanced validations
+  • _nb_eda_cells.py (1,534 L): Exploratory data analysis (EDA)
+  • _nb_tools.py (113 L): Shared utilities (plotting, I/O, metrics)
+  • _nb_edits.py (337 L): Reusable cell edits for variants
+
+Testing:
+  • _verify.py (218 L): Test harness: imports functions from notebook, tests on real data
+
+JUPYTER NOTEBOOKS (notebooks/)
+-------------------------------
+• pangenomic_gat_pipeline.ipynb (844 KB)
+  Main pipeline (63 cells): data → model → metrics
+  ** This is the primary notebook to run **
+
+• pangenomic_exploratory_analysis.ipynb (3.7 MB)
+  Data profiling, PCA, manifold, clustering
+
+• pangenomic_gat_pipeline_pchic_only.ipynb (1.1 MB)
+  PCHi-C only ablation (no Hi-C), 16kb window
+
+• pangenomic_gat_pipeline_pchic_only_validations.ipynb (257 KB)
+  + chromosome-block CV, LOTO, blood holdout
+
+• pangenomic_gat_pipeline_1mb_window_fast.ipynb (258 KB)
+  1 Mb promoter window, 8k genes, 5 tissues (fast mode)
+
+• pangenomic_gat_pipeline_1mb_window_full.ipynb (259 KB)
+  1 Mb promoter window, all genes/tissues (most expensive)
+
+• pangenomic_gat_pipeline_trimodal.ipynb (250 KB)
+  3-modality variant: sequence + structure + epigenomics
+
+DATA REPOSITORIES
+-----------------
+reference/                Reference genome & annotation
+  ├─ hg19.2bit           UCSC genome sequence
+  ├─ refGene_hg19.txt    RefSeq genes + TSS
+  └─ *.over.chain.gz     liftOver coordinate conversion
+
+histone/                  ENCODE histone ChIP-seq
+  ├─ DOWNLOAD_manifest.csv     Sources & metadata
+  └─ *.bw                BigWig files (H3K27ac, H3K4me1, etc.)
+
+hic/                      Hi-C contact matrices
+  ├─ HIC_manifest.csv    Metadata
+  └─ *.hic               Juicer format (.hic files)
+
+interaction_data/         Chromatin interactions
+  └─ *_merged_loop.txt   PCHi-C loop files
+
+rna_seq/                  Gene expression
+  └─ *.txt               TPM matrices per tissue
+
+results/                  Model outputs & artifacts
+  ├─ model_fold0-4.pt    Trained checkpoints (5 folds)
+  ├─ predictions_fold0-4.npz  Predictions (5 folds)
+  ├─ metrics_summary_*.csv    Performance metrics
+  ├─ ablation_*.csv      Ablation study results
+  ├─ training_history.csv     Epoch-by-epoch curves
+  ├─ figures/            19 main result visualizations
+  └─ eda/                EDA outputs + 13 exploratory plots
+
+================================================================================
+KEY TECHNICAL INNOVATIONS
+================================================================================
+
+1. HyenaDNA Sequence Encoder
+   Why: O(L log L) complexity via FFT; handles full 16 kb promoter in one
+   receptive field (vs. ~500 bp for CNN)
+
+2. Reverse-Complement Equivariance
+   Why: DNA sequence is strand-agnostic; model respects this symmetry
+
+3. Gene-Grouped Cross-Validation
+   Why: Prevents data leakage; same gene never in train & test simultaneously
+
+4. Coordinate Lifting
+   Why: Query with correct assembly version (hg19 for PCHi-C, GRCh38 for Hi-C);
+   saves GB of disk space
+
+5. Masked Missing Data
+   Why: Distinguishes absence from zero signal (important for chromatin data)
+
+6. Multi-Head Prediction
+   Why: Four tasks simultaneously predict different regulatory aspects
+
+7. Ablation Arms
+   Why: Isolates contribution of each modality (graph, sequence, epigenomics)
+
+8. DHL Ensemble
+   Why: Validates if frozen embeddings generalize to classical ML algorithms
+
+9. uint8 Sequence Bank
+   Why: At 1 Mb scale, memory-efficient without on-the-fly recomputation
+
+================================================================================
+EXECUTION WORKFLOW
+================================================================================
+
+# 1. Setup environment
+bash setup_env.sh
+
+# 2. Download reference data
+bash download_data.sh
+
+# 3. Activate environment
+conda activate pangenomic-gat
+jupyter lab
+
+# 4. Run a notebook
+# Open: notebooks/pangenomic_gat_pipeline.ipynb
+# Kernel: Python (pangenomic-gat)
+# Execute all cells sequentially
+
+Timeline:
+  - pangenomic_gat_pipeline.ipynb: ~2–4 hours
+  - pangenomic_gat_pipeline_1mb_window_full.ipynb: ~8–12 hours (most expensive)
+  - pangenomic_gat_pipeline_1mb_window_fast.ipynb: ~20–30 minutes
+
+================================================================================
+RESULTS & ARTIFACTS
+================================================================================
+
+MODEL OUTPUTS
+  • model_fold0-4.pt — Trained checkpoints (5-fold CV)
+  • predictions_fold0-4.npz — Per-sample predictions on test sets
+
+METRICS & ABLATIONS
+  • metrics_summary_*.csv — AUROC, AUPRC, F1, calibration error per head
+  • ablation_*.csv — Comparison: GAT-only vs. Seq-only vs. Combined vs. DHL
+  • training_history.csv — Epoch-by-epoch loss/metrics across 5 folds
+
+VISUALIZATIONS (32 figures)
+  • Interaction QC — Loop coverage, CHiCAGO score distribution
+  • Sequence QC — GC content, repeat content, homopolymer regions
+  • Histone QC — Signal coverage, missing tissues
+  • Example Graphs — Subgraph visualizations (random samples)
+  • Label Distribution — Class balance across folds
+  • Fold Assignments — Gene-grouped CV breakdown by chromosome
+  • ROC/PR Curves — Per-head, per-fold performance
+  • Confusion Matrices — Per-head, aggregated across folds
+  • Training Curves — Loss/metrics evolution
+  • Embeddings — t-SNE/UMAP of learned representations
+  • Attention Maps — GAT attention weights (which edges matter)
+  • Ablation Comparisons — Side-by-side AUROC/AUPRC/F1
+  • EDA Plots — PCA scree, manifold learning, clustering, class separability
+
+================================================================================
+SCIENTIFIC CONTEXT
+================================================================================
+
+Why This Matters:
+  • Gene regulation is fundamental to understanding development, disease, evolution
+  • 3D genome structure (Hi-C) revolutionized chromatin biology, but raw contacts
+    alone don't predict function
+  • Combining topology, sequence, and chromatin state offers a more complete picture
+  • Graph neural networks naturally capture network structure; sequence encoders
+    capture motifs
+  • Multi-modal fusion shows where each data type contributes most
+
+Generalization:
+  • This architecture could apply to other gene regulation tasks (promoter-enhancer
+    interactions, splicing, etc.)
+  • The modular notebook-generation system allows easy experimentation with new
+    features or architectures
+  • Cross-validation strategies (chromosome-block, tissue LOTO) test real-world
+    robustness
+
+================================================================================
+SUMMARY IN ONE SENTENCE
+================================================================================
+
+A multi-modal graph neural network that fuses 3D genome topology (Hi-C, PCHi-C),
+promoter DNA sequence, and histone modifications to predict gene regulation
+strength and tissue-specificity, validated with gene-grouped cross-validation to
+prevent data leakage.
+
+================================================================================
+NEXT STEPS FOR CONTINUATION
+================================================================================
+
+When resuming work on this project:
+1. Refer to this file for project context and architecture
+2. The main executable notebook is: notebooks/pangenomic_gat_pipeline.ipynb
+3. Data fetching is handled by: bash download_data.sh
+4. Environment setup is handled by: bash setup_env.sh
+5. For ablation studies or variants, see the other notebook files
+6. For detailed implementation, read codes/_nb_cells_part1.py (data loading),
+   codes/_nb_cells_part2.py (model training), and codes/_nb_cells_part3.py
+   (validation)
+
+================================================================================

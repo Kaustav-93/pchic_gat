@@ -1,170 +1,170 @@
-# #!/usr/bin/env bash
-# # =============================================================================
-# #  setup_env.sh — build the conda environment for the Pangenomic-AI
-# #                 promoter-centred graph attention pipeline.
-# #
-# #  Usage:
-# #      bash setup_env.sh                 # create env, install everything, verify
-# #      bash setup_env.sh --cpu           # force CPU-only PyTorch
-# #      bash setup_env.sh --verify-only   # skip install, just re-check the env
-# #      bash setup_env.sh --name myenv    # custom env name
-# #
-# #  After it finishes:
-# #      conda activate pangenomic-gat
-# #      jupyter lab pangenomic_gat_pipeline.ipynb
-# #      # then pick the kernel "Python (pangenomic-gat)"
-# # =============================================================================
-# set -Eeuo pipefail
+#!/usr/bin/env bash
+# =============================================================================
+#  setup_env.sh — build the conda environment for the Pangenomic-AI
+#                 promoter-centred graph attention pipeline.
+#
+#  Usage:
+#      bash setup_env.sh                 # create env, install everything, verify
+#      bash setup_env.sh --cpu           # force CPU-only PyTorch
+#      bash setup_env.sh --verify-only   # skip install, just re-check the env
+#      bash setup_env.sh --name myenv    # custom env name
+#
+#  After it finishes:
+#      conda activate pangenomic-gat
+#      jupyter lab notebooks/pangenomic_gat_pipeline.ipynb
+#      # then pick the kernel "Python (pangenomic-gat)"
+# =============================================================================
+set -Eeuo pipefail
 
-# ENV_NAME="pangenomic-gat"
-# PY_VER="3.10"
-# FORCE_CPU=0
-# VERIFY_ONLY=0
+ENV_NAME="pangenomic-gat"
+PY_VER="3.10"
+FORCE_CPU=0
+VERIFY_ONLY=0
 
-# while [[ $# -gt 0 ]]; do
-#   case "$1" in
-#     --name)        ENV_NAME="$2"; shift 2 ;;
-#     --cpu)         FORCE_CPU=1; shift ;;
-#     --verify-only) VERIFY_ONLY=1; shift ;;
-#     -h|--help)     sed -n '2,18p' "$0"; exit 0 ;;
-#     *) echo "unknown option: $1" >&2; exit 1 ;;
-#   esac
-# done
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --name)        ENV_NAME="$2"; shift 2 ;;
+    --cpu)         FORCE_CPU=1; shift ;;
+    --verify-only) VERIFY_ONLY=1; shift ;;
+    -h|--help)     sed -n '2,18p' "$0"; exit 0 ;;
+    *) echo "unknown option: $1" >&2; exit 1 ;;
+  esac
+done
 
-# # ----------------------------------------------------------------- pretty print
-# BOLD=$'\033[1m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'; RED=$'\033[31m'; OFF=$'\033[0m'
-# say()  { printf "\n${BOLD}==> %s${OFF}\n" "$*"; }
-# ok()   { printf "  ${GREEN}OK${OFF}    %s\n" "$*"; }
-# warn() { printf "  ${YELLOW}WARN${OFF}  %s\n" "$*"; }
-# die()  { printf "  ${RED}FAIL${OFF}  %s\n" "$*" >&2; exit 1; }
+# ----------------------------------------------------------------- pretty print
+BOLD=$'\033[1m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'; RED=$'\033[31m'; OFF=$'\033[0m'
+say()  { printf "\n${BOLD}==> %s${OFF}\n" "$*"; }
+ok()   { printf "  ${GREEN}OK${OFF}    %s\n" "$*"; }
+warn() { printf "  ${YELLOW}WARN${OFF}  %s\n" "$*"; }
+die()  { printf "  ${RED}FAIL${OFF}  %s\n" "$*" >&2; exit 1; }
 
-# trap 'echo; echo "${RED}setup_env.sh failed on line $LINENO${OFF}" >&2' ERR
+trap 'echo; echo "${RED}setup_env.sh failed on line $LINENO${OFF}" >&2' ERR
 
-# # ----------------------------------------------------------------- 0. conda
-# say "0/7  Locating conda"
-# if ! command -v conda >/dev/null 2>&1; then
-#   die "conda not found on PATH. Install Miniconda first:
-#         https://docs.conda.io/en/latest/miniconda.html"
-# fi
-# CONDA_BASE="$(conda info --base)"
-# # shellcheck disable=SC1091
-# source "${CONDA_BASE}/etc/profile.d/conda.sh"
-# ok "conda $(conda --version | awk '{print $2}') at ${CONDA_BASE}"
+# ----------------------------------------------------------------- 0. conda
+say "0/7  Locating conda"
+if ! command -v conda >/dev/null 2>&1; then
+  die "conda not found on PATH. Install Miniconda first:
+        https://docs.conda.io/en/latest/miniconda.html"
+fi
+CONDA_BASE="$(conda info --base)"
+# shellcheck disable=SC1091
+source "${CONDA_BASE}/etc/profile.d/conda.sh"
+ok "conda $(conda --version | awk '{print $2}') at ${CONDA_BASE}"
 
-# # mamba is dramatically faster; use it when present
-# if command -v mamba >/dev/null 2>&1; then
-#   SOLVER="mamba"; ok "mamba found — using it as the solver"
-# else
-#   SOLVER="conda"; warn "mamba not found — falling back to conda (slower)"
-# fi
+# mamba is dramatically faster; use it when present
+if command -v mamba >/dev/null 2>&1; then
+  SOLVER="mamba"; ok "mamba found — using it as the solver"
+else
+  SOLVER="conda"; warn "mamba not found — falling back to conda (slower)"
+fi
 
-# # ----------------------------------------------------------------- 1. hardware
-# say "1/7  Detecting hardware"
-# ACCEL="cpu"
-# if [[ $FORCE_CPU -eq 0 ]]; then
-#   if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
-#     ACCEL="cuda"
-#     ok "NVIDIA GPU detected: $(nvidia-smi -L | head -1)"
-#   elif [[ "$(uname -s)" == "Darwin" && "$(uname -m)" == "arm64" ]]; then
-#     ACCEL="mps"
-#     ok "Apple Silicon detected — PyTorch will use the MPS backend"
-#   else
-#     ok "No GPU detected — installing CPU build"
-#   fi
-# else
-#   ok "--cpu given — installing CPU build"
-# fi
+# ----------------------------------------------------------------- 1. hardware
+say "1/7  Detecting hardware"
+ACCEL="cpu"
+if [[ $FORCE_CPU -eq 0 ]]; then
+  if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
+    ACCEL="cuda"
+    ok "NVIDIA GPU detected: $(nvidia-smi -L | head -1)"
+  elif [[ "$(uname -s)" == "Darwin" && "$(uname -m)" == "arm64" ]]; then
+    ACCEL="mps"
+    ok "Apple Silicon detected — PyTorch will use the MPS backend"
+  else
+    ok "No GPU detected — installing CPU build"
+  fi
+else
+  ok "--cpu given — installing CPU build"
+fi
 
-# # ----------------------------------------------------------------- 2. env
-# if [[ $VERIFY_ONLY -eq 0 ]]; then
-#   say "2/7  Creating conda env '${ENV_NAME}' (python ${PY_VER})"
-#   if conda env list | awk '{print $1}' | grep -qx "${ENV_NAME}"; then
-#     warn "env '${ENV_NAME}' already exists — reusing it (delete with: conda env remove -n ${ENV_NAME})"
-#   else
-#     $SOLVER create -y -n "${ENV_NAME}" "python=${PY_VER}" pip
-#     ok "env created"
-#   fi
-# else
-#   say "2/7  --verify-only: skipping env creation"
-# fi
+# ----------------------------------------------------------------- 2. env
+if [[ $VERIFY_ONLY -eq 0 ]]; then
+  say "2/7  Creating conda env '${ENV_NAME}' (python ${PY_VER})"
+  if conda env list | awk '{print $1}' | grep -qx "${ENV_NAME}"; then
+    warn "env '${ENV_NAME}' already exists — reusing it (delete with: conda env remove -n ${ENV_NAME})"
+  else
+    $SOLVER create -y -n "${ENV_NAME}" "python=${PY_VER}" pip
+    ok "env created"
+  fi
+else
+  say "2/7  --verify-only: skipping env creation"
+fi
 
-# conda activate "${ENV_NAME}"
-# ok "active env: ${CONDA_DEFAULT_ENV}  ($(python -c 'import sys;print(sys.version.split()[0])'))"
+conda activate "${ENV_NAME}"
+ok "active env: ${CONDA_DEFAULT_ENV}  ($(python -c 'import sys;print(sys.version.split()[0])'))"
 
-# if [[ $VERIFY_ONLY -eq 0 ]]; then
+if [[ $VERIFY_ONLY -eq 0 ]]; then
 
-#   # --------------------------------------------------------------- 3. bioconda
-#   say "3/7  Installing genomics stack (bioconda / conda-forge)"
-#   # These are the packages that are painful via pip because they need C libraries
-#   # (zlib, curl, hdf5, htslib). Conda handles that for us.
-#   $SOLVER install -y -c conda-forge -c bioconda \
-#       "pybigwig"        `# read histone-mark bigWig signal` \
-#       "py2bit"          `# read hg19.2bit reference sequence` \
-#       "pyfaidx"         `# fallback FASTA reader` \
-#       "pybedtools"      `# interval arithmetic` \
-#       "bedtools"        `# merges overlapping intervals after liftOver` \
-#       "ucsc-liftover"              `# coordinate + interval conversion` \
-#       "ucsc-bigwigtobedgraph"      `# bigWig -> bedGraph, for track liftOver` \
-#       "ucsc-bedgraphtobigwig"      `# bedGraph -> bigWig, to finish the round trip` \
-#       "ucsc-bigwigaverageoverbed"  `# fast bulk signal extraction (optional path)` \
-#       "htslib" "samtools" \
-#       "hdf5" "zlib" "curl"
-#   ok "genomics stack installed (incl. UCSC liftOver toolchain)"
+  # --------------------------------------------------------------- 3. bioconda
+  say "3/7  Installing genomics stack (bioconda / conda-forge)"
+  # These are the packages that are painful via pip because they need C libraries
+  # (zlib, curl, hdf5, htslib). Conda handles that for us.
+  $SOLVER install -y -c conda-forge -c bioconda \
+      pybigwig \
+      py2bit \
+      pyfaidx \
+      pybedtools \
+      bedtools \
+      ucsc-liftover \
+      ucsc-bigwigtobedgraph \
+      ucsc-bedgraphtobigwig \
+      ucsc-bigwigaverageoverbed \
+      htslib samtools \
+      hdf5 zlib curl
+  ok "genomics stack installed (incl. UCSC liftOver toolchain)"
 
-#   # --------------------------------------------------------------- 4. pytorch
-#   say "4/7  Installing PyTorch (${ACCEL})"
-#   case "$ACCEL" in
-#     cuda)
-#       pip install --upgrade "torch>=2.2,<2.6" torchvision torchaudio \
-#           --index-url https://download.pytorch.org/whl/cu121 ;;
-#     mps|cpu)
-#       pip install --upgrade "torch>=2.2,<2.6" torchvision torchaudio ;;
-#   esac
-#   TORCH_VER="$(python -c 'import torch;print(torch.__version__)')"
-#   ok "torch ${TORCH_VER}"
+  # --------------------------------------------------------------- 4. pytorch
+  say "4/7  Installing PyTorch (${ACCEL})"
+  case "$ACCEL" in
+    cuda)
+      pip install --upgrade "torch>=2.2,<2.6" torchvision torchaudio \
+          --index-url https://download.pytorch.org/whl/cu121 ;;
+    mps|cpu)
+      pip install --upgrade "torch>=2.2,<2.6" torchvision torchaudio ;;
+  esac
+  TORCH_VER="$(python -c 'import torch;print(torch.__version__)')"
+  ok "torch ${TORCH_VER}"
 
-#   # --------------------------------------------------------------- 5. PyG
-#   say "5/7  Installing PyTorch Geometric"
-#   pip install --upgrade torch_geometric
-#   # torch-scatter / torch-sparse are optional for PyG >= 2.4 but make GATv2 and
-#   # the pooling ops considerably faster. They must match the torch build exactly,
-#   # so we install from the pinned wheel index and tolerate failure.
-#   TORCH_TAG="$(python - <<'PY'
-# import torch, re
-# v = re.match(r"(\d+\.\d+\.\d+)", torch.__version__).group(1)
-# cu = torch.version.cuda
-# print(f"{v}+{'cu'+cu.replace('.','') if cu else 'cpu'}")
-# PY
-# )"
-#   if pip install --no-cache-dir torch_scatter torch_sparse \
-#        -f "https://data.pyg.org/whl/torch-${TORCH_TAG}.html" 2>/dev/null; then
-#     ok "torch_scatter / torch_sparse installed (fast path enabled)"
-#   else
-#     warn "torch_scatter / torch_sparse unavailable for torch-${TORCH_TAG}"
-#     warn "PyG will fall back to its pure-torch kernels — slower but correct"
-#   fi
-#   ok "torch_geometric $(python -c 'import torch_geometric;print(torch_geometric.__version__)')"
+  # --------------------------------------------------------------- 5. PyG
+  say "5/7  Installing PyTorch Geometric"
+  pip install --upgrade torch_geometric
+  # torch-scatter / torch-sparse are optional for PyG >= 2.4 but make GATv2 and
+  # the pooling ops considerably faster. They must match the torch build exactly,
+  # so we install from the pinned wheel index and tolerate failure.
+  TORCH_TAG="$(python - <<'PY'
+import torch, re
+v = re.match(r"(\d+\.\d+\.\d+)", torch.__version__).group(1)
+cu = torch.version.cuda
+print(f"{v}+{'cu'+cu.replace('.','') if cu else 'cpu'}")
+PY
+)"
+  if pip install --no-cache-dir torch_scatter torch_sparse \
+       -f "https://data.pyg.org/whl/torch-${TORCH_TAG}.html" 2>/dev/null; then
+    ok "torch_scatter / torch_sparse installed (fast path enabled)"
+  else
+    warn "torch_scatter / torch_sparse unavailable for torch-${TORCH_TAG}"
+    warn "PyG will fall back to its pure-torch kernels — slower but correct"
+  fi
+  ok "torch_geometric $(python -c 'import torch_geometric;print(torch_geometric.__version__)')"
 
-#   # --------------------------------------------------------------- 6. python
-#   say "6/7  Installing scientific / plotting / notebook stack"
-#   pip install --upgrade \
-#       "numpy>=1.24,<3"  "pandas>=2.0"   "scipy>=1.10" \
-#       "scikit-learn>=1.3" "statsmodels" \
-#       "matplotlib>=3.7" "seaborn>=0.13" "umap-learn" \
-#       "networkx>=3.0"   "tqdm"          "pyarrow" \
-#       "jupyterlab>=4"   "ipykernel"     "ipywidgets" "nbformat" \
-#       "hic-straw"       `# read .hic contact matrices` \
-#       "pyliftover"      `# hg19 <-> GRCh38 coordinate conversion` \
-#       "requests"        "tenacity"      `# ENCODE / UCSC downloads with retry` \
-#       "gtfparse"        `# GENCODE parsing if you swap in a GTF` \
-#       "shap"            `# optional: feature attribution`
-#   ok "python stack installed"
+  # --------------------------------------------------------------- 6. python
+  say "6/7  Installing scientific / plotting / notebook stack"
+  pip install --upgrade \
+      "numpy>=1.24,<3"  "pandas>=2.0"   "scipy>=1.10" \
+      "scikit-learn>=1.3" "statsmodels" \
+      "matplotlib>=3.7" "seaborn>=0.13" "umap-learn" \
+      "networkx>=3.0"   "tqdm"          "pyarrow" \
+      "jupyterlab>=4"   "ipykernel"     "ipywidgets" "nbformat" \
+      "hic-straw" \
+      "pyliftover" \
+      "requests"        "tenacity" \
+      "gtfparse" \
+      "shap"
+  ok "python stack installed"
 
-#   # register the kernel so the notebook can only ever run inside this env
-#   python -m ipykernel install --user \
-#       --name "${ENV_NAME}" --display-name "Python (${ENV_NAME})"
-#   ok "Jupyter kernel registered as 'Python (${ENV_NAME})'"
-# fi
+  # register the kernel so the notebook can only ever run inside this env
+  python -m ipykernel install --user \
+      --name "${ENV_NAME}" --display-name "Python (${ENV_NAME})"
+  ok "Jupyter kernel registered as 'Python (${ENV_NAME})'"
+fi
 
 # ----------------------------------------------------------------- 7. verify
 say "7/7  Verifying every dependency"
@@ -297,7 +297,7 @@ cat <<EOF
   Next steps
     1)  bash download_data.sh          # genome, TSS, chains, histone, Hi-C
     2)  conda activate ${ENV_NAME}
-    3)  jupyter lab pangenomic_gat_pipeline.ipynb
+    3)  jupyter lab notebooks/pangenomic_gat_pipeline.ipynb
     4)  Kernel -> Change Kernel -> "Python (${ENV_NAME})"
 
   Re-check the env at any time with:
