@@ -95,10 +95,10 @@ warnings.filterwarnings("ignore")
 
 # ---------------------------------------------------------------- paths
 def _find_project_root(start: Path) -> Path:
-    """Notebooks live in notebooks/, one level below the repo root, so
-    Path.cwd() (Jupyter sets it to the notebook's own directory) is no
-    longer the project root by itself. Walk upward for the marker that
-    identifies the root instead of assuming a fixed number of parent hops."""
+    # Notebooks live in notebooks/, one level below the repo root, so
+    # Path.cwd() (Jupyter sets it to the notebook's own directory) is no
+    # longer the project root by itself. Walk upward for the marker that
+    # identifies the root instead of assuming a fixed number of parent hops.
     for p in (start, *start.parents):
         if (p / "setup_env.sh").exists():
             return p

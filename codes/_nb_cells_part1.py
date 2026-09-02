@@ -99,10 +99,10 @@ from dataclasses import dataclass, asdict, field
 
 # --------------------------------------------------------------- paths
 def _find_project_root(start: Path) -> Path:
-    """Notebooks live in notebooks/, one level below the repo root, so
-    Path.cwd() (Jupyter sets it to the notebook's own directory) is no
-    longer the project root by itself. Walk upward for the marker that
-    identifies the root instead of assuming a fixed number of parent hops."""
+    # Notebooks live in notebooks/, one level below the repo root, so
+    # Path.cwd() (Jupyter sets it to the notebook's own directory) is no
+    # longer the project root by itself. Walk upward for the marker that
+    # identifies the root instead of assuming a fixed number of parent hops.
     for p in (start, *start.parents):
         if (p / "setup_env.sh").exists():
             return p
@@ -846,7 +846,7 @@ else:
     tb.close()
 
     SEQ_ONEHOT = np.stack(mats).astype(np.uint8)
-    seq_flags = np.array(flags, dtype=np.uint8)
+    seq_flags = np.array(flags, dtype=np.int32)   # pad-base COUNT, not a boolean -- can exceed 255 at large windows
     np.savez_compressed(cache_path, genes=np.array(SEQ_GENES),
                         onehot=SEQ_ONEHOT, flags=seq_flags)
     print(f"\nextracted {len(SEQ_GENES):,} promoters   "
