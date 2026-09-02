@@ -92,7 +92,7 @@ Results go to `results_1mb_window_{mode}/`; the promoter one-hot cache
 lives in the shared `cache/` dir under its own filename (keyed on window
 size and gene count, so it cannot collide with the 16 kb cache from the
 other notebooks).
-{"" if mode == "fast" else '''
+{"" if mode == "fast" else """
 
 **Full-mode runtime warning.** This is the most expensive notebook in the
 set: a ~4x longer effective sequence than the 16 kb baseline, run across
@@ -102,7 +102,7 @@ of them), and the blood holdout. If that is more compute than you want to
 spend in one go, the two knobs to trim first are `CFG.variants` (drop
 `"gat"`/`"seq"` to keep only the fused arm) and `LOTO_TISSUES` in Part III
 (edit it down to a handful of representative tissues instead of all of
-them) — both are called out again at the point you'd edit them.'''}'''
+them) — both are called out again at the point you'd edit them."""}'''
 
     cells = [["markdown", banner]] + cells
 

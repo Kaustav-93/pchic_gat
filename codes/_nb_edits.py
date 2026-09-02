@@ -240,32 +240,48 @@ LOTO_DF.to_csv(VSTRAT_DIR / "leave_one_tissue_out" / "metrics_per_tissue.csv", i
 print(f"\\nLOTO done in {(time.time()-t0)/60:.1f} min -> "
       f"validation_strategies/leave_one_tissue_out/metrics_per_tissue.csv")'''
 
-PART3_MD_BLOOD = '''## III.3 · Named holdout — blood as the test lineage
+PART3_MD_BLOOD = '''## III.3 · Named holdout — one lineage as the test set
 
-A single split, not a K-fold: every tissue whose name contains "Blood" is
-held out as test; every other tissue trains the model. Blood cell types are
-the best-represented lineage in this PCHi-C compendium, so this is the
-holdout most likely to be asked for by name and the one with the most
-training tissues on the other side of the split.'''
+A single split, not a K-fold: every tissue whose name contains a chosen
+lineage keyword is held out as test; every other tissue trains the model.
+"Blood" is preferred (it is the best-represented lineage across the full
+46-tissue compendium, with the most training tissues on the other side of
+the split), but under a subsampled `TISSUE_LIST` (e.g. `CFG.fast_mode`)
+that lineage is not guaranteed to be present. The cell below falls back to
+whichever lineage prefix (the text before `" - "`) actually has the most
+tissues in *this* run's `TISSUE_LIST`, so the holdout still runs instead of
+silently being skipped.'''
 
-PART3_CODE_BLOOD = '''BLOOD_TISSUES = [t for t in TISSUE_LIST if "blood" in t.lower()]
+PART3_CODE_BLOOD = '''NAMED_HOLDOUT_KEYWORD = "blood"   # preferred: best-represented lineage in the full 46-tissue set
+BLOOD_TISSUES = [t for t in TISSUE_LIST if NAMED_HOLDOUT_KEYWORD in t.lower()]
+
+if len(BLOOD_TISSUES) == 0:
+    # Preferred keyword absent from this run's TISSUE_LIST -- expected under
+    # fast_mode, whose random subsample doesn't guarantee any given lineage.
+    # Fall back to whichever lineage prefix (the text before " - ") has the
+    # most tissues actually present, so the named holdout still runs instead
+    # of silently being skipped.
+    from collections import Counter
+    lineage_counts = Counter(t.split(" - ")[0].strip().lower() for t in TISSUE_LIST)
+    NAMED_HOLDOUT_KEYWORD, _n_lineage = lineage_counts.most_common(1)[0]
+    BLOOD_TISSUES = [t for t in TISSUE_LIST if NAMED_HOLDOUT_KEYWORD in t.lower()]
+    print(f"'blood' not present in this run's TISSUE_LIST -- falling back to "
+          f"the best-represented lineage instead: {NAMED_HOLDOUT_KEYWORD!r} "
+          f"({_n_lineage} tissue(s) in this TISSUE_LIST).")
+
+print(f"named holdout lineage: {NAMED_HOLDOUT_KEYWORD!r}")
 print(f"held-out (test) tissues: {BLOOD_TISSUES}")
 
 if len(BLOOD_TISSUES) == 0:
-    # Expected under fast_mode: TISSUE_LIST is a random subsample of the 46
-    # tissues, and it can miss "Blood" entirely. Skip rather than hard-fail
-    # the whole run over an optional, named holdout -- CFG.fast_mode = False
-    # (or a TISSUE_LIST that happens to include a Blood tissue) always runs it.
-    print("no tissue name contains 'Blood' in this run's TISSUE_LIST -- "
-          "skipping the blood-as-test holdout for this run "
-          "(expected when CFG.fast_mode subsamples tissues).")
+    # Only reachable if TISSUE_LIST itself is empty.
+    print("TISSUE_LIST is empty -- skipping the named-lineage holdout for this run.")
     BLOOD_METRICS = None
 else:
     te = np.where(META["tissue"].isin(BLOOD_TISSUES).values)[0]
     tr = np.where(~META["tissue"].isin(BLOOD_TISSUES).values)[0]
-    print(f"train (non-blood): {len(tr):,} graphs, "
+    print(f"train (non-{NAMED_HOLDOUT_KEYWORD}): {len(tr):,} graphs, "
           f"{META.iloc[tr]['tissue'].nunique()} tissues, {META.iloc[tr]['gene'].nunique():,} genes")
-    print(f"test  (blood)    : {len(te):,} graphs, "
+    print(f"test  ({NAMED_HOLDOUT_KEYWORD})    : {len(te):,} graphs, "
           f"{META.iloc[te]['tissue'].nunique()} tissues, {META.iloc[te]['gene'].nunique():,} genes")
     gene_overlap = len(set(META.iloc[tr]["gene"]) & set(META.iloc[te]["gene"]))
     print(f"genes appearing on both sides (expected -- this is a tissue split, "
@@ -279,12 +295,12 @@ else:
     _save_scheme_fold("blood_holdout", "test", pred, BLOOD_METRICS, hist, model)
     pd.DataFrame([BLOOD_METRICS]).to_csv(
         VSTRAT_DIR / "blood_holdout" / "metrics.csv", index=False)
-    print(f"\\nblood holdout done in {(time.time()-t0)/60:.1f} min:")
+    print(f"\\n{NAMED_HOLDOUT_KEYWORD} holdout done in {(time.time()-t0)/60:.1f} min:")
     print(f"  link AUPRC {BLOOD_METRICS.get('link_auprc', np.nan):.3f} | "
           f"expr AUPRC {BLOOD_METRICS.get('expr_auprc', np.nan):.3f} | "
           f"tau AUPRC {BLOOD_METRICS.get('tau_auprc', np.nan):.3f} | "
           f"tissue acc {BLOOD_METRICS.get('tissue_accuracy', np.nan):.3f}"
-          "  (tissue acc is over blood sub-classes only, all seen in training)")'''
+          f"  (tissue acc is over {NAMED_HOLDOUT_KEYWORD} sub-classes only, all seen in training)")'''
 
 PART3_MD_COMPARE = '''## III.4 · Comparing every validation strategy
 
@@ -313,7 +329,8 @@ for scheme, df in [
         row[f"{metric}_mean"] = m; row[f"{metric}_std"] = s
     rows.append(row)
 
-blood_row = {"scheme": "blood-as-test (single split)"}
+_holdout_label = (NAMED_HOLDOUT_KEYWORD if "NAMED_HOLDOUT_KEYWORD" in globals() else "blood")
+blood_row = {"scheme": f"{_holdout_label}-as-test (single split)"}
 for metric in ("link_auprc", "expr_auprc", "tau_auprc", "tissue_accuracy"):
     blood_row[f"{metric}_mean"] = (BLOOD_METRICS.get(metric, np.nan)
                                     if "BLOOD_METRICS" in globals() and BLOOD_METRICS is not None
