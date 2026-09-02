@@ -250,34 +250,41 @@ training tissues on the other side of the split.'''
 
 PART3_CODE_BLOOD = '''BLOOD_TISSUES = [t for t in TISSUE_LIST if "blood" in t.lower()]
 print(f"held-out (test) tissues: {BLOOD_TISSUES}")
-assert len(BLOOD_TISSUES) > 0, (
-    "no tissue name contains 'Blood' in this run's TISSUE_LIST -- check "
-    "spelling/casing in the loop-file tissue names before trusting this split")
 
-te = np.where(META["tissue"].isin(BLOOD_TISSUES).values)[0]
-tr = np.where(~META["tissue"].isin(BLOOD_TISSUES).values)[0]
-print(f"train (non-blood): {len(tr):,} graphs, "
-      f"{META.iloc[tr]['tissue'].nunique()} tissues, {META.iloc[tr]['gene'].nunique():,} genes")
-print(f"test  (blood)    : {len(te):,} graphs, "
-      f"{META.iloc[te]['tissue'].nunique()} tissues, {META.iloc[te]['gene'].nunique():,} genes")
-gene_overlap = len(set(META.iloc[tr]["gene"]) & set(META.iloc[te]["gene"]))
-print(f"genes appearing on both sides (expected -- this is a tissue split, "
-      f"not a gene split): {gene_overlap:,}")
+if len(BLOOD_TISSUES) == 0:
+    # Expected under fast_mode: TISSUE_LIST is a random subsample of the 46
+    # tissues, and it can miss "Blood" entirely. Skip rather than hard-fail
+    # the whole run over an optional, named holdout -- CFG.fast_mode = False
+    # (or a TISSUE_LIST that happens to include a Blood tissue) always runs it.
+    print("no tissue name contains 'Blood' in this run's TISSUE_LIST -- "
+          "skipping the blood-as-test holdout for this run "
+          "(expected when CFG.fast_mode subsamples tissues).")
+    BLOOD_METRICS = None
+else:
+    te = np.where(META["tissue"].isin(BLOOD_TISSUES).values)[0]
+    tr = np.where(~META["tissue"].isin(BLOOD_TISSUES).values)[0]
+    print(f"train (non-blood): {len(tr):,} graphs, "
+          f"{META.iloc[tr]['tissue'].nunique()} tissues, {META.iloc[tr]['gene'].nunique():,} genes")
+    print(f"test  (blood)    : {len(te):,} graphs, "
+          f"{META.iloc[te]['tissue'].nunique()} tissues, {META.iloc[te]['gene'].nunique():,} genes")
+    gene_overlap = len(set(META.iloc[tr]["gene"]) & set(META.iloc[te]["gene"]))
+    print(f"genes appearing on both sides (expected -- this is a tissue split, "
+          f"not a gene split): {gene_overlap:,}")
 
-t0 = time.time()
-model, pred, hist, best_ep = train_one_fold(
-    0, tr, te, GRAPHS, SEQ_BANK, CFG, DEVICE, variant="both")
-BLOOD_METRICS = all_metrics(pred, len(TISSUE_LIST))
-BLOOD_METRICS["best_epoch"] = best_ep
-_save_scheme_fold("blood_holdout", "test", pred, BLOOD_METRICS, hist, model)
-pd.DataFrame([BLOOD_METRICS]).to_csv(
-    VSTRAT_DIR / "blood_holdout" / "metrics.csv", index=False)
-print(f"\\nblood holdout done in {(time.time()-t0)/60:.1f} min:")
-print(f"  link AUPRC {BLOOD_METRICS.get('link_auprc', np.nan):.3f} | "
-      f"expr AUPRC {BLOOD_METRICS.get('expr_auprc', np.nan):.3f} | "
-      f"tau AUPRC {BLOOD_METRICS.get('tau_auprc', np.nan):.3f} | "
-      f"tissue acc {BLOOD_METRICS.get('tissue_accuracy', np.nan):.3f}"
-      "  (tissue acc is over blood sub-classes only, all seen in training)")'''
+    t0 = time.time()
+    model, pred, hist, best_ep = train_one_fold(
+        0, tr, te, GRAPHS, SEQ_BANK, CFG, DEVICE, variant="both")
+    BLOOD_METRICS = all_metrics(pred, len(TISSUE_LIST))
+    BLOOD_METRICS["best_epoch"] = best_ep
+    _save_scheme_fold("blood_holdout", "test", pred, BLOOD_METRICS, hist, model)
+    pd.DataFrame([BLOOD_METRICS]).to_csv(
+        VSTRAT_DIR / "blood_holdout" / "metrics.csv", index=False)
+    print(f"\\nblood holdout done in {(time.time()-t0)/60:.1f} min:")
+    print(f"  link AUPRC {BLOOD_METRICS.get('link_auprc', np.nan):.3f} | "
+          f"expr AUPRC {BLOOD_METRICS.get('expr_auprc', np.nan):.3f} | "
+          f"tau AUPRC {BLOOD_METRICS.get('tau_auprc', np.nan):.3f} | "
+          f"tissue acc {BLOOD_METRICS.get('tissue_accuracy', np.nan):.3f}"
+          "  (tissue acc is over blood sub-classes only, all seen in training)")'''
 
 PART3_MD_COMPARE = '''## III.4 · Comparing every validation strategy
 
@@ -308,7 +315,9 @@ for scheme, df in [
 
 blood_row = {"scheme": "blood-as-test (single split)"}
 for metric in ("link_auprc", "expr_auprc", "tau_auprc", "tissue_accuracy"):
-    blood_row[f"{metric}_mean"] = BLOOD_METRICS.get(metric, np.nan)
+    blood_row[f"{metric}_mean"] = (BLOOD_METRICS.get(metric, np.nan)
+                                    if "BLOOD_METRICS" in globals() and BLOOD_METRICS is not None
+                                    else np.nan)
     blood_row[f"{metric}_std"] = 0.0
 rows.append(blood_row)
 
