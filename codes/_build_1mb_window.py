@@ -142,7 +142,7 @@ them) — both are called out again at the point you'd edit them."""}'''
 
     # ---- memory-safe sequence bank --------------------------------------
     replace_cell(cells, IDX["seq_extract"], "L = CFG.seq_len\ncache_path",
-                PREFLIGHT_CODE + "\nL = CFG.seq_len\ncache_path")
+                "L = CFG.seq_len\n" + PREFLIGHT_CODE + "\ncache_path")
 
     replace_cell(cells, IDX["cv_split"],
                 'SEQ_TENSOR = torch.from_numpy(SEQ_ONEHOT).float()\n'
