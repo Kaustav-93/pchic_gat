@@ -1447,7 +1447,7 @@ rows = []
 with torch.no_grad():
     for batch in dl:
         batch = batch.to(DEVICE)
-        seq = SEQ_BANK[batch.seq_idx.cpu()].to(DEVICE)
+        seq = SEQ_BANK[batch.seq_idx.cpu()].to(DEVICE).float()   # SEQ_BANK is uint8; conv layers need float
         z_seq = model.seq(seq)
         h, z_str, attn = model.struc(batch.x, batch.edge_index, batch.edge_attr,
                                    batch.batch, batch.ptr[:-1])
