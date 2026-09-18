@@ -15,14 +15,25 @@
 # Raw source archive (91MB, messy Drive-export name) - kept out of git history
 /Gene_Annotated_PCHIC_Loops_Selected BEST TO USE-20260803T231327Z-1-001.zip
 
-# Large derived artifact regenerable from the pipeline notebooks (>100MB, breaks GitHub's file limit)
+# Self-contained server deployment staging copy (~262GB: hardlinked raw data +
+# caches + histone bigWigs) - built from this repo's own data/code, not
+# separately version-controlled. See server_package/README.md.
+/server_package/
+
+# Large derived artifact regenerable from the pipeline notebooks (>100MB, breaks GitHub's file limit).
+# Was anchored to /results/embeddings.parquet only; the results-consolidation
+# move relocated it under results/results_*/ subfolders, which that anchored
+# pattern no longer matched (same class of bug as the warm-start path break) -
+# matched recursively now so it can't silently miss again after a reorg.
 /results/embeddings.parquet
+results/**/embeddings.parquet
 
 # Non-code material kept out of the repo for a clean code+results tree
 # (writeups/slides live elsewhere; this repo is the pipeline + its outputs)
 /paper/
 /thesis/
 /slides/
+/presentation/
 /.claude/
 
 # Notebook / editor / OS cruft

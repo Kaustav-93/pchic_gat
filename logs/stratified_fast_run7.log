@@ -1,0 +1,605 @@
+PROJECT_ROOT : /mnt/raid/ksengupta/pic_hic_ml
+CPU cores    : 128  (graph-building process pool: 126 workers)
+mode         : FAST (subsampled)
+promoter win : 1000000 bp
+epochs       : 12
+arms         : ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi'] (7 total)
+warm start   : (none -- training from scratch)
+HK tau cut   : 0.2
+results dir  : results_trimodal_1mb_stratified_fast
+
+  seed                 42
+  fast_mode            True
+  fast_n_tissues       8
+  fast_n_genes         2500
+  explicit_tissue_ids  ()
+  genome_build         hg19
+  promoter_window      1000000
+  seq_len_fast         1000000
+  max_neighbours       10000
+  min_chicago          5.0
+  add_backbone_edges   True
+  histone_marks        ('H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3', 'H3K36me3', 'H3K9me3', 'CTCF')
+  histone_stat         mean
+  tpm_threshold        1.0
+  tau_threshold        0.85
+  hk_tau_threshold     0.2
+  link_holdout_frac    0.15
+  d_hidden             128
+  d_embed              128
+  gat_layers           3
+  gat_heads            4
+  dropout              0.2
+  attn_dropout         0.1
+  hyena_d_model        128
+  hyena_blocks         4
+  hyena_order          2
+  hyena_filter_order   64
+  stem_kernel          15
+  stem_stride          64
+  rc_equivariant       True
+  variants             ('all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi')
+  run_hybrid           True
+  pretrained_checkpoint 
+  warm_start_lr_scale  0.3
+  min_epochs_warm_start 20
+  w_link               1.0
+  w_expr               1.0
+  w_tau                0.5
+  w_tissue             0.5
+  w_align              0.3
+  temperature          0.1
+  n_folds              5
+  group_split_by       gene
+  epochs               40
+  epochs_fast          12
+  batch_size           128
+  lr                   0.001
+  weight_decay         0.0001
+  grad_clip            1.0
+  patience             8
+  num_workers          32
+  use_amp              False
+python      : 3.10.8
+executable  : /mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/bin/python
+conda env   : pangenomic-gat
+
+required packages
+  OK    numpy              2.2.6
+  OK    pandas             2.3.3
+  OK    scipy              1.15.3
+  OK    matplotlib         3.10.9
+  OK    seaborn            0.13.2
+  OK    networkx           3.4.2
+  OK    torch              2.5.1+cu121
+  OK    torch_geometric    2.8.0.post1
+  OK    pyBigWig           0.3.25
+  OK    py2bit             1.0.1
+  OK    scikit-learn       1.7.2
+
+optional packages
+  OK    pyliftover         0.4.1
+  OK    umap               0.5.12
+  OK    torch_scatter      2.1.2+pt25cu121
+
+device      : cuda  (NVIDIA L40)
+mp start method : fork
+
+environment ready
+46 tissues with PCHi-C loops
+
+sample_id                              tissue  file_mb
+     0002                Embryo - Trophoblast      4.4
+     0003                              Spleen      5.9
+     0004    Small Intestine - Terminal Ileum      1.3
+     0008                   Muscle - Skeletal      0.9
+     0009                            Pancreas      1.8
+     0010                               Ovary      0.7
+     0011                      Nerve - Tibial      1.4
+     0012                Embryo - Mesendoderm      3.8
+     0013       Cells - Mesenchymal Stem Cell      4.8
+     0014                 Blood - Lymphoblast      6.7
+     0015                                Lung      1.3
+     0017              Heart - Left Ventricle      1.8
+     0020                             Stomach      1.5
+     0021        Cells - Cultured fibroblasts      4.5
+     0024        Brain - Frontal Cortex (BA9)      8.8
+     0025                             Bladder      2.4
+     0026                      Artery - Aorta      3.1
+     0027                       Adrenal Gland      2.0
+     0028                 Brain - Hippocampus      8.0
+     0029                   Cells - Astrocyte     11.7
+     0032                      Cells - Neuron      5.5
+     0042                              Uterus     12.0
+     0044        Cells - Neuroectodermal Cell     10.5
+     0045                         Bone Marrow     18.9
+     0047                   Cells - Leukocyte      9.3
+     0048         Cells - Lymphoblastoid Cell     10.6
+     0055 Skin - Not Sun Exposed (Suprapubic)     15.7
+     0056                Blood - Erythroblast     16.8
+     0057                              Thymus     18.7
+     0058            Cells - Endothelial Cell     21.2
+     0060                 Blood - Neutrophils     15.9
+     0061                   Blood - Monocytes     19.2
+     0063                 Blood - Macrophages     22.0
+     0064              Blood - Megakaryocytes     19.8
+     0065            Blood - Naive CD8+ Cells     22.2
+     0066            Blood - Naive CD4+ Cells     21.4
+     0067            Blood - Total CD4+ Cells     22.7
+     0068               Blood - Total B Cells     22.3
+     0069               Blood - Naive B Cells     21.3
+     0070            Blood - Total CD8+ Cells     21.4
+     0071    Blood - Non-activated CD4+ Cells     23.3
+     0072        Blood - Activated CD4+ Cells     16.8
+     0073         Cells - Embryonic Stem Cell     22.3
+     0074              Adipose - Subcutaneous     15.8
+     0077                               Liver     10.6
+     0079                 Cervix - Ectocervix     14.6
+
+
+305 histone bigWigs covering 45 sample ids
+
+histone coverage (files per tissue x mark; 0 = imputed from other tissues)
+                                               H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+sample_id tissue                                                                                           
+0002      Embryo - Trophoblast                       1        1        1         1         1        1     0
+0003      Spleen                                     1        1        1         1         1        1     1
+0004      Small Intestine - Terminal Ileum           1        1        1         1         1        1     1
+0008      Muscle - Skeletal                          1        1        1         1         1        1     0
+0009      Pancreas                                   1        1        1         1         1        1     1
+0010      Ovary                                      1        1        1         1         1        1     1
+0011      Nerve - Tibial                             1        1        1         1         1        1     1
+0012      Embryo - Mesendoderm                       1        1        1         1         1        1     0
+0013      Cells - Mesenchymal Stem Cell              1        1        1         1         1        1     0
+0014      Blood - Lymphoblast                        1        1        1         1         1        1     1
+0015      Lung                                       1        1        1         1         1        1     1
+0017      Heart - Left Ventricle                     1        1        1         1         1        1     1
+0020      Stomach                                    1        1        1         1         1        1     1
+0021      Cells - Cultured fibroblasts               1        1        1         1         1        1     1
+0024      Brain - Frontal Cortex (BA9)               1        1        1         1         1        1     1
+0025      Bladder                                    1        1        1         0         1        0     0
+0026      Artery - Aorta                             1        1        1         1         1        1     0
+0027      Adrenal Gland                              1        1        1         1         1        1     1
+0028      Brain - Hippocampus                        1        1        1         1         1        1     0
+0029      Cells - Astrocyte                          1        1        1         1         1        1     1
+0032      Cells - Neuron                             1        1        1         1         1        1     1
+0042      Uterus                                     1        1        1         1         1        1     1
+0044      Cells - Neuroectodermal Cell               1        1        1         1         1        1     1
+0045      Bone Marrow                                1        1        0         1         1        1     0
+0047      Cells - Leukocyte                          1        1        1         1         1        1     0
+0048      Cells - Lymphoblastoid Cell                1        1        1         1         1        1     1
+0055      Skin - Not Sun Exposed (Suprapubic)        1        1        1         1         1        1     1
+0056      Blood - Erythroblast                       1        1        1         1         1        1     1
+0057      Thymus                                     1        1        1         1         1        1     0
+0058      Cells - Endothelial Cell                   1        1        1         1         1        1     1
+0060      Blood - Neutrophils                        1        2        1         1         1        1     1
+0061      Blood - Monocytes                          1        1        1         1         1        2     1
+0063      Blood - Macrophages                        1        1        1         1         1        1     1
+0064      Blood - Megakaryocytes                     1        1        1         1         1        1     1
+0065      Blood - Naive CD8+ Cells                   1        1        1         1         1        1     1
+0066      Blood - Naive CD4+ Cells                   1        1        1         1         1        1     1
+0067      Blood - Total CD4+ Cells                   1        1        1         1         1        1     1
+0068      Blood - Total B Cells                      1        1        1         1         1        1     1
+0069      Blood - Naive B Cells                      1        1        1         1         1        1     0
+0070      Blood - Total CD8+ Cells                   1        1        1         1         1        1     1
+0071      Blood - Non-activated CD4+ Cells           1        1        1         1         1        1     1
+0072      Blood - Activated CD4+ Cells               1        1        1         1         1        1     1
+0073      Cells - Embryonic Stem Cell                1        1        1         1         1        1     1
+0074      Adipose - Subcutaneous                     1        1        1         1         1        1     1
+0077      Liver                                      1        1        1         1         1        1     1
+
+coverage: 301/322 tissue x mark cells (93.5%)
+  19 of these tracks are GRCh38 (ENCODE has retired much of
+  its hg19 output). Their queries are lifted hg19 -> GRCh38 in cell 8;
+  the tracks themselves are left alone.
+  -> run  python fetch_histone_encode.py  to pull more from ENCODE;
+     whatever remains missing is imputed as the cross-tissue average
+     for that mark (section 8), not zero-filled.
+
+download manifest: 322 rows
+match_quality
+exact    189
+close     77
+proxy     49
+none       7
+  WARNING: 1 tracks come from a PROXY biosample (related but not the same tissue).
+  Treat those marks as noisy; see histone/DOWNLOAD_manifest.csv
+
+
+RNA-seq: 194 sample columns over 43 tissue ids
+  23/46 loop tissues have matching RNA-seq columns
+
+hg19.2bit              present  (promoter sequence)
+
+refGene_hg19.txt       present  (canonical TSS)
+FAST_MODE: using 8 of 46 tissues
+
+parsing 8 loop files across 8 processes
+parsing loop files (parallel):   0%|          | 0/8 [00:00<?, ?it/s]parsing loop files (parallel):  12%|█▎        | 1/8 [00:00<00:00,  9.88it/s]parsing loop files (parallel):  62%|██████▎   | 5/8 [00:00<00:00, 27.08it/s]parsing loop files (parallel): 100%|██████████| 8/8 [00:00<00:00, 28.13it/s]parsing loop files (parallel): 100%|██████████| 8/8 [00:00<00:00, 26.10it/s]
+
+parsed 32,205 (gene, bait, other-end) rows across 8 tissues
+unique genes           : 8,423
+unique bait fragments  : 6,608
+cis / trans            : 32,205 / 0
+
+sample_id tissue          gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+     0010  Ovary          TPPP     chr5      687730    690639      chr5       789001     795437      136    inf  103034.5           1
+     0010  Ovary         OR2T7     chr1   248601766 248607843      chr1    248810816  248816904      128    inf  209055.5           1
+     0010  Ovary         OR4C5    chr11    48386729  48389031     chr11     50039109   50042830       71    inf 1653089.5           1
+     0010  Ovary         EEPD1     chr7    36188737  36200949      chr7     36146233   36150580       86 266.16   46436.5           1
+     0010  Ovary         KLRC3    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary RP11-277P12.6    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary CTD-2620I22.3    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+     0010  Ovary        ERVV-1    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+
+per-tissue: rows before score filter -> gene-exploded rows after
+                          tissue  raw_loops  rows_after_filter_and_explode
+                          Spleen      59961                           8691
+   Cells - Mesenchymal Stem Cell      49121                           5358
+            Embryo - Trophoblast      45384                          13190
+            Embryo - Mesendoderm      39314                           1040
+                  Nerve - Tibial      14216                           1408
+Small Intestine - Terminal Ileum      12843                            936
+               Muscle - Skeletal       8791                            913
+                           Ovary       7215                            669
+
+distance (cis only) / CHiCAGO score
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           distance     score       N_reads
+count  3.220500e+04  32205.00  32205.000000
+mean   1.892544e+05       inf     20.170750
+std    2.345683e+05       NaN     21.310933
+min    0.000000e+00      5.00      5.000000
+25%    4.936650e+04      5.50      8.000000
+50%    1.137960e+05      6.24     13.000000
+75%    2.354205e+05      7.74     26.000000
+max    1.992490e+06       inf    643.000000
+  figure -> results_trimodal_1mb_stratified_fast/figures/01_interaction_qc.png
+degree: median=1  mean=2.0  p95=6  max=37
+fraction of (gene,tissue) pairs truncated by MAX_NEIGHBOURS=10000: 0.0%
+refGene rows: 81,407
+
+protein-coding vs non-coding, by RefSeq accession prefix (19,392 coding / 8,845 non-coding of 28,237 gene symbols with a canonical model)
+canonical models for 28,237 gene symbols
+        chrom strand    txStart      txEnd        tss
+name2                                                
+NBPF20   chr1      +  144146810  146467744  144146810
+NBPF19   chr1      +  144146811  146467744  144146811
+PTPRD    chr9      -    8314245   10613002   10613002
+DMD      chrX      -   31137340   33357505   33357505
+DLG2    chr11      -   83166055   85339417   85339417
+
+assembly check: 2,356/3,318 sampled genes have their hg19 TSS inside (+/-5 kb of) their own bait fragment  ->  71.0%
+  -> coordinates are consistent with hg19. Proceeding.
+
+gene symbols resolvable to a TSS: 83.4% of rows (6,999 unique genes)
+unresolved symbols are mostly lncRNA/clone IDs (RP11-*, CTD-*, AC0*)
+gene
+RP11-247A12.8    48
+RP11-247A12.2    48
+RP1-76B20.12     34
+RP1-76B20.11     34
+LLfos-48D6.2     33
+RP11-392O1.4     25
+RP11-545E17.3    25
+CCND2-AS2        23
+
+kept 26,843 rows with a resolvable TSS
+FAST_MODE: kept 2,500 most widely-observed genes -> 17,981 rows
+loaded cached promoter sequences: promoter_onehot_hg19_1000000_2500.npz
+one-hot tensor: (2500, 4, 1000000)  dtype=uint8  10000 MB
+  figure -> results_trimodal_1mb_stratified_fast/figures/02_promoter_sequence_qc.png
+mean GC = 45.4%   (expect ~0.50-0.60 for promoters; ~0.41 would mean the TSS mapping is wrong)
+mean N fraction = 0.0115
+histone availability for the tissues in this run
+                                  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+tissue                                                                                        
+Embryo - Trophoblast                    1        1        1         1         1        1     0
+Spleen                                  1        1        1         1         1        1     1
+Small Intestine - Terminal Ileum        1        1        1         1         1        1     1
+Muscle - Skeletal                       1        1        1         1         1        1     0
+Ovary                                   1        1        1         1         1        1     1
+Nerve - Tibial                          1        1        1         1         1        1     1
+Embryo - Mesendoderm                    1        1        1         1         1        1     0
+Cells - Mesenchymal Stem Cell           1        1        1         1         1        1     0
+
+92.9% of (tissue x mark) tracks are directly measured; the rest have their signal imputed as the average of that mark over the other tissues in this run (mask stays 0, so the model can still tell a real measurement from an imputed one)
+
+example signal, sample 0002 (Embryo - Trophoblast):
+   gene  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+ZNF705G    0.025    0.074    0.081     0.093     0.032    0.040 0.249
+   TPPP    0.000    0.000    0.000     0.048     0.000    0.000 0.083
+   CST4    0.580    1.104    0.658     0.802     0.395    1.009 0.731
+  OR4C5    0.118    0.715    0.656     0.915     0.330    1.380 0.713
+  KLRC3    0.022    0.401    0.502     0.607     0.056    0.096 0.535
+
+cross-assembly lookups so far: no cross-assembly lookups were needed
+
+per-mark transform fitted on 5,000 sampled fragments
+    mark  clip_p99.5  mean   std
+ H3K4me1       2.149 0.865 0.463
+ H3K4me3       3.384 0.994 0.683
+ H3K27ac       3.070 0.840 0.579
+H3K27me3       2.292 0.602 0.343
+H3K36me3       2.062 0.657 0.405
+ H3K9me3       1.513 0.495 0.215
+    CTCF       2.130 0.737 0.304
+
+signal provenance so far: 20,596 direct  +  1,951 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  22,547 (tissue, mark) lookups  (8.7% imputed)
+/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py:1463: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  ax[0].boxplot([raw_log[:, i] for i in present],
+  figure -> results_trimodal_1mb_stratified_fast/figures/03_histone_features.png
+
+Sanity: H3K4me3/H3K27ac (active) should correlate positively with each
+other and negatively with H3K27me3/H3K9me3 (repressive).
+loading cached graphs -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+  3,462 graphs loaded from cache (rebuild skipped)
+
+built 3,462 promoter subgraphs
+  unique genes   : 1,911
+  unique tissues : 8
+  node features F   = 18  (4 structural + 7 marks + 7 mask)
+  edge features F_e = 4
+  histone signal provenance: 94,740 direct  +  9,546 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  104,286 (tissue, mark) lookups  (9.2% imputed)
+
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           n_nodes      n_edges        n_pos   mean_score
+count  3462.000000  3462.000000  3462.000000  3462.000000
+mean      4.873484    11.372039     1.060947          inf
+std       3.033026    11.646121     0.304137          NaN
+min       3.000000     4.000000     1.000000     5.020000
+25%       3.000000     4.000000     1.000000     6.050000
+50%       4.000000     8.000000     1.000000     6.763542
+75%       5.000000    12.000000     1.000000     7.965000
+max      38.000000   134.000000     6.000000          inf
+
+feature variance audit (first 4,000 graphs)
+      feature   mean   std
+      is_bait  0.205 0.404
+      log_len  3.714 0.311
+    sgn_log_d  0.356 4.517
+   same_chrom  1.000 0.000
+      H3K4me1 -0.303 0.935
+      H3K4me3 -0.513 0.639
+      H3K27ac -0.273 0.771
+     H3K27me3 -0.157 0.744
+     H3K36me3  0.051 1.115
+      H3K9me3 -0.044 0.951
+         CTCF -0.157 0.913
+ mask:H3K4me1  1.000 0.000
+ mask:H3K4me3  1.000 0.000
+ mask:H3K27ac  1.000 0.000
+mask:H3K27me3  1.000 0.000
+mask:H3K36me3  1.000 0.000
+ mask:H3K9me3  1.000 0.000
+    mask:CTCF  0.366 0.482
+
+edge_feature  mean   std
+   log_score 1.038 1.075
+   log_reads 1.428 1.524
+   sgn_log_d 2.469 4.144
+  same_chrom 1.000 0.000
+
+  CONSTANT (zero variance) -> carries no information:
+    node: same_chrom, mask:H3K4me1, mask:H3K4me3, mask:H3K27ac, mask:H3K27me3, mask:H3K36me3, mask:H3K9me3
+    edge: same_chrom
+  These cost parameters and teach the model nothing. 'same_chrom' is
+  constant whenever the loop files are cis-only, which is the case
+  for this dataset. Leaving them in is harmless but wasteful; drop
+  them if you want a tighter feature matrix.
+
+example graph:
+  OR2T7 in Ovary
+  x=(3, 18)  edge_index=(2, 4)  edge_attr=(4, 4)
+  held-out positives=1  negatives=1
+  figure -> results_trimodal_1mb_stratified_fast/figures/04_example_graph.png
+smallest graph, full feature matrix:
+   is_bait  log_len  sgn_log_d  same_chr  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF  mask:H3K4me1  mask:H3K4me3  mask:H3K27ac  mask:H3K27me3  mask:H3K36me3  mask:H3K9me3  mask:CTCF
+0      1.0     3.78       0.00       1.0    -1.34    -0.93    -0.93     -0.25     -0.56     0.05 -1.22           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+1      0.0     3.78       5.32       1.0    -1.75    -1.12    -0.97     -1.23     -0.83    -1.01 -1.35           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+2      0.0     1.30       5.30       1.0    -1.87    -1.46    -1.45     -1.13     -1.62    -2.30 -2.43           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+
+its edge features:
+   log_score  log_reads  sgn_log_d  same_chrom
+0       4.27       3.61       5.30         1.0
+1       4.27       3.61       5.30         1.0
+2       0.00       0.00       3.92         1.0
+3       0.00       0.00       3.92         1.0
+TPM matrix: 1,909 genes x 43 tissues
+            0001   0002   0003  0004  0005    0006
+gene_name                                         
+A4GALT      8.21   4.86   6.26  0.04  0.16  136.71
+AAAS       23.87  28.57  13.07  1.69  0.37   21.08
+AATBC       1.07   0.21   1.61  0.00  0.01    0.58
+ABALON      0.25   1.09   0.16  0.01  0.01    1.27
+ABCA1      11.33   3.70   1.37  0.08  0.06    1.49
+
+H2  expressed (TPM > 1.0): 58.7% of gene x tissue cells positive
+H3  tau computed for 1,902 genes; 22.3% are tissue-restricted (tau > 0.85)
+H*  housekeeping (tau < 0.2): 0.0% of the 1,902 genes with a defined tau
+H4  8 tissue classes
+
+label coverage over 3,462 graphs
+  H2 expression : 3,458 labelled (99.9%), positive rate 67.2%
+  H3 tau        : 3,443 labelled (99.5%), positive rate 20.7%
+  H4 tissue     : 3,462 labelled, 8 classes
+  housekeeping  : 3,443 labelled (99.5%), 0.0% housekeeping
+  protein-coding: 3,462 labelled (100.0%), 94.5% protein-coding
+  H1 links      : 3,673 positives + 3,673 distance-matched negatives
+  figure -> results_trimodal_1mb_stratified_fast/figures/05_label_distributions.png
+
+positive rate for H2 by tissue (watch for a tissue that is trivially separable)
+tissue
+Muscle - Skeletal                   0.812
+Cells - Mesenchymal Stem Cell       0.728
+Ovary                               0.706
+Embryo - Trophoblast                0.691
+Embryo - Mesendoderm                0.669
+Spleen                              0.649
+Nerve - Tibial                      0.585
+Small Intestine - Terminal Ileum    0.237
+5-fold GroupKFold, grouped by 'gene'
+
+ fold  n_train  n_test  genes_train  genes_test  gene_leak  tissues_test  expr_pos_train  expr_pos_test  tau_pos_test
+    0     2769     693         1529         382          0             8           0.671          0.680         0.202
+    1     2769     693         1528         383          0             8           0.667          0.696         0.210
+    2     2770     692         1529         382          0             8           0.671          0.678         0.196
+    3     2770     692         1529         382          0             8           0.671          0.677         0.197
+    4     2770     692         1529         382          0             8           0.683          0.632         0.228
+
+  OK: no gene appears in both train and test of any fold
+  OK: every fold's test set covers all tissue classes
+  figure -> results_trimodal_1mb_stratified_fast/figures/06_cv_splits.png
+
+sequence tensor for the model: (2500, 4, 1000000) (40000 MB float32)
+parameter budget per ablation arm
+variant  sequence_tower  structure_tower  epigenomic_tower  fusion+heads   total
+   all3          800769           301505              9536         83723 1195533
+seq_str          800769           301505                 0         83723 1185997
+seq_epi          800769                0              9536         83723  894028
+str_epi               0           301505              9536         83723  394764
+    seq          800769                0                 0         34058  834827
+    str               0           301505                 0         34058  335563
+    epi               0                0              9536         34058   43594
+
+  TOWER A  HyenaDNA-style long convolution
+    promoter window   1,000,000 bp  (stem stride 64 -> 15,625 positions)
+    blocks            4 x HyenaOperator(order=2)
+    d_model           128
+    implicit filter   MLP width 64, sine activations
+    receptive field   15,625 positions from block 1 (filter length == input length)
+    rev-comp equiv.   True
+  TOWER B  GATv2
+    layers x heads    3 x 4, d_h=128
+    node / edge feat  F=18  F_e=4
+  TOWER C  epigenomic MLP
+    input             14 dims (signal + direct-measurement mask, per mark, promoter fragment only)
+  SHARED
+    embedding dim     d=128
+    tissue classes    8
+    arms trained      ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi']
+
+smoke test: SequenceEncoder (2, 4, 1000000) -> (2, 128)
+  reverse-complement equivariance: max |z(x) - z(rc(x))| = 0.00e+00
+  backward OK: 110 tensors received gradient, total |grad| = 2.422e+05
+smoke test: EpiEncoder (5, 14) -> (5, 128)
+batching self-check
+  graph 0 has 3 nodes; graph 1's first held-out pair should be offset by 3
+  expected 3, got 3
+  OK: edge pairs offset correctly, ptr marks anchors, seq_idx per graph
+
+training utilities defined
+  run_epoch(...) -> (mean losses, stacked predictions)
+  anchors  = batch.ptr[:-1]  (node 0 of every graph)
+  H2/H3 use masked BCE, so y = -1 rows contribute no gradient
+metric self-test on synthetic data (should be well above chance):
+  n                  800.0000
+  pos_rate           0.5337
+  auroc              0.9550
+  auprc              0.9602
+  auprc_baseline     0.5337
+  accuracy           0.8888
+  precision          0.9024
+  recall             0.8876
+  specificity        0.8901
+  f1                 0.8949
+  mcc                0.7769
+  kappa              0.7767
+  brier              0.0948
+  logloss            0.3281
+  best_threshold     0.4752
+  f1_at_best         0.9040
+
+  OK: metric suite behaves sensibly
+HIST_STD floored at 0.05, features clipped to +/-10
+    mark  HIST_STD
+ H3K4me1    0.4633
+ H3K4me3    0.6827
+ H3K27ac    0.5788
+H3K27me3    0.3432
+H3K36me3    0.4047
+ H3K9me3    0.2148
+    CTCF    0.3037
+edge_attr:
+ [[ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 0.         0.         4.93073    1.       ]
+ [ 0.         0.         4.93073    1.       ]] 
+
+
+column stats over ALL graphs:
+  col 0: n_inf=0     n_nan=0     finite_range=[0, 5.748]
+  col 1: n_inf=0     n_nan=0     finite_range=[0, 6.361]
+  col 2: n_inf=0     n_nan=0     finite_range=[-6.3, 6.445]
+  col 3: n_inf=0     n_nan=0     finite_range=[1, 1]
+
+source rows for DTX2 (appears in 6/9 bad graphs):
+     sample_id                            tissue  gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+42        0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       15  31.66  500420.5           1
+173       0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76583452   76590221        5   6.82  494725.0           1
+476       0008                 Muscle - Skeletal  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       31  89.14  500420.5           1
+487       0008                 Muscle - Skeletal  DTX2     chr7    76132574  76144865      chr7     76628054   76637837       29  53.77  494226.0           1
+1088      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76132574  76144865      chr7     76628054   76637837      123    inf  494226.0           1
+1103      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       51    inf  500420.5           1
+1353      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76594843   76600243        6   7.62  505431.5           1
+1799      0011                    Nerve - Tibial  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       12  21.17  500420.5           1
+sanitised 0/3462 graphs  (0 node values, 0 edge values)
+all graph tensors finite
+repaired 0 edges: inf score -> 5.748 (max observed) instead of 0
+cache refreshed (post sanitise/repair) -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+epigenomic modality attached: 14-dim vector per graph (promoter-fragment histone/CTCF signal + measurement mask)
+  example: gene=OR2T7  tissue=Ovary
+  epi = [[-1.343 -0.934 -0.931 -0.251 -0.564  0.049 -1.218  1.     1.     1.
+   1.     1.     1.     1.   ]]
+device               : cuda
+mixed precision      : off
+DataLoader workers   : 32  (pin_memory=True)
+
+
+##########################################################################
+#  ARM: ALL3       (seq + str + epi)
+##########################################################################
+
+==========================================================================
+all3 | FOLD 1/5   train=2,769  test=693
+==========================================================================
+Traceback (most recent call last):
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 3348, in <module>
+    model, pred, hist, best_ep = train_one_fold(
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 3293, in train_one_fold
+    tr_loss, _ = run_epoch(model, dl_tr, seq_bank, cfg, optim, device, scaler=scaler)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2822, in run_epoch
+    z_seq, z_str, z_epi, z, h, attn = model.encode(batch, seq_bank)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2642, in encode
+    z_seq = self.seq(seq)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2441, in forward
+    z = self._embed(x)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2433, in _embed
+    h = b(h)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2373, in forward
+    x = x + self.drop(self.mixer(self.n1(x)))
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/stratified_full_run_script.py", line 2327, in forward
+    x = self.short_filter(x)[..., :lf]         # local context, depthwise
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 375, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 370, in _conv_forward
+    return F.conv1d(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.86 GiB. GPU 0 has a total capacity of 44.39 GiB of which 1.85 GiB is free. Including non-PyTorch memory, this process has 42.54 GiB memory in use. Of the allocated memory 41.85 GiB is allocated by PyTorch, and 183.17 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

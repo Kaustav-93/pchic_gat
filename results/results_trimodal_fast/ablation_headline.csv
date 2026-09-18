@@ -1,0 +1,5 @@
+head,structure only,sequence only,epigenomic only,str + epi (no seq),seq + str (no epi),seq + str + epi,random baseline
+H1  link prediction,1.000,n/a,n/a,0.999,1.000,0.999,0.500
+H2  expressed in tissue,0.819,0.661,0.819,0.817,0.826,0.807,0.613
+H3  tissue-restricted,0.418,0.243,0.402,0.429,0.414,0.414,0.145
+H4  tissue classification,0.721,0.202,0.681,0.732,0.732,0.738,0.200

@@ -1,0 +1,5 @@
+head,GAT + sequence,GAT only,sequence only,random baseline
+H1  link prediction,1.000,1.000,n/a,0.500
+H2  expressed in tissue,0.858,0.854,0.672,0.660
+H3  tissue-restricted,0.346,0.360,0.152,0.127
+H4  tissue classification,0.735,0.800,0.201,0.200

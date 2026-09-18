@@ -1,0 +1,244 @@
+[NbConvertApp] Converting notebook pangenomic_gat_pipeline_trimodal_1mb_stratified.ipynb to notebook
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Traceback (most recent call last):
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/bin/jupyter-nbconvert", line 6, in <module>
+    sys.exit(main())
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/jupyter_core/application.py", line 284, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/traitlets/config/application.py", line 1080, in launch_instance
+    app.start()
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/nbconvertapp.py", line 420, in start
+    self.convert_notebooks()
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/nbconvertapp.py", line 597, in convert_notebooks
+    self.convert_single_notebook(notebook_filename)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/nbconvertapp.py", line 563, in convert_single_notebook
+    output, resources = self.export_single_notebook(
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/nbconvertapp.py", line 487, in export_single_notebook
+    output, resources = self.exporter.from_filename(
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/exporters/exporter.py", line 220, in from_file
+    return self.from_notebook_node(
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/exporters/notebook.py", line 36, in from_notebook_node
+    nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/exporters/exporter.py", line 154, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/exporters/exporter.py", line 353, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/preprocessors/base.py", line 48, in __call__
+    return self.preprocess(nb, resources)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/preprocessors/execute.py", line 103, in preprocess
+    self.preprocess_cell(cell, resources, index)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbconvert/preprocessors/execute.py", line 124, in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+def stratum_frame(preds_list, meta):
+    """Concatenate one (scheme, arm)'s per-fold prediction dicts into a single
+    frame, joined back to this row's gene-level metadata via row_idx. One row
+    per evaluated (gene, tissue) graph. tis_p (per-graph softmax over
+    tissues) is kept as a separate parallel 2-D array, row-aligned with the
+    frame, rather than embedded in it -- a DataFrame cell holding a vector is
+    a fragile way to carry a fixed-width array through a mask operation."""
+    row_idx_all, expr_p, expr_y, tau_p, tau_y, tis_y, tis_p = [], [], [], [], [], [], []
+    for pred in preds_list:
+        n = len(pred["row_idx"])
+        if n == 0:
+            continue
+        row_idx_all.append(pred["row_idx"].astype(int))
+        expr_p.append(pred["expr_p"]); expr_y.append(pred["expr_y"])
+        tau_p.append(pred["tau_p"]);   tau_y.append(pred["tau_y"])
+        tis_y.append(pred["tis_y"]);   tis_p.append(pred["tis_p"])
+    df = pd.DataFrame({
+        "row_idx": np.concatenate(row_idx_all),
+        "expr_p": np.concatenate(expr_p), "expr_y": np.concatenate(expr_y),
+        "tau_p": np.concatenate(tau_p),   "tau_y": np.concatenate(tau_y),
+        "tis_y": np.concatenate(tis_y),
+    })
+    tis_p_all = np.concatenate(tis_p, axis=0)
+    gene_cols = meta[["gene", "tissue", "y_housekeeping", "y_coding"]].reset_index(drop=True)
+    df = df.join(gene_cols, on="row_idx")
+    return df, tis_p_all
+
+
+CATEGORY_LEVELS = {
+    "housekeeping":   {1: "housekeeping", 0: "non-housekeeping"},
+    "protein_coding": {1: "protein-coding", 0: "non-coding"},
+}
+COMBO_LEVELS = {
+    (1, 1): "housekeeping + protein-coding", (1, 0): "housekeeping + non-coding",
+    (0, 1): "non-housekeeping + protein-coding", (0, 0): "non-housekeeping + non-coding",
+}
+
+
+def stratified_report(preds_list, meta, n_classes, scheme, arm):
+    df, tis_p_all = stratum_frame(preds_list, meta)
+
+    def score(mask, group, level):
+        if mask.sum() < 20:
+            return None
+        sub = df[mask]
+        m_expr = binary_metrics(sub["expr_y"].values, sub["expr_p"].values, "expr_")
+        m_tau  = binary_metrics(sub["tau_y"].values,  sub["tau_p"].values,  "tau_")
+        m_tis  = multiclass_metrics(sub["tis_y"].values, tis_p_all[mask.values], n_classes)
+        return {
+            "scheme": scheme, "arm": arm, "group": group, "level": level,
+            "n_graphs": int(mask.sum()),
+            "H2_auprc": m_expr.get("expr_auprc", np.nan),
+            "H2_auprc_baseline": m_expr.get("expr_auprc_baseline", np.nan),
+            "H3_auprc": m_tau.get("tau_auprc", np.nan),
+            "H3_auprc_baseline": m_tau.get("tau_auprc_baseline", np.nan),
+            "H4_accuracy": m_tis.get("tissue_accuracy", np.nan),
+        }
+
+    rows = []
+    # single-factor marginals
+    for col, level_names in CATEGORY_LEVELS.items():
+        for level, level_name in level_names.items():
+            r = score(df[col] == level, col, level_name)
+            if r is not None:
+                rows.append(r)
+    # full 2x2 combination
+    for (hk, cod), name in COMBO_LEVELS.items():
+        mask = (df["y_housekeeping"] == hk) & (df["y_coding"] == cod)
+        r = score(mask, "housekeeping_x_coding", name)
+        if r is not None:
+            rows.append(r)
+    return pd.DataFrame(rows)
+
+
+STRAT_ALL = pd.concat(
+    [stratified_report(RESULTS[v]["preds"], META, len(TISSUE_LIST), "gene-grouped CV", v)
+     for v in RESULTS]
+    + [stratified_report(CHROM_CV_PREDS, META, len(TISSUE_LIST), "chromosome-block CV", "all3")]
+    + [stratified_report(LOTO_PREDS, META, len(TISSUE_LIST), "leave-one-tissue-out", "all3")],
+    ignore_index=True,
+)
+STRAT_ALL.to_csv(RESULTS_DIR / "stratified_metrics_all_arms_all_schemes.csv", index=False)
+print(f"{'='*96}\nStratified evaluation -- every arm (gene-grouped CV) x every validation "
+      f"scheme (all3)\n{'='*96}")
+print(STRAT_ALL.round(4).to_string(index=False))
+print(f"\nfull table -> results/stratified_metrics_all_arms_all_schemes.csv")
+print("\nLOTO's H4 column is not meaningful (structurally ~0: the held-out tissue's")
+print("class index was never a training target) -- read H2/H3 there, ignore H4.")
+
+# ---------------------------------------------------------------- headline: primary arm, gene-CV, the 2x2 combination
+HEADLINE = STRAT_ALL[(STRAT_ALL.scheme == "gene-grouped CV") & (STRAT_ALL.arm == PRIMARY)
+                     & (STRAT_ALL.group == "housekeeping_x_coding")].set_index("level")
+print(f"\n{'='*96}\nHEADLINE: {PRIMARY} arm, gene-grouped CV, full housekeeping x coding combination\n{'='*96}")
+print(HEADLINE[["n_graphs", "H2_auprc", "H2_auprc_baseline", "H3_auprc",
+               "H3_auprc_baseline", "H4_accuracy"]].round(4).to_string())
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 4.4))
+for ax, metric, base_col, title in [
+        (axes[0], "H2_auprc", "H2_auprc_baseline", "H2 expressed-in-tissue"),
+        (axes[1], "H3_auprc", "H3_auprc_baseline", "H3 tissue-restricted (tau)"),
+        (axes[2], "H4_accuracy", None, "H4 tissue classification")]:
+    sub = HEADLINE.reset_index()
+    ax.bar(sub["level"], sub[metric], color=PALETTE[:len(sub)])
+    if base_col:
+        for i, b in enumerate(sub[base_col]):
+            ax.plot([i-.4, i+.4], [b, b], "r--", lw=1.4)
+    ax.set_title(f"{title}\n({PRIMARY}, gene-grouped CV)", fontsize=10)
+    ax.tick_params(axis="x", labelsize=7, rotation=20)
+fig.suptitle("Full housekeeping x protein-coding combination (4 groups)", y=1.03)
+fig.tight_layout(); savefig(fig, "21_stratified_combination"); plt.show()
+
+# ---------------------------------------------------------------- how H2 moves across validation schemes, per stratum
+print(f"\n{'='*96}\nH2 AUPRC by stratum, across validation schemes ({PRIMARY} arm)\n{'='*96}")
+piv = (STRAT_ALL[(STRAT_ALL.arm == PRIMARY) & (STRAT_ALL.group == "housekeeping_x_coding")]
+      .pivot_table(index="level", columns="scheme", values="H2_auprc"))
+print(piv.round(4).to_string())
+
+print("\nread each cell against the marginal rows in the full CSV for the group's own")
+print("baseline -- a combination cell with few n_graphs (see the CSV) is noisier than")
+print("its marginal.")
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+File [0;32m/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/indexes/base.py:3812[0m, in [0;36mIndex.get_loc[0;34m(self, key)[0m
+[1;32m   3811[0m [38;5;28;01mtry[39;00m:
+[0;32m-> 3812[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_engine[49m[38;5;241;43m.[39;49m[43mget_loc[49m[43m([49m[43mcasted_key[49m[43m)[49m
+[1;32m   3813[0m [38;5;28;01mexcept[39;00m [38;5;167;01mKeyError[39;00m [38;5;28;01mas[39;00m err:
+
+File [0;32mpandas/_libs/index.pyx:167[0m, in [0;36mpandas._libs.index.IndexEngine.get_loc[0;34m()[0m
+
+File [0;32mpandas/_libs/index.pyx:196[0m, in [0;36mpandas._libs.index.IndexEngine.get_loc[0;34m()[0m
+
+File [0;32mpandas/_libs/hashtable_class_helper.pxi:7088[0m, in [0;36mpandas._libs.hashtable.PyObjectHashTable.get_item[0;34m()[0m
+
+File [0;32mpandas/_libs/hashtable_class_helper.pxi:7096[0m, in [0;36mpandas._libs.hashtable.PyObjectHashTable.get_item[0;34m()[0m
+
+[0;31mKeyError[0m: 'housekeeping'
+
+The above exception was the direct cause of the following exception:
+
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+Cell [0;32mIn[41], line 76[0m
+[1;32m     71[0m             rows[38;5;241m.[39mappend(r)
+[1;32m     72[0m     [38;5;28;01mreturn[39;00m pd[38;5;241m.[39mDataFrame(rows)
+[1;32m     75[0m STRAT_ALL [38;5;241m=[39m pd[38;5;241m.[39mconcat(
+[0;32m---> 76[0m     [stratified_report(RESULTS[v][[38;5;124m"[39m[38;5;124mpreds[39m[38;5;124m"[39m], META, [38;5;28mlen[39m(TISSUE_LIST), [38;5;124m"[39m[38;5;124mgene-grouped CV[39m[38;5;124m"[39m, v)
+[1;32m     77[0m      [38;5;28;01mfor[39;00m v [38;5;129;01min[39;00m RESULTS]
+[1;32m     78[0m     [38;5;241m+[39m [stratified_report(CHROM_CV_PREDS, META, [38;5;28mlen[39m(TISSUE_LIST), [38;5;124m"[39m[38;5;124mchromosome-block CV[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mall3[39m[38;5;124m"[39m)]
+[1;32m     79[0m     [38;5;241m+[39m [stratified_report(LOTO_PREDS, META, [38;5;28mlen[39m(TISSUE_LIST), [38;5;124m"[39m[38;5;124mleave-one-tissue-out[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mall3[39m[38;5;124m"[39m)],
+[1;32m     80[0m     ignore_index[38;5;241m=[39m[38;5;28;01mTrue[39;00m,
+[1;32m     81[0m )
+[1;32m     82[0m STRAT_ALL[38;5;241m.[39mto_csv(RESULTS_DIR [38;5;241m/[39m [38;5;124m"[39m[38;5;124mstratified_metrics_all_arms_all_schemes.csv[39m[38;5;124m"[39m, index[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
+[1;32m     83[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124m=[39m[38;5;124m'[39m[38;5;241m*[39m[38;5;241m96[39m[38;5;132;01m}[39;00m[38;5;130;01m\n[39;00m[38;5;124mStratified evaluation -- every arm (gene-grouped CV) x every validation [39m[38;5;124m"[39m
+[1;32m     84[0m       [38;5;124mf[39m[38;5;124m"[39m[38;5;124mscheme (all3)[39m[38;5;130;01m\n[39;00m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124m=[39m[38;5;124m'[39m[38;5;241m*[39m[38;5;241m96[39m[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+Cell [0;32mIn[41], line 76[0m, in [0;36m<listcomp>[0;34m(.0)[0m
+[1;32m     71[0m             rows[38;5;241m.[39mappend(r)
+[1;32m     72[0m     [38;5;28;01mreturn[39;00m pd[38;5;241m.[39mDataFrame(rows)
+[1;32m     75[0m STRAT_ALL [38;5;241m=[39m pd[38;5;241m.[39mconcat(
+[0;32m---> 76[0m     [[43mstratified_report[49m[43m([49m[43mRESULTS[49m[43m[[49m[43mv[49m[43m][49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mpreds[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m[43m [49m[43mMETA[49m[43m,[49m[43m [49m[38;5;28;43mlen[39;49m[43m([49m[43mTISSUE_LIST[49m[43m)[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mgene-grouped CV[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mv[49m[43m)[49m
+[1;32m     77[0m      [38;5;28;01mfor[39;00m v [38;5;129;01min[39;00m RESULTS]
+[1;32m     78[0m     [38;5;241m+[39m [stratified_report(CHROM_CV_PREDS, META, [38;5;28mlen[39m(TISSUE_LIST), [38;5;124m"[39m[38;5;124mchromosome-block CV[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mall3[39m[38;5;124m"[39m)]
+[1;32m     79[0m     [38;5;241m+[39m [stratified_report(LOTO_PREDS, META, [38;5;28mlen[39m(TISSUE_LIST), [38;5;124m"[39m[38;5;124mleave-one-tissue-out[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mall3[39m[38;5;124m"[39m)],
+[1;32m     80[0m     ignore_index[38;5;241m=[39m[38;5;28;01mTrue[39;00m,
+[1;32m     81[0m )
+[1;32m     82[0m STRAT_ALL[38;5;241m.[39mto_csv(RESULTS_DIR [38;5;241m/[39m [38;5;124m"[39m[38;5;124mstratified_metrics_all_arms_all_schemes.csv[39m[38;5;124m"[39m, index[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
+[1;32m     83[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124m=[39m[38;5;124m'[39m[38;5;241m*[39m[38;5;241m96[39m[38;5;132;01m}[39;00m[38;5;130;01m\n[39;00m[38;5;124mStratified evaluation -- every arm (gene-grouped CV) x every validation [39m[38;5;124m"[39m
+[1;32m     84[0m       [38;5;124mf[39m[38;5;124m"[39m[38;5;124mscheme (all3)[39m[38;5;130;01m\n[39;00m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124m=[39m[38;5;124m'[39m[38;5;241m*[39m[38;5;241m96[39m[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+Cell [0;32mIn[41], line 63[0m, in [0;36mstratified_report[0;34m(preds_list, meta, n_classes, scheme, arm)[0m
+[1;32m     61[0m [38;5;28;01mfor[39;00m col, level_names [38;5;129;01min[39;00m CATEGORY_LEVELS[38;5;241m.[39mitems():
+[1;32m     62[0m     [38;5;28;01mfor[39;00m level, level_name [38;5;129;01min[39;00m level_names[38;5;241m.[39mitems():
+[0;32m---> 63[0m         r [38;5;241m=[39m score([43mdf[49m[43m[[49m[43mcol[49m[43m][49m [38;5;241m==[39m level, col, level_name)
+[1;32m     64[0m         [38;5;28;01mif[39;00m r [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m     65[0m             rows[38;5;241m.[39mappend(r)
+
+File [0;32m/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/frame.py:4113[0m, in [0;36mDataFrame.__getitem__[0;34m(self, key)[0m
+[1;32m   4111[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mcolumns[38;5;241m.[39mnlevels [38;5;241m>[39m [38;5;241m1[39m:
+[1;32m   4112[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_getitem_multilevel(key)
+[0;32m-> 4113[0m indexer [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcolumns[49m[38;5;241;43m.[39;49m[43mget_loc[49m[43m([49m[43mkey[49m[43m)[49m
+[1;32m   4114[0m [38;5;28;01mif[39;00m is_integer(indexer):
+[1;32m   4115[0m     indexer [38;5;241m=[39m [indexer]
+
+File [0;32m/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/indexes/base.py:3819[0m, in [0;36mIndex.get_loc[0;34m(self, key)[0m
+[1;32m   3814[0m     [38;5;28;01mif[39;00m [38;5;28misinstance[39m(casted_key, [38;5;28mslice[39m) [38;5;129;01mor[39;00m (
+[1;32m   3815[0m         [38;5;28misinstance[39m(casted_key, abc[38;5;241m.[39mIterable)
+[1;32m   3816[0m         [38;5;129;01mand[39;00m [38;5;28many[39m([38;5;28misinstance[39m(x, [38;5;28mslice[39m) [38;5;28;01mfor[39;00m x [38;5;129;01min[39;00m casted_key)
+[1;32m   3817[0m     ):
+[1;32m   3818[0m         [38;5;28;01mraise[39;00m InvalidIndexError(key)
+[0;32m-> 3819[0m     [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m(key) [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01merr[39;00m
+[1;32m   3820[0m [38;5;28;01mexcept[39;00m [38;5;167;01mTypeError[39;00m:
+[1;32m   3821[0m     [38;5;66;03m# If we have a listlike key, _check_indexing_error will raise[39;00m
+[1;32m   3822[0m     [38;5;66;03m#  InvalidIndexError. Otherwise we fall through and re-raise[39;00m
+[1;32m   3823[0m     [38;5;66;03m#  the TypeError.[39;00m
+[1;32m   3824[0m     [38;5;28mself[39m[38;5;241m.[39m_check_indexing_error(key)
+
+[0;31mKeyError[0m: 'housekeeping'
+

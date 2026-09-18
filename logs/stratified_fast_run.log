@@ -1,0 +1,5 @@
+[NbConvertApp] Converting notebook pangenomic_gat_pipeline_trimodal_1mb_stratified.ipynb to notebook
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
+  validate(nb)
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[NbConvertApp] Writing 3662224 bytes to pangenomic_gat_pipeline_trimodal_1mb_stratified.ipynb
