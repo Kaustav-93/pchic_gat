@@ -1,6 +1,3 @@
 representation,dims,rows with data,granularity,source,note
 topology,19,18679,per gene x tissue,input,PCHi-C graph summary statistics
-histone,14,18679,per gene x tissue,input,mean mark signal over the bait
-sequence,256,9298,per gene,input,4-mer composition of the promoter window
 expression,43,18280,per gene,input,the gene's log-TPM profile across tissues
-input_all,33,18679,per gene x tissue,input,topology + histone concatenated

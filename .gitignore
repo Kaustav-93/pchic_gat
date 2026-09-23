@@ -1,8 +1,9 @@
 # --- Raw / bulk external data (regenerate via download_data.sh & the fetch_*.py scripts) ---
 /reference/
 /cache/
-/rna_seq/
-/interection_data/
+/rna_seq
+/interection_data
+/pchic_saikat/
 /hic/*
 !/hic/HIC_manifest.csv
 /histone/*
@@ -11,6 +12,9 @@
 /grubert_cohesin/*
 !/grubert_cohesin/manifest.tsv
 !/grubert_cohesin/download_log.tsv
+
+# Local tool directories
+/.graphify/
 
 # Raw source archive (91MB, messy Drive-export name) - kept out of git history
 /Gene_Annotated_PCHIC_Loops_Selected BEST TO USE-20260803T231327Z-1-001.zip

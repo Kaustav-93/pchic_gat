@@ -1,46 +1,46 @@
 sample_id,tissue,status,source,accession,assembly,biosample,match_quality
 0002,Embryo - Trophoblast,not-found,,,,trophoblast cell,close
-0003,Spleen,downloaded,encode,ENCFF280EYD,GRCh38,spleen,exact
+0003,Spleen,too-large,encode,ENCFF280EYD,GRCh38,spleen,exact
 0004,Small Intestine - Terminal Ileum,not-found,,,,Peyer's patch,close
 0008,Muscle - Skeletal,not-found,,,,skeletal muscle tissue,exact
-0009,Pancreas,downloaded,encode,ENCFF140ROU,GRCh38,body of pancreas,close
-0010,Ovary,downloaded,encode,ENCFF700CYI,GRCh38,ovary,exact
+0009,Pancreas,too-large,encode,ENCFF140ROU,GRCh38,body of pancreas,close
+0010,Ovary,too-large,encode,ENCFF700CYI,GRCh38,ovary,exact
 0011,Nerve - Tibial,not-found,,,,tibial nerve,exact
 0012,Embryo - Mesendoderm,not-found,,,,mesendoderm,exact
 0013,Cells - Mesenchymal Stem Cell,not-found,,,,mesenchymal stem cell,exact
-0014,Blood - Lymphoblast,downloaded,encode,ENCFF693EYS,GRCh38,K562,proxy
+0014,Blood - Lymphoblast,too-large,encode,ENCFF693EYS,GRCh38,K562,proxy
 0015,Lung,not-found,,,,upper lobe of left lung,close
-0017,Heart - Left Ventricle,downloaded,encode,ENCFF193CQL,GRCh38,heart left ventricle,exact
-0020,Stomach,downloaded,encode,ENCFF883XXW,GRCh38,stomach,exact
+0017,Heart - Left Ventricle,too-large,encode,ENCFF193CQL,GRCh38,heart left ventricle,exact
+0020,Stomach,too-large,encode,ENCFF883XXW,GRCh38,stomach,exact
 0021,Cells - Cultured fibroblasts,not-found,,,,fibroblast of dermis,close
-0024,Brain - Frontal Cortex (BA9),downloaded,encode,ENCFF925QIF,GRCh38,dorsolateral prefrontal cortex,close
+0024,Brain - Frontal Cortex (BA9),too-large,encode,ENCFF925QIF,GRCh38,dorsolateral prefrontal cortex,close
 0025,Bladder,not-found,,,,urinary bladder,close
-0026,Artery - Aorta,downloaded,encode,ENCFF493YNC,GRCh38,aorta,exact
-0027,Adrenal Gland,downloaded,encode,ENCFF333WCK,GRCh38,adrenal gland,exact
+0026,Artery - Aorta,too-large,encode,ENCFF493YNC,GRCh38,aorta,exact
+0027,Adrenal Gland,too-large,encode,ENCFF333WCK,GRCh38,adrenal gland,exact
 0028,Brain - Hippocampus,not-found,,,,layer of hippocampus,close
 0029,Cells - Astrocyte,not-found,,,,astrocyte,exact
 0032,Cells - Neuron,not-found,,,,neural cell,proxy
-0042,Uterus,downloaded,encode,ENCFF983KVN,GRCh38,uterus,exact
+0042,Uterus,too-large,encode,ENCFF983KVN,GRCh38,uterus,exact
 0044,Cells - Neuroectodermal Cell,not-found,,,,neural progenitor cell,proxy
 0045,Bone Marrow,not-found,,,,bone marrow,exact
 0047,Cells - Leukocyte,not-found,,,,"common myeloid progenitor, CD34-positive",proxy
-0048,Cells - Lymphoblastoid Cell,download-failed,encode,ENCFF452JLC,GRCh38,GM12878,exact
+0048,Cells - Lymphoblastoid Cell,too-large,encode,ENCFF452JLC,GRCh38,GM12878,exact
 0055,Skin - Not Sun Exposed (Suprapubic),not-found,,,,suprapubic skin,exact
 0056,Blood - Erythroblast,not-found,,,,erythroblast,exact
 0057,Thymus,not-found,,,,thymus,exact
-0058,Cells - Endothelial Cell,downloaded,encode,ENCFF783KQI,GRCh38,endothelial cell of umbilical vein,proxy
+0058,Cells - Endothelial Cell,too-large,encode,ENCFF783KQI,GRCh38,endothelial cell of umbilical vein,proxy
 0060,Blood - Neutrophils,not-found,,,,neutrophil,exact
-0061,Blood - Monocytes,downloaded,encode,ENCFF684YCT,GRCh38,CD14-positive monocyte,exact
-0063,Blood - Macrophages,downloaded,encode,ENCFF684YCT,GRCh38,CD14-positive monocyte,proxy
+0061,Blood - Monocytes,too-large,encode,ENCFF684YCT,GRCh38,CD14-positive monocyte,exact
+0063,Blood - Macrophages,too-large,encode,ENCFF684YCT,GRCh38,CD14-positive monocyte,proxy
 0064,Blood - Megakaryocytes,not-found,,,,CD34-positive mobilized cell,proxy
 0065,Blood - Naive CD8+ Cells,not-found,,,,"naive thymus-derived CD8-positive, alpha-beta T cell",exact
-0066,Blood - Naive CD4+ Cells,download-failed,encode,ENCFF520GFL,GRCh38,"naive thymus-derived CD4-positive, alpha-beta T cell",exact
-0067,Blood - Total CD4+ Cells,downloaded,encode,ENCFF762HKR,GRCh38,"CD4-positive, alpha-beta T cell",exact
-0068,Blood - Total B Cells,downloaded,encode,ENCFF076LWH,GRCh38,B cell,exact
+0066,Blood - Naive CD4+ Cells,too-large,encode,ENCFF520GFL,GRCh38,"naive thymus-derived CD4-positive, alpha-beta T cell",exact
+0067,Blood - Total CD4+ Cells,too-large,encode,ENCFF762HKR,GRCh38,"CD4-positive, alpha-beta T cell",exact
+0068,Blood - Total B Cells,too-large,encode,ENCFF076LWH,GRCh38,B cell,exact
 0069,Blood - Naive B Cells,not-found,,,,naive B cell,exact
-0070,Blood - Total CD8+ Cells,downloaded,encode,ENCFF063KHP,GRCh38,"CD8-positive, alpha-beta T cell",exact
-0071,Blood - Non-activated CD4+ Cells,downloaded,encode,ENCFF762HKR,GRCh38,"CD4-positive, alpha-beta T cell",close
-0072,Blood - Activated CD4+ Cells,downloaded,encode,ENCFF407JPA,GRCh38,"activated CD4-positive, alpha-beta T cell",close
+0070,Blood - Total CD8+ Cells,too-large,encode,ENCFF063KHP,GRCh38,"CD8-positive, alpha-beta T cell",exact
+0071,Blood - Non-activated CD4+ Cells,too-large,encode,ENCFF762HKR,GRCh38,"CD4-positive, alpha-beta T cell",close
+0072,Blood - Activated CD4+ Cells,too-large,encode,ENCFF407JPA,GRCh38,"activated CD4-positive, alpha-beta T cell",close
 0073,Cells - Embryonic Stem Cell,not-found,,,,H1,close
 0074,Adipose - Subcutaneous,not-found,,,,subcutaneous adipose tissue,exact
 0077,Liver,not-found,,,,liver,exact
