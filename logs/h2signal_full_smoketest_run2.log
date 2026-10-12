@@ -1,0 +1,1146 @@
+PROJECT_ROOT : /mnt/raid/ksengupta/pic_hic_ml
+CPU cores    : 128  (graph-building process pool: 126 workers)
+mode         : FAST (subsampled)
+promoter win : 1000000 bp
+epochs       : 12
+arms         : ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi'] (7 total)
+warm start   : /mnt/raid/ksengupta/pic_hic_ml/results_trimodal_1mb_fast/model_fold0.pt
+HK tau cut   : 0.2
+results dir  : results/results_trimodal_1mb_h2signal_fast
+
+  seed                 42
+  fast_mode            True
+  fast_n_tissues       8
+  fast_n_genes         2500
+  explicit_tissue_ids  ()
+  genome_build         hg19
+  promoter_window      1000000
+  seq_len_fast         1000000
+  max_neighbours       10000
+  min_chicago          5.0
+  add_backbone_edges   True
+  histone_marks        ('H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3', 'H3K36me3', 'H3K9me3', 'CTCF')
+  histone_stat         mean
+  tpm_threshold        1.0
+  tau_threshold        0.85
+  hk_tau_threshold     0.2
+  link_holdout_frac    0.15
+  d_hidden             128
+  d_embed              128
+  gat_layers           3
+  gat_heads            4
+  dropout              0.2
+  attn_dropout         0.1
+  hyena_d_model        128
+  hyena_blocks         4
+  hyena_order          2
+  hyena_filter_order   64
+  stem_kernel          15
+  stem_stride          64
+  rc_equivariant       True
+  variants             ('all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi')
+  run_hybrid           True
+  pretrained_checkpoint /mnt/raid/ksengupta/pic_hic_ml/results_trimodal_1mb_fast/model_fold0.pt
+  warm_start_lr_scale  0.3
+  min_epochs_warm_start 20
+  w_link               1.0
+  w_expr               1.0
+  w_tau                0.5
+  w_tissue             0.5
+  w_align              0.3
+  temperature          0.1
+  n_folds              5
+  group_split_by       gene
+  epochs               40
+  epochs_fast          12
+  batch_size           16
+  lr                   0.001
+  weight_decay         0.0001
+  grad_clip            1.0
+  patience             8
+  num_workers          32
+  use_amp              False
+python      : 3.10.8
+executable  : /mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/bin/python
+conda env   : base
+
+required packages
+  OK    numpy              2.2.6
+  OK    pandas             2.3.3
+  OK    scipy              1.15.3
+  OK    matplotlib         3.10.9
+  OK    seaborn            0.13.2
+  OK    networkx           3.4.2
+  OK    torch              2.5.1+cu121
+  OK    torch_geometric    2.8.0.post1
+  OK    pyBigWig           0.3.25
+  OK    py2bit             1.0.1
+  OK    scikit-learn       1.7.2
+
+optional packages
+  OK    pyliftover         0.4.1
+  OK    umap               0.5.12
+  OK    torch_scatter      2.1.2+pt25cu121
+
+device      : cuda  (NVIDIA L40)
+mp start method : fork
+
+environment ready
+46 tissues with PCHi-C loops
+
+sample_id                              tissue  file_mb
+     0002                Embryo - Trophoblast      4.4
+     0003                              Spleen      5.9
+     0004    Small Intestine - Terminal Ileum      1.3
+     0008                   Muscle - Skeletal      0.9
+     0009                            Pancreas      1.8
+     0010                               Ovary      0.7
+     0011                      Nerve - Tibial      1.4
+     0012                Embryo - Mesendoderm      3.8
+     0013       Cells - Mesenchymal Stem Cell      4.8
+     0014                 Blood - Lymphoblast      6.7
+     0015                                Lung      1.3
+     0017              Heart - Left Ventricle      1.8
+     0020                             Stomach      1.5
+     0021        Cells - Cultured fibroblasts      4.5
+     0024        Brain - Frontal Cortex (BA9)      8.8
+     0025                             Bladder      2.4
+     0026                      Artery - Aorta      3.1
+     0027                       Adrenal Gland      2.0
+     0028                 Brain - Hippocampus      8.0
+     0029                   Cells - Astrocyte     11.7
+     0032                      Cells - Neuron      5.5
+     0042                              Uterus     12.0
+     0044        Cells - Neuroectodermal Cell     10.5
+     0045                         Bone Marrow     18.9
+     0047                   Cells - Leukocyte      9.3
+     0048         Cells - Lymphoblastoid Cell     10.6
+     0055 Skin - Not Sun Exposed (Suprapubic)     15.7
+     0056                Blood - Erythroblast     16.8
+     0057                              Thymus     18.7
+     0058            Cells - Endothelial Cell     21.2
+     0060                 Blood - Neutrophils     15.9
+     0061                   Blood - Monocytes     19.2
+     0063                 Blood - Macrophages     22.0
+     0064              Blood - Megakaryocytes     19.8
+     0065            Blood - Naive CD8+ Cells     22.2
+     0066            Blood - Naive CD4+ Cells     21.4
+     0067            Blood - Total CD4+ Cells     22.7
+     0068               Blood - Total B Cells     22.3
+     0069               Blood - Naive B Cells     21.3
+     0070            Blood - Total CD8+ Cells     21.4
+     0071    Blood - Non-activated CD4+ Cells     23.3
+     0072        Blood - Activated CD4+ Cells     16.8
+     0073         Cells - Embryonic Stem Cell     22.3
+     0074              Adipose - Subcutaneous     15.8
+     0077                               Liver     10.6
+     0079                 Cervix - Ectocervix     14.6
+
+
+305 histone bigWigs covering 45 sample ids
+
+histone coverage (files per tissue x mark; 0 = imputed from other tissues)
+                                               H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+sample_id tissue                                                                                           
+0002      Embryo - Trophoblast                       1        1        1         1         1        1     0
+0003      Spleen                                     1        1        1         1         1        1     1
+0004      Small Intestine - Terminal Ileum           1        1        1         1         1        1     1
+0008      Muscle - Skeletal                          1        1        1         1         1        1     0
+0009      Pancreas                                   1        1        1         1         1        1     1
+0010      Ovary                                      1        1        1         1         1        1     1
+0011      Nerve - Tibial                             1        1        1         1         1        1     1
+0012      Embryo - Mesendoderm                       1        1        1         1         1        1     0
+0013      Cells - Mesenchymal Stem Cell              1        1        1         1         1        1     0
+0014      Blood - Lymphoblast                        1        1        1         1         1        1     1
+0015      Lung                                       1        1        1         1         1        1     1
+0017      Heart - Left Ventricle                     1        1        1         1         1        1     1
+0020      Stomach                                    1        1        1         1         1        1     1
+0021      Cells - Cultured fibroblasts               1        1        1         1         1        1     1
+0024      Brain - Frontal Cortex (BA9)               1        1        1         1         1        1     1
+0025      Bladder                                    1        1        1         0         1        0     0
+0026      Artery - Aorta                             1        1        1         1         1        1     0
+0027      Adrenal Gland                              1        1        1         1         1        1     1
+0028      Brain - Hippocampus                        1        1        1         1         1        1     0
+0029      Cells - Astrocyte                          1        1        1         1         1        1     1
+0032      Cells - Neuron                             1        1        1         1         1        1     1
+0042      Uterus                                     1        1        1         1         1        1     1
+0044      Cells - Neuroectodermal Cell               1        1        1         1         1        1     1
+0045      Bone Marrow                                1        1        0         1         1        1     0
+0047      Cells - Leukocyte                          1        1        1         1         1        1     0
+0048      Cells - Lymphoblastoid Cell                1        1        1         1         1        1     1
+0055      Skin - Not Sun Exposed (Suprapubic)        1        1        1         1         1        1     1
+0056      Blood - Erythroblast                       1        1        1         1         1        1     1
+0057      Thymus                                     1        1        1         1         1        1     0
+0058      Cells - Endothelial Cell                   1        1        1         1         1        1     1
+0060      Blood - Neutrophils                        1        2        1         1         1        1     1
+0061      Blood - Monocytes                          1        1        1         1         1        2     1
+0063      Blood - Macrophages                        1        1        1         1         1        1     1
+0064      Blood - Megakaryocytes                     1        1        1         1         1        1     1
+0065      Blood - Naive CD8+ Cells                   1        1        1         1         1        1     1
+0066      Blood - Naive CD4+ Cells                   1        1        1         1         1        1     1
+0067      Blood - Total CD4+ Cells                   1        1        1         1         1        1     1
+0068      Blood - Total B Cells                      1        1        1         1         1        1     1
+0069      Blood - Naive B Cells                      1        1        1         1         1        1     0
+0070      Blood - Total CD8+ Cells                   1        1        1         1         1        1     1
+0071      Blood - Non-activated CD4+ Cells           1        1        1         1         1        1     1
+0072      Blood - Activated CD4+ Cells               1        1        1         1         1        1     1
+0073      Cells - Embryonic Stem Cell                1        1        1         1         1        1     1
+0074      Adipose - Subcutaneous                     1        1        1         1         1        1     1
+0077      Liver                                      1        1        1         1         1        1     1
+
+coverage: 301/322 tissue x mark cells (93.5%)
+  19 of these tracks are GRCh38 (ENCODE has retired much of
+  its hg19 output). Their queries are lifted hg19 -> GRCh38 in cell 8;
+  the tracks themselves are left alone.
+  -> run  python fetch_histone_encode.py  to pull more from ENCODE;
+     whatever remains missing is imputed as the cross-tissue average
+     for that mark (section 8), not zero-filled.
+
+download manifest: 322 rows
+match_quality
+exact    189
+close     77
+proxy     49
+none       7
+  WARNING: 1 tracks come from a PROXY biosample (related but not the same tissue).
+  Treat those marks as noisy; see histone/DOWNLOAD_manifest.csv
+
+
+RNA-seq: 194 sample columns over 43 tissue ids
+  23/46 loop tissues have matching RNA-seq columns
+
+hg19.2bit              present  (promoter sequence)
+
+refGene_hg19.txt       present  (canonical TSS)
+FAST_MODE: using 8 of 46 tissues
+
+parsing 8 loop files across 8 processes
+parsing loop files (parallel):   0%|          | 0/8 [00:00<?, ?it/s]parsing loop files (parallel):  12%|█▎        | 1/8 [00:00<00:00,  9.39it/s]parsing loop files (parallel):  75%|███████▌  | 6/8 [00:00<00:00, 22.99it/s]parsing loop files (parallel): 100%|██████████| 8/8 [00:00<00:00, 23.00it/s]
+
+parsed 32,205 (gene, bait, other-end) rows across 8 tissues
+unique genes           : 8,423
+unique bait fragments  : 6,608
+cis / trans            : 32,205 / 0
+
+sample_id tissue          gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+     0010  Ovary          TPPP     chr5      687730    690639      chr5       789001     795437      136    inf  103034.5           1
+     0010  Ovary         OR2T7     chr1   248601766 248607843      chr1    248810816  248816904      128    inf  209055.5           1
+     0010  Ovary         OR4C5    chr11    48386729  48389031     chr11     50039109   50042830       71    inf 1653089.5           1
+     0010  Ovary         EEPD1     chr7    36188737  36200949      chr7     36146233   36150580       86 266.16   46436.5           1
+     0010  Ovary         KLRC3    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary RP11-277P12.6    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary CTD-2620I22.3    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+     0010  Ovary        ERVV-1    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+
+per-tissue: rows before score filter -> gene-exploded rows after
+                          tissue  raw_loops  rows_after_filter_and_explode
+                          Spleen      59961                           8691
+   Cells - Mesenchymal Stem Cell      49121                           5358
+            Embryo - Trophoblast      45384                          13190
+            Embryo - Mesendoderm      39314                           1040
+                  Nerve - Tibial      14216                           1408
+Small Intestine - Terminal Ileum      12843                            936
+               Muscle - Skeletal       8791                            913
+                           Ovary       7215                            669
+
+distance (cis only) / CHiCAGO score
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           distance     score       N_reads
+count  3.220500e+04  32205.00  32205.000000
+mean   1.892544e+05       inf     20.170750
+std    2.345683e+05       NaN     21.310933
+min    0.000000e+00      5.00      5.000000
+25%    4.936650e+04      5.50      8.000000
+50%    1.137960e+05      6.24     13.000000
+75%    2.354205e+05      7.74     26.000000
+max    1.992490e+06       inf    643.000000
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/01_interaction_qc.png
+degree: median=1  mean=2.0  p95=6  max=37
+fraction of (gene,tissue) pairs truncated by MAX_NEIGHBOURS=10000: 0.0%
+refGene rows: 81,407
+
+protein-coding vs non-coding, by RefSeq accession prefix (19,392 coding / 8,845 non-coding of 28,237 gene symbols with a canonical model)
+canonical models for 28,237 gene symbols
+        chrom strand    txStart      txEnd        tss
+name2                                                
+NBPF20   chr1      +  144146810  146467744  144146810
+NBPF19   chr1      +  144146811  146467744  144146811
+PTPRD    chr9      -    8314245   10613002   10613002
+DMD      chrX      -   31137340   33357505   33357505
+DLG2    chr11      -   83166055   85339417   85339417
+
+assembly check: 2,356/3,318 sampled genes have their hg19 TSS inside (+/-5 kb of) their own bait fragment  ->  71.0%
+  -> coordinates are consistent with hg19. Proceeding.
+
+gene symbols resolvable to a TSS: 83.4% of rows (6,999 unique genes)
+unresolved symbols are mostly lncRNA/clone IDs (RP11-*, CTD-*, AC0*)
+gene
+RP11-247A12.8    48
+RP11-247A12.2    48
+RP1-76B20.12     34
+RP1-76B20.11     34
+LLfos-48D6.2     33
+RP11-392O1.4     25
+RP11-545E17.3    25
+CCND2-AS2        23
+
+kept 26,843 rows with a resolvable TSS
+FAST_MODE: kept 2,500 most widely-observed genes -> 17,981 rows
+loaded cached promoter sequences: promoter_onehot_hg19_1000000_2500.npz
+one-hot tensor: (2500, 4, 1000000)  dtype=uint8  10000 MB
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/02_promoter_sequence_qc.png
+mean GC = 45.4%   (expect ~0.50-0.60 for promoters; ~0.41 would mean the TSS mapping is wrong)
+mean N fraction = 0.0115
+histone availability for the tissues in this run
+                                  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+tissue                                                                                        
+Embryo - Trophoblast                    1        1        1         1         1        1     0
+Spleen                                  1        1        1         1         1        1     1
+Small Intestine - Terminal Ileum        1        1        1         1         1        1     1
+Muscle - Skeletal                       1        1        1         1         1        1     0
+Ovary                                   1        1        1         1         1        1     1
+Nerve - Tibial                          1        1        1         1         1        1     1
+Embryo - Mesendoderm                    1        1        1         1         1        1     0
+Cells - Mesenchymal Stem Cell           1        1        1         1         1        1     0
+
+92.9% of (tissue x mark) tracks are directly measured; the rest have their signal imputed as the average of that mark over the other tissues in this run (mask stays 0, so the model can still tell a real measurement from an imputed one)
+
+example signal, sample 0002 (Embryo - Trophoblast):
+   gene  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+ZNF705G    0.025    0.074    0.081     0.093     0.032    0.040 0.249
+   TPPP    0.000    0.000    0.000     0.048     0.000    0.000 0.083
+   CST4    0.580    1.104    0.658     0.802     0.395    1.009 0.731
+  OR4C5    0.118    0.715    0.656     0.915     0.330    1.380 0.713
+  KLRC3    0.022    0.401    0.502     0.607     0.056    0.096 0.535
+
+cross-assembly lookups so far: no cross-assembly lookups were needed
+
+per-mark transform fitted on 5,000 sampled fragments
+    mark  clip_p99.5  mean   std
+ H3K4me1       2.149 0.865 0.463
+ H3K4me3       3.384 0.994 0.683
+ H3K27ac       3.070 0.840 0.579
+H3K27me3       2.292 0.602 0.343
+H3K36me3       2.062 0.657 0.405
+ H3K9me3       1.513 0.495 0.215
+    CTCF       2.130 0.737 0.304
+
+signal provenance so far: 20,596 direct  +  1,951 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  22,547 (tissue, mark) lookups  (8.7% imputed)
+/mnt/raid/ksengupta/pic_hic_ml/notebooks/pangenomic_gat_pipeline_trimodal_1mb_full_h2signal_complete.py:1477: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  ax[0].boxplot([raw_log[:, i] for i in present],
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/03_histone_features.png
+
+Sanity: H3K4me3/H3K27ac (active) should correlate positively with each
+other and negatively with H3K27me3/H3K9me3 (repressive).
+loading cached graphs -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+  3,462 graphs loaded from cache (rebuild skipped)
+
+built 3,462 promoter subgraphs
+  unique genes   : 1,911
+  unique tissues : 8
+  node features F   = 18  (4 structural + 7 marks + 7 mask)
+  edge features F_e = 4
+  histone signal provenance: 94,740 direct  +  9,546 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  104,286 (tissue, mark) lookups  (9.2% imputed)
+
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           n_nodes      n_edges        n_pos   mean_score
+count  3462.000000  3462.000000  3462.000000  3462.000000
+mean      4.873484    11.372039     1.060947          inf
+std       3.033026    11.646121     0.304137          NaN
+min       3.000000     4.000000     1.000000     5.020000
+25%       3.000000     4.000000     1.000000     6.050000
+50%       4.000000     8.000000     1.000000     6.763542
+75%       5.000000    12.000000     1.000000     7.965000
+max      38.000000   134.000000     6.000000          inf
+
+feature variance audit (first 4,000 graphs)
+      feature   mean   std
+      is_bait  0.205 0.404
+      log_len  3.714 0.311
+    sgn_log_d  0.356 4.517
+   same_chrom  1.000 0.000
+      H3K4me1 -0.303 0.935
+      H3K4me3 -0.513 0.639
+      H3K27ac -0.273 0.771
+     H3K27me3 -0.157 0.744
+     H3K36me3  0.051 1.115
+      H3K9me3 -0.044 0.951
+         CTCF -0.157 0.913
+ mask:H3K4me1  1.000 0.000
+ mask:H3K4me3  1.000 0.000
+ mask:H3K27ac  1.000 0.000
+mask:H3K27me3  1.000 0.000
+mask:H3K36me3  1.000 0.000
+ mask:H3K9me3  1.000 0.000
+    mask:CTCF  0.366 0.482
+
+edge_feature  mean   std
+   log_score 1.038 1.075
+   log_reads 1.428 1.524
+   sgn_log_d 2.469 4.144
+  same_chrom 1.000 0.000
+
+  CONSTANT (zero variance) -> carries no information:
+    node: same_chrom, mask:H3K4me1, mask:H3K4me3, mask:H3K27ac, mask:H3K27me3, mask:H3K36me3, mask:H3K9me3
+    edge: same_chrom
+  These cost parameters and teach the model nothing. 'same_chrom' is
+  constant whenever the loop files are cis-only, which is the case
+  for this dataset. Leaving them in is harmless but wasteful; drop
+  them if you want a tighter feature matrix.
+
+example graph:
+  OR2T7 in Ovary
+  x=(3, 18)  edge_index=(2, 4)  edge_attr=(4, 4)
+  held-out positives=1  negatives=1
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/04_example_graph.png
+smallest graph, full feature matrix:
+   is_bait  log_len  sgn_log_d  same_chr  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF  mask:H3K4me1  mask:H3K4me3  mask:H3K27ac  mask:H3K27me3  mask:H3K36me3  mask:H3K9me3  mask:CTCF
+0      1.0     3.78       0.00       1.0    -1.34    -0.93    -0.93     -0.25     -0.56     0.05 -1.22           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+1      0.0     3.78       5.32       1.0    -1.75    -1.12    -0.97     -1.23     -0.83    -1.01 -1.35           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+2      0.0     1.30       5.30       1.0    -1.87    -1.46    -1.45     -1.13     -1.62    -2.30 -2.43           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+
+its edge features:
+   log_score  log_reads  sgn_log_d  same_chrom
+0       4.27       3.61       5.30         1.0
+1       4.27       3.61       5.30         1.0
+2       0.00       0.00       3.92         1.0
+3       0.00       0.00       3.92         1.0
+TPM matrix: 1,909 genes x 43 tissues
+            0001   0002   0003  0004  0005    0006
+gene_name                                         
+A4GALT      8.21   4.86   6.26  0.04  0.16  136.71
+AAAS       23.87  28.57  13.07  1.69  0.37   21.08
+AATBC       1.07   0.21   1.61  0.00  0.01    0.58
+ABALON      0.25   1.09   0.16  0.01  0.01    1.27
+ABCA1      11.33   3.70   1.37  0.08  0.06    1.49
+
+H2  signal = log2(TPM + 1): mean 2.186, std 2.176 over 82,087 gene x tissue cells
+    for reference, 58.7% of cells would be 'expressed' at the old TPM > 1.0 cut (not used for training in this notebook)
+H3  tau computed for 1,902 genes; 22.3% are tissue-restricted (tau > 0.85)
+H*  housekeeping (tau < 0.2): 0.0% of the 1,902 genes with a defined tau
+H4  8 tissue classes
+
+label coverage over 3,462 graphs
+  H2 signal     : 3,458 labelled (99.9%), mean 2.402, std 2.348
+  H3 tau        : 3,443 labelled (99.5%), positive rate 20.7%
+  H4 tissue     : 3,462 labelled, 8 classes
+  housekeeping  : 3,443 labelled (99.5%), 0.0% housekeeping
+  protein-coding: 3,462 labelled (100.0%), 94.5% protein-coding
+  H1 links      : 3,673 positives + 3,673 distance-matched negatives
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/05_label_distributions.png
+
+mean H2 signal by tissue (watch for a tissue trivially separable by scale alone)
+tissue
+Cells - Mesenchymal Stem Cell       2.912
+Muscle - Skeletal                   2.838
+Embryo - Mesendoderm                2.764
+Embryo - Trophoblast                2.665
+Ovary                               2.216
+Nerve - Tibial                      1.952
+Spleen                              1.836
+Small Intestine - Terminal Ileum    0.485
+5-fold GroupKFold, grouped by 'gene'
+
+ fold  n_train  n_test  genes_train  genes_test  gene_leak  tissues_test  expr_pos_train  expr_pos_test  tau_pos_test
+    0     2769     693         1529         382          0             8           2.398          2.416         0.202
+    1     2769     693         1528         383          0             8           2.365          2.548         0.210
+    2     2770     692         1529         382          0             8           2.410          2.367         0.196
+    3     2770     692         1529         382          0             8           2.401          2.404         0.197
+    4     2770     692         1529         382          0             8           2.434          2.273         0.228
+
+  OK: no gene appears in both train and test of any fold
+  OK: every fold's test set covers all tissue classes
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/06_cv_splits.png
+
+sequence tensor for the model: (2500, 4, 1000000) (40000 MB float32)
+parameter budget per ablation arm
+variant  sequence_tower  structure_tower  epigenomic_tower  fusion+heads   total
+   all3          800769           301505              9536         83723 1195533
+seq_str          800769           301505                 0         83723 1185997
+seq_epi          800769                0              9536         83723  894028
+str_epi               0           301505              9536         83723  394764
+    seq          800769                0                 0         34058  834827
+    str               0           301505                 0         34058  335563
+    epi               0                0              9536         34058   43594
+
+  TOWER A  HyenaDNA-style long convolution
+    promoter window   1,000,000 bp  (stem stride 64 -> 15,625 positions)
+    blocks            4 x HyenaOperator(order=2)
+    d_model           128
+    implicit filter   MLP width 64, sine activations
+    receptive field   15,625 positions from block 1 (filter length == input length)
+    rev-comp equiv.   True
+  TOWER B  GATv2
+    layers x heads    3 x 4, d_h=128
+    node / edge feat  F=18  F_e=4
+  TOWER C  epigenomic MLP
+    input             14 dims (signal + direct-measurement mask, per mark, promoter fragment only)
+  SHARED
+    embedding dim     d=128
+    tissue classes    8
+    arms trained      ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi']
+
+smoke test: SequenceEncoder (2, 4, 1000000) -> (2, 128)
+  reverse-complement equivariance: max |z(x) - z(rc(x))| = 0.00e+00
+  backward OK: 110 tensors received gradient, total |grad| = 2.422e+05
+smoke test: EpiEncoder (5, 14) -> (5, 128)
+batching self-check
+  graph 0 has 3 nodes; graph 1's first held-out pair should be offset by 3
+  expected 3, got 3
+  OK: edge pairs offset correctly, ptr marks anchors, seq_idx per graph
+
+training utilities defined
+  run_epoch(...) -> (mean losses, stacked predictions)
+  anchors  = batch.ptr[:-1]  (node 0 of every graph)
+  H2/H3 use masked BCE, so y = -1 rows contribute no gradient
+metric self-test on synthetic data (should be well above chance):
+  n                  800.0000
+  pos_rate           0.5337
+  auroc              0.9550
+  auprc              0.9602
+  auprc_baseline     0.5337
+  accuracy           0.8888
+  precision          0.9024
+  recall             0.8876
+  specificity        0.8901
+  f1                 0.8949
+  mcc                0.7769
+  kappa              0.7767
+  brier              0.0948
+  logloss            0.3281
+  best_threshold     0.4752
+  f1_at_best         0.9040
+
+  OK: metric suite behaves sensibly
+HIST_STD floored at 0.05, features clipped to +/-10
+    mark  HIST_STD
+ H3K4me1    0.4633
+ H3K4me3    0.6827
+ H3K27ac    0.5788
+H3K27me3    0.3432
+H3K36me3    0.4047
+ H3K9me3    0.2148
+    CTCF    0.3037
+edge_attr:
+ [[ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 0.         0.         4.93073    1.       ]
+ [ 0.         0.         4.93073    1.       ]] 
+
+
+column stats over ALL graphs:
+  col 0: n_inf=0     n_nan=0     finite_range=[0, 5.748]
+  col 1: n_inf=0     n_nan=0     finite_range=[0, 6.361]
+  col 2: n_inf=0     n_nan=0     finite_range=[-6.3, 6.445]
+  col 3: n_inf=0     n_nan=0     finite_range=[1, 1]
+
+source rows for DTX2 (appears in 6/9 bad graphs):
+     sample_id                            tissue  gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+42        0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       15  31.66  500420.5           1
+173       0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76583452   76590221        5   6.82  494725.0           1
+476       0008                 Muscle - Skeletal  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       31  89.14  500420.5           1
+487       0008                 Muscle - Skeletal  DTX2     chr7    76132574  76144865      chr7     76628054   76637837       29  53.77  494226.0           1
+1088      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76132574  76144865      chr7     76628054   76637837      123    inf  494226.0           1
+1103      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       51    inf  500420.5           1
+1353      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76594843   76600243        6   7.62  505431.5           1
+1799      0011                    Nerve - Tibial  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       12  21.17  500420.5           1
+sanitised 0/3462 graphs  (0 node values, 0 edge values)
+all graph tensors finite
+repaired 0 edges: inf score -> 5.748 (max observed) instead of 0
+cache refreshed (post sanitise/repair) -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+epigenomic modality attached: 14-dim vector per graph (promoter-fragment histone/CTCF signal + measurement mask)
+  example: gene=OR2T7  tissue=Ovary
+  epi = [[-1.343 -0.934 -0.931 -0.251 -0.564  0.049 -1.218  1.     1.     1.
+   1.     1.     1.     1.   ]]
+device               : cuda
+mixed precision      : off
+DataLoader workers   : 32  (pin_memory=True)
+
+
+##########################################################################
+#  ARM: ALL3       (seq + str + epi)
+##########################################################################
+
+==========================================================================
+all3 | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_all3_fold0.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  all3 fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.562 | tau AUPRC 0.463 | tissue acc 0.759
+
+==========================================================================
+all3 | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_all3_fold1.pt, best epoch 10) -- skipping training, re-scoring test set
+
+  all3 fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.586 | tau AUPRC 0.631 | tissue acc 0.785
+
+==========================================================================
+all3 | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_all3_fold2.pt, best epoch 10) -- skipping training, re-scoring test set
+
+  all3 fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.577 | tau AUPRC 0.583 | tissue acc 0.779
+
+==========================================================================
+all3 | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_all3_fold3.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  all3 fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.522 | tau AUPRC 0.504 | tissue acc 0.764
+
+==========================================================================
+all3 | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_all3_fold4.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  all3 fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.571 | tau AUPRC 0.503 | tissue acc 0.759
+
+
+##########################################################################
+#  ARM: SEQ_STR    (seq + str (no epi))
+##########################################################################
+
+==========================================================================
+seq_str | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_seq_str_fold0.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  seq_str fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.514 | tau AUPRC 0.459 | tissue acc 0.651
+
+==========================================================================
+seq_str | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_seq_str_fold1.pt, best epoch 8) -- skipping training, re-scoring test set
+
+  seq_str fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.533 | tau AUPRC 0.543 | tissue acc 0.693
+
+==========================================================================
+seq_str | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_seq_str_fold2.pt, best epoch 6) -- skipping training, re-scoring test set
+
+  seq_str fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.515 | tau AUPRC 0.498 | tissue acc 0.665
+
+==========================================================================
+seq_str | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_seq_str_fold3.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  seq_str fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.446 | tau AUPRC 0.458 | tissue acc 0.652
+
+==========================================================================
+seq_str | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_seq_str_fold4.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  seq_str fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.509 | tau AUPRC 0.454 | tissue acc 0.653
+
+
+##########################################################################
+#  ARM: SEQ_EPI    (seq + epi (no str))
+##########################################################################
+
+==========================================================================
+seq_epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_seq_epi_fold0.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  seq_epi fold 0 test:  link AUPRC nan | expr Pearson r 0.556 | tau AUPRC 0.453 | tissue acc 0.749
+
+==========================================================================
+seq_epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_seq_epi_fold1.pt, best epoch 7) -- skipping training, re-scoring test set
+
+  seq_epi fold 1 test:  link AUPRC nan | expr Pearson r 0.592 | tau AUPRC 0.631 | tissue acc 0.766
+
+==========================================================================
+seq_epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_seq_epi_fold2.pt, best epoch 5) -- skipping training, re-scoring test set
+
+  seq_epi fold 2 test:  link AUPRC nan | expr Pearson r 0.590 | tau AUPRC 0.561 | tissue acc 0.733
+
+==========================================================================
+seq_epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_seq_epi_fold3.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  seq_epi fold 3 test:  link AUPRC nan | expr Pearson r 0.530 | tau AUPRC 0.496 | tissue acc 0.730
+
+==========================================================================
+seq_epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_seq_epi_fold4.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  seq_epi fold 4 test:  link AUPRC nan | expr Pearson r 0.553 | tau AUPRC 0.501 | tissue acc 0.757
+
+
+##########################################################################
+#  ARM: STR_EPI    (str + epi (no seq))
+##########################################################################
+
+==========================================================================
+str_epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_str_epi_fold0.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  str_epi fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.564 | tau AUPRC 0.466 | tissue acc 0.753
+
+==========================================================================
+str_epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_str_epi_fold1.pt, best epoch 8) -- skipping training, re-scoring test set
+
+  str_epi fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.587 | tau AUPRC 0.643 | tissue acc 0.781
+
+==========================================================================
+str_epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_str_epi_fold2.pt, best epoch 6) -- skipping training, re-scoring test set
+
+  str_epi fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.586 | tau AUPRC 0.544 | tissue acc 0.767
+
+==========================================================================
+str_epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_str_epi_fold3.pt, best epoch 8) -- skipping training, re-scoring test set
+
+  str_epi fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.517 | tau AUPRC 0.513 | tissue acc 0.769
+
+==========================================================================
+str_epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_str_epi_fold4.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  str_epi fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.568 | tau AUPRC 0.511 | tissue acc 0.767
+
+
+##########################################################################
+#  ARM: SEQ        (sequence only)
+##########################################################################
+
+==========================================================================
+seq | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_seq_fold0.pt, best epoch 3) -- skipping training, re-scoring test set
+
+  seq fold 0 test:  link AUPRC nan | expr Pearson r -0.075 | tau AUPRC 0.208 | tissue acc 0.371
+
+==========================================================================
+seq | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_seq_fold1.pt, best epoch 3) -- skipping training, re-scoring test set
+
+  seq fold 1 test:  link AUPRC nan | expr Pearson r -0.074 | tau AUPRC 0.232 | tissue acc 0.364
+
+==========================================================================
+seq | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_seq_fold2.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  seq fold 2 test:  link AUPRC nan | expr Pearson r 0.015 | tau AUPRC 0.195 | tissue acc 0.396
+
+==========================================================================
+seq | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_seq_fold3.pt, best epoch 8) -- skipping training, re-scoring test set
+
+  seq fold 3 test:  link AUPRC nan | expr Pearson r -0.018 | tau AUPRC 0.185 | tissue acc 0.397
+
+==========================================================================
+seq | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_seq_fold4.pt, best epoch 6) -- skipping training, re-scoring test set
+
+  seq fold 4 test:  link AUPRC nan | expr Pearson r 0.042 | tau AUPRC 0.252 | tissue acc 0.370
+
+
+##########################################################################
+#  ARM: STR        (structure only)
+##########################################################################
+
+==========================================================================
+str | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_str_fold0.pt, best epoch 7) -- skipping training, re-scoring test set
+
+  str fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.488 | tau AUPRC 0.463 | tissue acc 0.642
+
+==========================================================================
+str | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_str_fold1.pt, best epoch 10) -- skipping training, re-scoring test set
+
+  str fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.511 | tau AUPRC 0.549 | tissue acc 0.662
+
+==========================================================================
+str | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_str_fold2.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  str fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.496 | tau AUPRC 0.484 | tissue acc 0.656
+
+==========================================================================
+str | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_str_fold3.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  str fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.439 | tau AUPRC 0.483 | tissue acc 0.646
+
+==========================================================================
+str | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_str_fold4.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  str fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.498 | tau AUPRC 0.452 | tissue acc 0.640
+
+
+##########################################################################
+#  ARM: EPI        (epigenomic only)
+##########################################################################
+
+==========================================================================
+epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 checkpoint already complete (ckpt_main_epi_fold0.pt, best epoch 3) -- skipping training, re-scoring test set
+
+  epi fold 0 test:  link AUPRC nan | expr Pearson r 0.520 | tau AUPRC 0.448 | tissue acc 0.698
+
+==========================================================================
+epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 checkpoint already complete (ckpt_main_epi_fold1.pt, best epoch 9) -- skipping training, re-scoring test set
+
+  epi fold 1 test:  link AUPRC nan | expr Pearson r 0.577 | tau AUPRC 0.630 | tissue acc 0.703
+
+==========================================================================
+epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 checkpoint already complete (ckpt_main_epi_fold2.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  epi fold 2 test:  link AUPRC nan | expr Pearson r 0.576 | tau AUPRC 0.529 | tissue acc 0.712
+
+==========================================================================
+epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 checkpoint already complete (ckpt_main_epi_fold3.pt, best epoch 11) -- skipping training, re-scoring test set
+
+  epi fold 3 test:  link AUPRC nan | expr Pearson r 0.509 | tau AUPRC 0.500 | tissue acc 0.682
+
+==========================================================================
+epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 checkpoint already complete (ckpt_main_epi_fold4.pt, best epoch 8) -- skipping training, re-scoring test set
+
+  epi fold 4 test:  link AUPRC nan | expr Pearson r 0.545 | tau AUPRC 0.463 | tissue acc 0.694
+
+==========================================================================
+all 7 arms x 5 folds done in 16.4 min
+cells below report the 'all3' arm (seq + str + epi); the ablation cells compare all 7
+
+==========================================================================
+H1  link prediction   (mean +/- sd over 5 folds)
+==========================================================================
+                     mean      std     min     max
+metric                                            
+n                  1469.2  14.5327  1446.0  1486.0
+pos_rate              0.5   0.0000     0.5     0.5
+auroc                 1.0   0.0000     1.0     1.0
+auprc                 1.0   0.0000     1.0     1.0
+auprc_baseline        0.5   0.0000     0.5     0.5
+accuracy              1.0   0.0000     1.0     1.0
+balanced_accuracy     1.0   0.0000     1.0     1.0
+precision             1.0   0.0000     1.0     1.0
+recall                1.0   0.0000     1.0     1.0
+specificity           1.0   0.0000     1.0     1.0
+npv                   1.0   0.0000     1.0     1.0
+f1                    1.0   0.0000     1.0     1.0
+f2                    1.0   0.0000     1.0     1.0
+mcc                   1.0   0.0000     1.0     1.0
+kappa                 1.0   0.0000     1.0     1.0
+jaccard               1.0   0.0000     1.0     1.0
+brier                 0.0   0.0000     0.0     0.0
+logloss               0.0   0.0000     0.0     0.0
+best_threshold        1.0   0.0000     1.0     1.0
+f1_at_best            1.0   0.0000     1.0     1.0
+precision_at_best     1.0   0.0000     1.0     1.0
+recall_at_best        1.0   0.0000     1.0     1.0
+
+==========================================================================
+H2  expression signal (log2 TPM+1)   (mean +/- sd over 5 folds)
+==========================================================================
+                mean     std       min       max
+metric                                          
+n           691.6000  1.6733  689.0000  693.0000
+mean          2.8139  0.1141    2.6499    2.9689
+std           2.4280  0.0523    2.3688    2.4987
+mse           4.0372  0.1336    3.8675    4.2172
+rmse          2.0091  0.0332    1.9666    2.0536
+mae           1.5290  0.0442    1.4672    1.5892
+r2            0.3148  0.0277    0.2675    0.3375
+pearson_r     0.5638  0.0247    0.5224    0.5863
+pearson_p     0.0000  0.0000    0.0000    0.0000
+spearman_r    0.5887  0.0292    0.5480    0.6216
+spearman_p    0.0000  0.0000    0.0000    0.0000
+
+==========================================================================
+H3  tissue-restricted (tau)   (mean +/- sd over 5 folds)
+==========================================================================
+                       mean     std       min       max
+metric                                                 
+n                  688.6000  3.2094  684.0000  692.0000
+pos_rate             0.2065  0.0133    0.1959    0.2281
+auroc                0.8105  0.0341    0.7706    0.8564
+auprc                0.5368  0.0682    0.4632    0.6309
+auprc_baseline       0.2065  0.0133    0.1959    0.2281
+accuracy             0.8071  0.0304    0.7602    0.8389
+balanced_accuracy    0.6202  0.0214    0.5906    0.6477
+precision            0.5793  0.1079    0.4667    0.7049
+recall               0.3026  0.0452    0.2429    0.3590
+specificity          0.9377  0.0352    0.8788    0.9670
+npv                  0.8378  0.0125    0.8227    0.8555
+f1                   0.3937  0.0464    0.3269    0.4478
+f2                   0.3330  0.0439    0.2707    0.3763
+mcc                  0.3155  0.0692    0.2446    0.3984
+kappa                0.2915  0.0578    0.2243    0.3662
+jaccard              0.2460  0.0357    0.1954    0.2885
+brier                0.1286  0.0121    0.1168    0.1454
+logloss              0.4031  0.0326    0.3701    0.4454
+best_threshold       0.3038  0.0612    0.2597    0.4070
+f1_at_best           0.5675  0.0352    0.5238    0.6221
+precision_at_best    0.4966  0.0554    0.4160    0.5580
+recall_at_best       0.6719  0.0647    0.5704    0.7379
+
+==========================================================================
+H4  tissue classification   (mean +/- sd over 5 folds)
+==========================================================================
+                        mean     std       min       max
+metric                                                  
+n                   692.4000  0.5477  692.0000  693.0000
+n_classes_present     8.0000  0.0000    8.0000    8.0000
+accuracy              0.7692  0.0120    0.7587    0.7850
+balanced_accuracy     0.3993  0.0167    0.3748    0.4183
+kappa                 0.6722  0.0168    0.6574    0.6954
+precision_macro       0.4493  0.0480    0.4059    0.5196
+recall_macro          0.3993  0.0167    0.3748    0.4183
+f1_macro              0.4000  0.0168    0.3764    0.4213
+precision_micro       0.7692  0.0120    0.7587    0.7850
+recall_micro          0.7692  0.0120    0.7587    0.7850
+f1_micro              0.7692  0.0120    0.7587    0.7850
+precision_weighted    0.7091  0.0090    0.6992    0.7175
+recall_weighted       0.7692  0.0120    0.7587    0.7850
+f1_weighted           0.7294  0.0131    0.7151    0.7473
+auroc_macro_ovr       0.9234  0.0122    0.9108    0.9432
+auprc_macro_ovr       0.5480  0.0244    0.5154    0.5686
+
+
+==========================================================================
+HEADLINE
+==========================================================================
+                              head            primary metric secondary    tertiary  quaternary
+               H1  link prediction       acc 1.000 +/- 0.000  F1 1.000 AUROC 1.000 AUPRC 1.000
+H2  expression signal (log2 TPM+1) Pearson r 0.564 +/- 0.025 R^2 0.315   MAE 1.529  RMSE 2.009
+       H3  tissue-restricted (tau)       acc 0.807 +/- 0.030  F1 0.394 AUROC 0.811 AUPRC 0.537
+         H4  tissue classification       acc 0.769 +/- 0.012  F1 0.400 AUROC 0.923 AUPRC 0.548
+
+per-fold metrics -> metrics_per_fold.csv
+
+(H2's columns are a different metric family from H1/H3/H4 -- it is a
+regression head now, not binary classification. Not directly comparable
+row-for-row; each head's own metric is what matters.)
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/07_roc_curves.png
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/08_pr_curves.png
+read each curve against its own red baseline, not against the other panels
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/07b_h2_predicted_vs_observed.png
+Points on the y=x line are correct; a slope < 1 (a fan tilted toward the mean)
+means the model is regressing toward the mean rather than using its inputs.
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/09_confusion_matrices.png
+
+per-class report for H4 (pooled over folds):
+                                  precision    recall  f1-score   support
+
+   Cells - Mesenchymal Stem Cell       0.75      0.71      0.73       714
+            Embryo - Mesendoderm       0.00      0.00      0.00       127
+            Embryo - Trophoblast       0.78      0.91      0.84      1310
+               Muscle - Skeletal       0.00      0.00      0.00        80
+                  Nerve - Tibial       0.56      0.21      0.31       148
+                           Ovary       0.33      0.04      0.07        51
+Small Intestine - Terminal Ileum       0.43      0.36      0.39        97
+                          Spleen       0.81      0.95      0.87       935
+
+                        accuracy                           0.77      3462
+                       macro avg       0.46      0.40      0.40      3462
+                    weighted avg       0.71      0.77      0.73      3462
+
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/10_calibration.png
+A U-shaped probability histogram means confident predictions; a spike at
+the prevalence means the head has collapsed to predicting the base rate.
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/11_training_curves.png
+best epoch per fold: [11, 10, 10, 11, 9]
+mean seconds/epoch: 101.2
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/12_embedding_spaces.png
+
+silhouette against tissue labels:
+  z_seq  (sequence space)          -0.4355
+  z_str  (structure space)         -0.0777
+  z_epi  (epigenomic space)        -0.0660
+  z      (fused gene x tissue)     -0.0176
+
+z_seq should stay tissue-blind (it never receives tissue information);
+if it scores as high as the tissue-aware towers, tissue information is
+leaking into it. z_epi and z_str are both tissue-aware by construction
+(chromatin state and contact topology are both tissue-specific), so a
+similar silhouette between them is expected, not a red flag on its own.
+collected 1,895 attention weights on edges into promoter anchors
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/13_attention_analysis.png
+
+Gini of attention weights: 0.515
+  ~0   = uniform attention (the GAT is behaving like a mean aggregator)
+  >0.3 = genuinely selective, a few partners dominate
+predictions      -> results/predictions_fold0..4.npz
+embeddings       -> results/embeddings.parquet  (692, 515)
+models           -> results/model_fold0..4.pt
+manifest         -> results/run_manifest.json
+{
+  "link_auprc": 1.0,
+  "expr_pearson_r": 0.5637653589248657,
+  "tau_auprc": 0.5368121763089625,
+  "tissue_acc": 0.7692069330797654
+}
+
+figures (14):
+  01_interaction_qc.png
+  02_promoter_sequence_qc.png
+  03_histone_features.png
+  04_example_graph.png
+  05_label_distributions.png
+  06_cv_splits.png
+  07_roc_curves.png
+  07b_h2_predicted_vs_observed.png
+  08_pr_curves.png
+  09_confusion_matrices.png
+  10_calibration.png
+  11_training_curves.png
+  12_embedding_spaces.png
+  13_attention_analysis.png
+
+export complete
+
+==================================================================================
+H1  link prediction   mean +/- sd over 5 gene-grouped folds
+==================================================================================
+               arm           auprc  auprc_baseline           auroc        accuracy balanced_accuracy       precision          recall     specificity              f1             mcc           kappa           brier         logloss
+   seq + str + epi 1.000 +/- 0.000 0.500 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000   1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000
+seq + str (no epi) 1.000 +/- 0.000 0.500 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000   1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000
+seq + epi (no str)             n/a             n/a             n/a             n/a               n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a
+str + epi (no seq) 1.000 +/- 0.000 0.500 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000   1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000
+     sequence only             n/a             n/a             n/a             n/a               n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a
+    structure only 1.000 +/- 0.000 0.500 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000   1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 1.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000
+   epigenomic only             n/a             n/a             n/a             n/a               n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a             n/a
+
+==================================================================================
+H2  expression signal   mean +/- sd over 5 gene-grouped folds
+==================================================================================
+               arm                 n            mean             std             mse            rmse             mae               r2        pearson_r       spearman_r
+   seq + str + epi 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.037 +/- 0.134 2.009 +/- 0.033 1.529 +/- 0.044  0.315 +/- 0.028  0.564 +/- 0.025  0.589 +/- 0.029
+seq + str (no epi) 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.422 +/- 0.169 2.103 +/- 0.040 1.653 +/- 0.047  0.250 +/- 0.031  0.503 +/- 0.033  0.528 +/- 0.036
+seq + epi (no str) 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.046 +/- 0.209 2.011 +/- 0.052 1.530 +/- 0.052  0.314 +/- 0.031  0.564 +/- 0.026  0.591 +/- 0.033
+str + epi (no seq) 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.035 +/- 0.172 2.008 +/- 0.043 1.530 +/- 0.049  0.315 +/- 0.034  0.565 +/- 0.028  0.590 +/- 0.033
+     sequence only 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 5.974 +/- 0.276 2.444 +/- 0.056 2.044 +/- 0.048 -0.013 +/- 0.009 -0.022 +/- 0.053 -0.032 +/- 0.036
+    structure only 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.516 +/- 0.145 2.125 +/- 0.034 1.683 +/- 0.030  0.234 +/- 0.027  0.486 +/- 0.028  0.513 +/- 0.031
+   epigenomic only 691.600 +/- 1.673 2.814 +/- 0.114 2.428 +/- 0.052 4.161 +/- 0.189 2.039 +/- 0.046 1.570 +/- 0.047  0.294 +/- 0.034  0.545 +/- 0.031  0.574 +/- 0.038
+
+==================================================================================
+H3  tissue-restricted   mean +/- sd over 5 gene-grouped folds
+==================================================================================
+               arm           auprc  auprc_baseline           auroc        accuracy balanced_accuracy       precision          recall     specificity              f1             mcc           kappa           brier         logloss
+   seq + str + epi 0.537 +/- 0.068 0.207 +/- 0.013 0.811 +/- 0.034 0.807 +/- 0.030   0.620 +/- 0.021 0.579 +/- 0.108 0.303 +/- 0.045 0.938 +/- 0.035 0.394 +/- 0.046 0.315 +/- 0.069 0.291 +/- 0.058 0.129 +/- 0.012 0.403 +/- 0.033
+seq + str (no epi) 0.482 +/- 0.038 0.207 +/- 0.013 0.789 +/- 0.029 0.799 +/- 0.017   0.561 +/- 0.015 0.580 +/- 0.093 0.156 +/- 0.056 0.965 +/- 0.025 0.237 +/- 0.058 0.214 +/- 0.014 0.163 +/- 0.029 0.135 +/- 0.009 0.420 +/- 0.023
+seq + epi (no str) 0.528 +/- 0.069 0.207 +/- 0.013 0.808 +/- 0.036 0.811 +/- 0.031   0.642 +/- 0.034 0.578 +/- 0.104 0.355 +/- 0.065 0.929 +/- 0.034 0.436 +/- 0.068 0.346 +/- 0.084 0.330 +/- 0.079 0.129 +/- 0.012 0.405 +/- 0.035
+str + epi (no seq) 0.535 +/- 0.066 0.207 +/- 0.013 0.809 +/- 0.035 0.809 +/- 0.031   0.625 +/- 0.027 0.586 +/- 0.110 0.313 +/- 0.055 0.938 +/- 0.036 0.404 +/- 0.058 0.326 +/- 0.078 0.303 +/- 0.068 0.129 +/- 0.012 0.405 +/- 0.034
+     sequence only 0.214 +/- 0.027 0.207 +/- 0.013 0.497 +/- 0.028 0.793 +/- 0.013   0.500 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000 1.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000 0.000 +/- 0.000 0.164 +/- 0.008 0.511 +/- 0.019
+    structure only 0.486 +/- 0.038 0.207 +/- 0.013 0.791 +/- 0.030 0.802 +/- 0.017   0.571 +/- 0.009 0.576 +/- 0.061 0.176 +/- 0.025 0.965 +/- 0.014 0.269 +/- 0.027 0.235 +/- 0.029 0.190 +/- 0.022 0.134 +/- 0.010 0.418 +/- 0.026
+   epigenomic only 0.514 +/- 0.072 0.207 +/- 0.013 0.808 +/- 0.036 0.808 +/- 0.029   0.623 +/- 0.023 0.582 +/- 0.112 0.309 +/- 0.049 0.937 +/- 0.034 0.400 +/- 0.052 0.321 +/- 0.072 0.298 +/- 0.061 0.130 +/- 0.013 0.407 +/- 0.037
+
+==================================================================================
+H4  tissue classification   mean +/- sd over 5 gene-grouped folds
+==================================================================================
+               arm auprc_macro_ovr auroc_macro_ovr        accuracy balanced_accuracy precision_macro    recall_macro        f1_macro           kappa
+   seq + str + epi 0.548 +/- 0.024 0.923 +/- 0.012 0.769 +/- 0.012   0.399 +/- 0.017 0.449 +/- 0.048 0.399 +/- 0.017 0.400 +/- 0.017 0.672 +/- 0.017
+seq + str (no epi) 0.389 +/- 0.020 0.833 +/- 0.023 0.663 +/- 0.018   0.278 +/- 0.009 0.294 +/- 0.059 0.278 +/- 0.009 0.261 +/- 0.011 0.508 +/- 0.026
+seq + epi (no str) 0.551 +/- 0.027 0.920 +/- 0.009 0.747 +/- 0.016   0.372 +/- 0.016 0.428 +/- 0.045 0.372 +/- 0.016 0.371 +/- 0.021 0.640 +/- 0.023
+str + epi (no seq) 0.566 +/- 0.031 0.927 +/- 0.010 0.767 +/- 0.010   0.400 +/- 0.022 0.485 +/- 0.066 0.400 +/- 0.022 0.405 +/- 0.031 0.669 +/- 0.015
+     sequence only 0.138 +/- 0.004 0.489 +/- 0.024 0.380 +/- 0.016   0.126 +/- 0.002 0.073 +/- 0.025 0.126 +/- 0.002 0.073 +/- 0.008 0.005 +/- 0.008
+    structure only 0.359 +/- 0.020 0.797 +/- 0.024 0.649 +/- 0.010   0.270 +/- 0.005 0.282 +/- 0.056 0.270 +/- 0.005 0.254 +/- 0.008 0.486 +/- 0.013
+   epigenomic only 0.475 +/- 0.049 0.881 +/- 0.021 0.698 +/- 0.011   0.310 +/- 0.012 0.413 +/- 0.109 0.310 +/- 0.012 0.303 +/- 0.019 0.562 +/- 0.014
+
+
+==================================================================================
+HEADLINE: primary metric per head per arm
+==================================================================================
+Traceback (most recent call last):
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'expr_auprc_baseline'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/pangenomic_gat_pipeline_trimodal_1mb_full_h2signal_complete.py", line 4377, in <module>
+    b = ABL[f"{pref}auprc_baseline"]
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'expr_auprc_baseline'

@@ -1,0 +1,1408 @@
+PROJECT_ROOT : /mnt/raid/ksengupta/pic_hic_ml
+CPU cores    : 128  (graph-building process pool: 126 workers)
+mode         : FAST (subsampled)
+promoter win : 1000000 bp
+epochs       : 12
+arms         : ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi'] (7 total)
+warm start   : /mnt/raid/ksengupta/pic_hic_ml/results_trimodal_1mb_fast/model_fold0.pt
+HK tau cut   : 0.2
+results dir  : results/results_trimodal_1mb_h2signal_fast
+
+  seed                 42
+  fast_mode            True
+  fast_n_tissues       8
+  fast_n_genes         2500
+  explicit_tissue_ids  ()
+  genome_build         hg19
+  promoter_window      1000000
+  seq_len_fast         1000000
+  max_neighbours       10000
+  min_chicago          5.0
+  add_backbone_edges   True
+  histone_marks        ('H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3', 'H3K36me3', 'H3K9me3', 'CTCF')
+  histone_stat         mean
+  tpm_threshold        1.0
+  tau_threshold        0.85
+  hk_tau_threshold     0.2
+  link_holdout_frac    0.15
+  d_hidden             128
+  d_embed              128
+  gat_layers           3
+  gat_heads            4
+  dropout              0.2
+  attn_dropout         0.1
+  hyena_d_model        128
+  hyena_blocks         4
+  hyena_order          2
+  hyena_filter_order   64
+  stem_kernel          15
+  stem_stride          64
+  rc_equivariant       True
+  variants             ('all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi')
+  run_hybrid           True
+  pretrained_checkpoint /mnt/raid/ksengupta/pic_hic_ml/results_trimodal_1mb_fast/model_fold0.pt
+  warm_start_lr_scale  0.3
+  min_epochs_warm_start 20
+  w_link               1.0
+  w_expr               1.0
+  w_tau                0.5
+  w_tissue             0.5
+  w_align              0.3
+  temperature          0.1
+  n_folds              5
+  group_split_by       gene
+  epochs               40
+  epochs_fast          12
+  batch_size           16
+  lr                   0.001
+  weight_decay         0.0001
+  grad_clip            1.0
+  patience             8
+  num_workers          32
+  use_amp              False
+python      : 3.10.8
+executable  : /mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/bin/python
+conda env   : base
+
+required packages
+  OK    numpy              2.2.6
+  OK    pandas             2.3.3
+  OK    scipy              1.15.3
+  OK    matplotlib         3.10.9
+  OK    seaborn            0.13.2
+  OK    networkx           3.4.2
+  OK    torch              2.5.1+cu121
+  OK    torch_geometric    2.8.0.post1
+  OK    pyBigWig           0.3.25
+  OK    py2bit             1.0.1
+  OK    scikit-learn       1.7.2
+
+optional packages
+  OK    pyliftover         0.4.1
+  OK    umap               0.5.12
+  OK    torch_scatter      2.1.2+pt25cu121
+
+device      : cuda  (NVIDIA L40)
+mp start method : fork
+
+environment ready
+46 tissues with PCHi-C loops
+
+sample_id                              tissue  file_mb
+     0002                Embryo - Trophoblast      4.4
+     0003                              Spleen      5.9
+     0004    Small Intestine - Terminal Ileum      1.3
+     0008                   Muscle - Skeletal      0.9
+     0009                            Pancreas      1.8
+     0010                               Ovary      0.7
+     0011                      Nerve - Tibial      1.4
+     0012                Embryo - Mesendoderm      3.8
+     0013       Cells - Mesenchymal Stem Cell      4.8
+     0014                 Blood - Lymphoblast      6.7
+     0015                                Lung      1.3
+     0017              Heart - Left Ventricle      1.8
+     0020                             Stomach      1.5
+     0021        Cells - Cultured fibroblasts      4.5
+     0024        Brain - Frontal Cortex (BA9)      8.8
+     0025                             Bladder      2.4
+     0026                      Artery - Aorta      3.1
+     0027                       Adrenal Gland      2.0
+     0028                 Brain - Hippocampus      8.0
+     0029                   Cells - Astrocyte     11.7
+     0032                      Cells - Neuron      5.5
+     0042                              Uterus     12.0
+     0044        Cells - Neuroectodermal Cell     10.5
+     0045                         Bone Marrow     18.9
+     0047                   Cells - Leukocyte      9.3
+     0048         Cells - Lymphoblastoid Cell     10.6
+     0055 Skin - Not Sun Exposed (Suprapubic)     15.7
+     0056                Blood - Erythroblast     16.8
+     0057                              Thymus     18.7
+     0058            Cells - Endothelial Cell     21.2
+     0060                 Blood - Neutrophils     15.9
+     0061                   Blood - Monocytes     19.2
+     0063                 Blood - Macrophages     22.0
+     0064              Blood - Megakaryocytes     19.8
+     0065            Blood - Naive CD8+ Cells     22.2
+     0066            Blood - Naive CD4+ Cells     21.4
+     0067            Blood - Total CD4+ Cells     22.7
+     0068               Blood - Total B Cells     22.3
+     0069               Blood - Naive B Cells     21.3
+     0070            Blood - Total CD8+ Cells     21.4
+     0071    Blood - Non-activated CD4+ Cells     23.3
+     0072        Blood - Activated CD4+ Cells     16.8
+     0073         Cells - Embryonic Stem Cell     22.3
+     0074              Adipose - Subcutaneous     15.8
+     0077                               Liver     10.6
+     0079                 Cervix - Ectocervix     14.6
+
+
+305 histone bigWigs covering 45 sample ids
+
+histone coverage (files per tissue x mark; 0 = imputed from other tissues)
+                                               H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+sample_id tissue                                                                                           
+0002      Embryo - Trophoblast                       1        1        1         1         1        1     0
+0003      Spleen                                     1        1        1         1         1        1     1
+0004      Small Intestine - Terminal Ileum           1        1        1         1         1        1     1
+0008      Muscle - Skeletal                          1        1        1         1         1        1     0
+0009      Pancreas                                   1        1        1         1         1        1     1
+0010      Ovary                                      1        1        1         1         1        1     1
+0011      Nerve - Tibial                             1        1        1         1         1        1     1
+0012      Embryo - Mesendoderm                       1        1        1         1         1        1     0
+0013      Cells - Mesenchymal Stem Cell              1        1        1         1         1        1     0
+0014      Blood - Lymphoblast                        1        1        1         1         1        1     1
+0015      Lung                                       1        1        1         1         1        1     1
+0017      Heart - Left Ventricle                     1        1        1         1         1        1     1
+0020      Stomach                                    1        1        1         1         1        1     1
+0021      Cells - Cultured fibroblasts               1        1        1         1         1        1     1
+0024      Brain - Frontal Cortex (BA9)               1        1        1         1         1        1     1
+0025      Bladder                                    1        1        1         0         1        0     0
+0026      Artery - Aorta                             1        1        1         1         1        1     0
+0027      Adrenal Gland                              1        1        1         1         1        1     1
+0028      Brain - Hippocampus                        1        1        1         1         1        1     0
+0029      Cells - Astrocyte                          1        1        1         1         1        1     1
+0032      Cells - Neuron                             1        1        1         1         1        1     1
+0042      Uterus                                     1        1        1         1         1        1     1
+0044      Cells - Neuroectodermal Cell               1        1        1         1         1        1     1
+0045      Bone Marrow                                1        1        0         1         1        1     0
+0047      Cells - Leukocyte                          1        1        1         1         1        1     0
+0048      Cells - Lymphoblastoid Cell                1        1        1         1         1        1     1
+0055      Skin - Not Sun Exposed (Suprapubic)        1        1        1         1         1        1     1
+0056      Blood - Erythroblast                       1        1        1         1         1        1     1
+0057      Thymus                                     1        1        1         1         1        1     0
+0058      Cells - Endothelial Cell                   1        1        1         1         1        1     1
+0060      Blood - Neutrophils                        1        2        1         1         1        1     1
+0061      Blood - Monocytes                          1        1        1         1         1        2     1
+0063      Blood - Macrophages                        1        1        1         1         1        1     1
+0064      Blood - Megakaryocytes                     1        1        1         1         1        1     1
+0065      Blood - Naive CD8+ Cells                   1        1        1         1         1        1     1
+0066      Blood - Naive CD4+ Cells                   1        1        1         1         1        1     1
+0067      Blood - Total CD4+ Cells                   1        1        1         1         1        1     1
+0068      Blood - Total B Cells                      1        1        1         1         1        1     1
+0069      Blood - Naive B Cells                      1        1        1         1         1        1     0
+0070      Blood - Total CD8+ Cells                   1        1        1         1         1        1     1
+0071      Blood - Non-activated CD4+ Cells           1        1        1         1         1        1     1
+0072      Blood - Activated CD4+ Cells               1        1        1         1         1        1     1
+0073      Cells - Embryonic Stem Cell                1        1        1         1         1        1     1
+0074      Adipose - Subcutaneous                     1        1        1         1         1        1     1
+0077      Liver                                      1        1        1         1         1        1     1
+
+coverage: 301/322 tissue x mark cells (93.5%)
+  19 of these tracks are GRCh38 (ENCODE has retired much of
+  its hg19 output). Their queries are lifted hg19 -> GRCh38 in cell 8;
+  the tracks themselves are left alone.
+  -> run  python fetch_histone_encode.py  to pull more from ENCODE;
+     whatever remains missing is imputed as the cross-tissue average
+     for that mark (section 8), not zero-filled.
+
+download manifest: 322 rows
+match_quality
+exact    189
+close     77
+proxy     49
+none       7
+  WARNING: 1 tracks come from a PROXY biosample (related but not the same tissue).
+  Treat those marks as noisy; see histone/DOWNLOAD_manifest.csv
+
+
+RNA-seq: 194 sample columns over 43 tissue ids
+  23/46 loop tissues have matching RNA-seq columns
+
+hg19.2bit              present  (promoter sequence)
+
+refGene_hg19.txt       present  (canonical TSS)
+FAST_MODE: using 8 of 46 tissues
+
+parsing 8 loop files across 8 processes
+parsing loop files (parallel):   0%|          | 0/8 [00:00<?, ?it/s]parsing loop files (parallel):  12%|█▎        | 1/8 [00:00<00:00,  9.38it/s]parsing loop files (parallel):  62%|██████▎   | 5/8 [00:00<00:00, 25.12it/s]parsing loop files (parallel): 100%|██████████| 8/8 [00:00<00:00, 25.40it/s]parsing loop files (parallel): 100%|██████████| 8/8 [00:00<00:00, 23.78it/s]
+
+parsed 32,205 (gene, bait, other-end) rows across 8 tissues
+unique genes           : 8,423
+unique bait fragments  : 6,608
+cis / trans            : 32,205 / 0
+
+sample_id tissue          gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+     0010  Ovary          TPPP     chr5      687730    690639      chr5       789001     795437      136    inf  103034.5           1
+     0010  Ovary         OR2T7     chr1   248601766 248607843      chr1    248810816  248816904      128    inf  209055.5           1
+     0010  Ovary         OR4C5    chr11    48386729  48389031     chr11     50039109   50042830       71    inf 1653089.5           1
+     0010  Ovary         EEPD1     chr7    36188737  36200949      chr7     36146233   36150580       86 266.16   46436.5           1
+     0010  Ovary         KLRC3    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary RP11-277P12.6    chr12    10565643  10568289     chr12     10573324   10580972      144 249.84   10182.0           1
+     0010  Ovary CTD-2620I22.3    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+     0010  Ovary        ERVV-1    chr19    53515955  53517323     chr19     53552485   53554914      176 203.18   37060.5           1
+
+per-tissue: rows before score filter -> gene-exploded rows after
+                          tissue  raw_loops  rows_after_filter_and_explode
+                          Spleen      59961                           8691
+   Cells - Mesenchymal Stem Cell      49121                           5358
+            Embryo - Trophoblast      45384                          13190
+            Embryo - Mesendoderm      39314                           1040
+                  Nerve - Tibial      14216                           1408
+Small Intestine - Terminal Ileum      12843                            936
+               Muscle - Skeletal       8791                            913
+                           Ovary       7215                            669
+
+distance (cis only) / CHiCAGO score
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           distance     score       N_reads
+count  3.220500e+04  32205.00  32205.000000
+mean   1.892544e+05       inf     20.170750
+std    2.345683e+05       NaN     21.310933
+min    0.000000e+00      5.00      5.000000
+25%    4.936650e+04      5.50      8.000000
+50%    1.137960e+05      6.24     13.000000
+75%    2.354205e+05      7.74     26.000000
+max    1.992490e+06       inf    643.000000
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/01_interaction_qc.png
+degree: median=1  mean=2.0  p95=6  max=37
+fraction of (gene,tissue) pairs truncated by MAX_NEIGHBOURS=10000: 0.0%
+refGene rows: 81,407
+
+protein-coding vs non-coding, by RefSeq accession prefix (19,392 coding / 8,845 non-coding of 28,237 gene symbols with a canonical model)
+canonical models for 28,237 gene symbols
+        chrom strand    txStart      txEnd        tss
+name2                                                
+NBPF20   chr1      +  144146810  146467744  144146810
+NBPF19   chr1      +  144146811  146467744  144146811
+PTPRD    chr9      -    8314245   10613002   10613002
+DMD      chrX      -   31137340   33357505   33357505
+DLG2    chr11      -   83166055   85339417   85339417
+
+assembly check: 2,356/3,318 sampled genes have their hg19 TSS inside (+/-5 kb of) their own bait fragment  ->  71.0%
+  -> coordinates are consistent with hg19. Proceeding.
+
+gene symbols resolvable to a TSS: 83.4% of rows (6,999 unique genes)
+unresolved symbols are mostly lncRNA/clone IDs (RP11-*, CTD-*, AC0*)
+gene
+RP11-247A12.8    48
+RP11-247A12.2    48
+RP1-76B20.12     34
+RP1-76B20.11     34
+LLfos-48D6.2     33
+RP11-392O1.4     25
+RP11-545E17.3    25
+CCND2-AS2        23
+
+kept 26,843 rows with a resolvable TSS
+FAST_MODE: kept 2,500 most widely-observed genes -> 17,981 rows
+loaded cached promoter sequences: promoter_onehot_hg19_1000000_2500.npz
+one-hot tensor: (2500, 4, 1000000)  dtype=uint8  10000 MB
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/02_promoter_sequence_qc.png
+mean GC = 45.4%   (expect ~0.50-0.60 for promoters; ~0.41 would mean the TSS mapping is wrong)
+mean N fraction = 0.0115
+histone availability for the tissues in this run
+                                  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+tissue                                                                                        
+Embryo - Trophoblast                    1        1        1         1         1        1     0
+Spleen                                  1        1        1         1         1        1     1
+Small Intestine - Terminal Ileum        1        1        1         1         1        1     1
+Muscle - Skeletal                       1        1        1         1         1        1     0
+Ovary                                   1        1        1         1         1        1     1
+Nerve - Tibial                          1        1        1         1         1        1     1
+Embryo - Mesendoderm                    1        1        1         1         1        1     0
+Cells - Mesenchymal Stem Cell           1        1        1         1         1        1     0
+
+92.9% of (tissue x mark) tracks are directly measured; the rest have their signal imputed as the average of that mark over the other tissues in this run (mask stays 0, so the model can still tell a real measurement from an imputed one)
+
+example signal, sample 0002 (Embryo - Trophoblast):
+   gene  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF
+ZNF705G    0.025    0.074    0.081     0.093     0.032    0.040 0.249
+   TPPP    0.000    0.000    0.000     0.048     0.000    0.000 0.083
+   CST4    0.580    1.104    0.658     0.802     0.395    1.009 0.731
+  OR4C5    0.118    0.715    0.656     0.915     0.330    1.380 0.713
+  KLRC3    0.022    0.401    0.502     0.607     0.056    0.096 0.535
+
+cross-assembly lookups so far: no cross-assembly lookups were needed
+
+per-mark transform fitted on 5,000 sampled fragments
+    mark  clip_p99.5  mean   std
+ H3K4me1       2.149 0.865 0.463
+ H3K4me3       3.384 0.994 0.683
+ H3K27ac       3.070 0.840 0.579
+H3K27me3       2.292 0.602 0.343
+H3K36me3       2.062 0.657 0.405
+ H3K9me3       1.513 0.495 0.215
+    CTCF       2.130 0.737 0.304
+
+signal provenance so far: 20,596 direct  +  1,951 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  22,547 (tissue, mark) lookups  (8.7% imputed)
+/mnt/raid/ksengupta/pic_hic_ml/notebooks/pangenomic_gat_pipeline_trimodal_1mb_full_h2signal_complete.py:1477: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  ax[0].boxplot([raw_log[:, i] for i in present],
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/03_histone_features.png
+
+Sanity: H3K4me3/H3K27ac (active) should correlate positively with each
+other and negatively with H3K27me3/H3K9me3 (repressive).
+loading cached graphs -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+  3,462 graphs loaded from cache (rebuild skipped)
+
+built 3,462 promoter subgraphs
+  unique genes   : 1,911
+  unique tissues : 8
+  node features F   = 18  (4 structural + 7 marks + 7 mask)
+  edge features F_e = 4
+  histone signal provenance: 94,740 direct  +  9,546 imputed (cross-tissue average)  +  0 unavailable (no tissue anywhere has the mark)  =  104,286 (tissue, mark) lookups  (9.2% imputed)
+
+/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/pandas/core/nanops.py:1016: RuntimeWarning: invalid value encountered in subtract
+  sqr = _ensure_numeric((avg - values) ** 2)
+           n_nodes      n_edges        n_pos   mean_score
+count  3462.000000  3462.000000  3462.000000  3462.000000
+mean      4.873484    11.372039     1.060947          inf
+std       3.033026    11.646121     0.304137          NaN
+min       3.000000     4.000000     1.000000     5.020000
+25%       3.000000     4.000000     1.000000     6.050000
+50%       4.000000     8.000000     1.000000     6.763542
+75%       5.000000    12.000000     1.000000     7.965000
+max      38.000000   134.000000     6.000000          inf
+
+feature variance audit (first 4,000 graphs)
+      feature   mean   std
+      is_bait  0.205 0.404
+      log_len  3.714 0.311
+    sgn_log_d  0.356 4.517
+   same_chrom  1.000 0.000
+      H3K4me1 -0.303 0.935
+      H3K4me3 -0.513 0.639
+      H3K27ac -0.273 0.771
+     H3K27me3 -0.157 0.744
+     H3K36me3  0.051 1.115
+      H3K9me3 -0.044 0.951
+         CTCF -0.157 0.913
+ mask:H3K4me1  1.000 0.000
+ mask:H3K4me3  1.000 0.000
+ mask:H3K27ac  1.000 0.000
+mask:H3K27me3  1.000 0.000
+mask:H3K36me3  1.000 0.000
+ mask:H3K9me3  1.000 0.000
+    mask:CTCF  0.366 0.482
+
+edge_feature  mean   std
+   log_score 1.038 1.075
+   log_reads 1.428 1.524
+   sgn_log_d 2.469 4.144
+  same_chrom 1.000 0.000
+
+  CONSTANT (zero variance) -> carries no information:
+    node: same_chrom, mask:H3K4me1, mask:H3K4me3, mask:H3K27ac, mask:H3K27me3, mask:H3K36me3, mask:H3K9me3
+    edge: same_chrom
+  These cost parameters and teach the model nothing. 'same_chrom' is
+  constant whenever the loop files are cis-only, which is the case
+  for this dataset. Leaving them in is harmless but wasteful; drop
+  them if you want a tighter feature matrix.
+
+example graph:
+  OR2T7 in Ovary
+  x=(3, 18)  edge_index=(2, 4)  edge_attr=(4, 4)
+  held-out positives=1  negatives=1
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/04_example_graph.png
+smallest graph, full feature matrix:
+   is_bait  log_len  sgn_log_d  same_chr  H3K4me1  H3K4me3  H3K27ac  H3K27me3  H3K36me3  H3K9me3  CTCF  mask:H3K4me1  mask:H3K4me3  mask:H3K27ac  mask:H3K27me3  mask:H3K36me3  mask:H3K9me3  mask:CTCF
+0      1.0     3.78       0.00       1.0    -1.34    -0.93    -0.93     -0.25     -0.56     0.05 -1.22           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+1      0.0     3.78       5.32       1.0    -1.75    -1.12    -0.97     -1.23     -0.83    -1.01 -1.35           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+2      0.0     1.30       5.30       1.0    -1.87    -1.46    -1.45     -1.13     -1.62    -2.30 -2.43           1.0           1.0           1.0            1.0            1.0           1.0        1.0
+
+its edge features:
+   log_score  log_reads  sgn_log_d  same_chrom
+0       4.27       3.61       5.30         1.0
+1       4.27       3.61       5.30         1.0
+2       0.00       0.00       3.92         1.0
+3       0.00       0.00       3.92         1.0
+TPM matrix: 1,909 genes x 43 tissues
+            0001   0002   0003  0004  0005    0006
+gene_name                                         
+A4GALT      8.21   4.86   6.26  0.04  0.16  136.71
+AAAS       23.87  28.57  13.07  1.69  0.37   21.08
+AATBC       1.07   0.21   1.61  0.00  0.01    0.58
+ABALON      0.25   1.09   0.16  0.01  0.01    1.27
+ABCA1      11.33   3.70   1.37  0.08  0.06    1.49
+
+H2  signal = log2(TPM + 1): mean 2.186, std 2.176 over 82,087 gene x tissue cells
+    for reference, 58.7% of cells would be 'expressed' at the old TPM > 1.0 cut (not used for training in this notebook)
+H3  tau computed for 1,902 genes; 22.3% are tissue-restricted (tau > 0.85)
+H*  housekeeping (tau < 0.2): 0.0% of the 1,902 genes with a defined tau
+H4  8 tissue classes
+
+label coverage over 3,462 graphs
+  H2 signal     : 3,458 labelled (99.9%), mean 2.402, std 2.348
+  H3 tau        : 3,443 labelled (99.5%), positive rate 20.7%
+  H4 tissue     : 3,462 labelled, 8 classes
+  housekeeping  : 3,443 labelled (99.5%), 0.0% housekeeping
+  protein-coding: 3,462 labelled (100.0%), 94.5% protein-coding
+  H1 links      : 3,673 positives + 3,673 distance-matched negatives
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/05_label_distributions.png
+
+mean H2 signal by tissue (watch for a tissue trivially separable by scale alone)
+tissue
+Cells - Mesenchymal Stem Cell       2.912
+Muscle - Skeletal                   2.838
+Embryo - Mesendoderm                2.764
+Embryo - Trophoblast                2.665
+Ovary                               2.216
+Nerve - Tibial                      1.952
+Spleen                              1.836
+Small Intestine - Terminal Ileum    0.485
+5-fold GroupKFold, grouped by 'gene'
+
+ fold  n_train  n_test  genes_train  genes_test  gene_leak  tissues_test  expr_pos_train  expr_pos_test  tau_pos_test
+    0     2769     693         1529         382          0             8           2.398          2.416         0.202
+    1     2769     693         1528         383          0             8           2.365          2.548         0.210
+    2     2770     692         1529         382          0             8           2.410          2.367         0.196
+    3     2770     692         1529         382          0             8           2.401          2.404         0.197
+    4     2770     692         1529         382          0             8           2.434          2.273         0.228
+
+  OK: no gene appears in both train and test of any fold
+  OK: every fold's test set covers all tissue classes
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/06_cv_splits.png
+
+sequence tensor for the model: (2500, 4, 1000000) (40000 MB float32)
+parameter budget per ablation arm
+variant  sequence_tower  structure_tower  epigenomic_tower  fusion+heads   total
+   all3          800769           301505              9536         83723 1195533
+seq_str          800769           301505                 0         83723 1185997
+seq_epi          800769                0              9536         83723  894028
+str_epi               0           301505              9536         83723  394764
+    seq          800769                0                 0         34058  834827
+    str               0           301505                 0         34058  335563
+    epi               0                0              9536         34058   43594
+
+  TOWER A  HyenaDNA-style long convolution
+    promoter window   1,000,000 bp  (stem stride 64 -> 15,625 positions)
+    blocks            4 x HyenaOperator(order=2)
+    d_model           128
+    implicit filter   MLP width 64, sine activations
+    receptive field   15,625 positions from block 1 (filter length == input length)
+    rev-comp equiv.   True
+  TOWER B  GATv2
+    layers x heads    3 x 4, d_h=128
+    node / edge feat  F=18  F_e=4
+  TOWER C  epigenomic MLP
+    input             14 dims (signal + direct-measurement mask, per mark, promoter fragment only)
+  SHARED
+    embedding dim     d=128
+    tissue classes    8
+    arms trained      ['all3', 'seq_str', 'seq_epi', 'str_epi', 'seq', 'str', 'epi']
+
+smoke test: SequenceEncoder (2, 4, 1000000) -> (2, 128)
+  reverse-complement equivariance: max |z(x) - z(rc(x))| = 0.00e+00
+  backward OK: 110 tensors received gradient, total |grad| = 2.422e+05
+smoke test: EpiEncoder (5, 14) -> (5, 128)
+batching self-check
+  graph 0 has 3 nodes; graph 1's first held-out pair should be offset by 3
+  expected 3, got 3
+  OK: edge pairs offset correctly, ptr marks anchors, seq_idx per graph
+
+training utilities defined
+  run_epoch(...) -> (mean losses, stacked predictions)
+  anchors  = batch.ptr[:-1]  (node 0 of every graph)
+  H2/H3 use masked BCE, so y = -1 rows contribute no gradient
+metric self-test on synthetic data (should be well above chance):
+  n                  800.0000
+  pos_rate           0.5337
+  auroc              0.9550
+  auprc              0.9602
+  auprc_baseline     0.5337
+  accuracy           0.8888
+  precision          0.9024
+  recall             0.8876
+  specificity        0.8901
+  f1                 0.8949
+  mcc                0.7769
+  kappa              0.7767
+  brier              0.0948
+  logloss            0.3281
+  best_threshold     0.4752
+  f1_at_best         0.9040
+
+  OK: metric suite behaves sensibly
+HIST_STD floored at 0.05, features clipped to +/-10
+    mark  HIST_STD
+ H3K4me1    0.4633
+ H3K4me3    0.6827
+ H3K27ac    0.5788
+H3K27me3    0.3432
+H3K36me3    0.4047
+ H3K9me3    0.2148
+    CTCF    0.3037
+edge_attr:
+ [[ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 2.1575594  2.5649493 -4.5348     1.       ]
+ [ 0.         0.         4.93073    1.       ]
+ [ 0.         0.         4.93073    1.       ]] 
+
+
+column stats over ALL graphs:
+  col 0: n_inf=0     n_nan=0     finite_range=[0, 5.748]
+  col 1: n_inf=0     n_nan=0     finite_range=[0, 6.361]
+  col 2: n_inf=0     n_nan=0     finite_range=[-6.3, 6.445]
+  col 3: n_inf=0     n_nan=0     finite_range=[1, 1]
+
+source rows for DTX2 (appears in 6/9 bad graphs):
+     sample_id                            tissue  gene bait_chr  bait_start  bait_end other_chr  other_start  other_end  N_reads  score  distance  same_chrom
+42        0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       15  31.66  500420.5           1
+173       0010                             Ovary  DTX2     chr7    76089423  76094800      chr7     76583452   76590221        5   6.82  494725.0           1
+476       0008                 Muscle - Skeletal  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       31  89.14  500420.5           1
+487       0008                 Muscle - Skeletal  DTX2     chr7    76132574  76144865      chr7     76628054   76637837       29  53.77  494226.0           1
+1088      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76132574  76144865      chr7     76628054   76637837      123    inf  494226.0           1
+1103      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       51    inf  500420.5           1
+1353      0004  Small Intestine - Terminal Ileum  DTX2     chr7    76089423  76094800      chr7     76594843   76600243        6   7.62  505431.5           1
+1799      0011                    Nerve - Tibial  DTX2     chr7    76089423  76094800      chr7     76590222   76594842       12  21.17  500420.5           1
+sanitised 0/3462 graphs  (0 node values, 0 edge values)
+all graph tensors finite
+repaired 0 edges: inf score -> 5.748 (max observed) instead of 0
+cache refreshed (post sanitise/repair) -> graphs_hg19_1000000_2500_8_10000_5.0_True_0.15_42.pt
+epigenomic modality attached: 14-dim vector per graph (promoter-fragment histone/CTCF signal + measurement mask)
+  example: gene=OR2T7  tissue=Ovary
+  epi = [[-1.343 -0.934 -0.931 -0.251 -0.564  0.049 -1.218  1.     1.     1.
+   1.     1.     1.     1.   ]]
+device               : cuda
+mixed precision      : off
+DataLoader workers   : 32  (pin_memory=True)
+
+
+##########################################################################
+#  ARM: ALL3       (seq + str + epi)
+##########################################################################
+
+==========================================================================
+all3 | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 7.0723  val 5.5955  [link 0.019 expr 4.173 tau 0.445 tis 1.059 align 2.172]  120s  <- best
+  f0 ep  1  train 5.9304  val 5.5700  [link 0.008 expr 4.225 tau 0.445 tis 0.926 align 2.172]  95s  <- best
+  f0 ep  2  train 5.7131  val 5.3977  [link 0.005 expr 4.104 tau 0.440 tis 0.835 align 2.172]  94s  <- best
+  f0 ep  3  train 5.6785  val 5.3698  [link 0.002 expr 4.096 tau 0.441 tis 0.799 align 2.172]  96s  <- best
+  f0 ep  4  train 5.6348  val 5.3961  [link 0.002 expr 4.147 tau 0.442 tis 0.749 align 2.172]  97s
+  f0 ep  5  train 5.5390  val 5.3143  [link 0.001 expr 4.083 tau 0.437 tis 0.721 align 2.172]  98s  <- best
+  f0 ep  6  train 5.4721  val 5.3038  [link 0.001 expr 4.080 tau 0.435 tis 0.707 align 2.172]  100s  <- best
+  f0 ep  7  train 5.4317  val 5.2763  [link 0.000 expr 4.062 tau 0.434 tis 0.692 align 2.172]  101s  <- best
+  f0 ep  8  train 5.3856  val 5.2677  [link 0.000 expr 4.056 tau 0.436 tis 0.685 align 2.172]  100s  <- best
+  f0 ep  9  train 5.4494  val 5.2521  [link 0.000 expr 4.041 tau 0.437 tis 0.683 align 2.172]  100s  <- best
+  f0 ep 10  train 5.3595  val 5.2413  [link 0.000 expr 4.031 tau 0.437 tis 0.680 align 2.172]  101s  <- best
+  f0 ep 11  train 5.3827  val 5.2378  [link 0.000 expr 4.028 tau 0.437 tis 0.679 align 2.172]  101s  <- best
+
+  all3 fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.562 | tau AUPRC 0.463 | tissue acc 0.759
+
+==========================================================================
+all3 | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 6.9738  val 5.5184  [link 0.001 expr 4.093 tau 0.487 tis 1.067 align 2.160]  129s  <- best
+  f1 ep  1  train 5.9822  val 5.3654  [link 0.000 expr 4.021 tau 0.476 tis 0.916 align 2.160]  99s  <- best
+  f1 ep  2  train 5.8240  val 5.0506  [link 0.000 expr 3.754 tau 0.480 tis 0.817 align 2.160]  100s  <- best
+  f1 ep  3  train 5.6552  val 5.0491  [link 0.000 expr 3.777 tau 0.479 tis 0.770 align 2.160]  103s  <- best
+  f1 ep  4  train 5.6410  val 4.9699  [link 0.000 expr 3.720 tau 0.476 tis 0.728 align 2.160]  101s  <- best
+  f1 ep  5  train 5.6249  val 5.0015  [link 0.000 expr 3.760 tau 0.481 tis 0.707 align 2.160]  101s
+  f1 ep  6  train 5.4655  val 4.9451  [link 0.000 expr 3.714 tau 0.485 tis 0.681 align 2.160]  99s  <- best
+  f1 ep  7  train 5.5197  val 5.0177  [link 0.000 expr 3.797 tau 0.482 tis 0.663 align 2.160]  100s
+  f1 ep  8  train 5.4380  val 4.9526  [link 0.000 expr 3.738 tau 0.481 tis 0.653 align 2.160]  100s
+  f1 ep  9  train 5.3714  val 4.9054  [link 0.000 expr 3.695 tau 0.477 tis 0.648 align 2.160]  100s  <- best
+  f1 ep 10  train 5.3647  val 4.9001  [link 0.000 expr 3.691 tau 0.477 tis 0.646 align 2.160]  100s  <- best
+  f1 ep 11  train 5.4461  val 4.9137  [link 0.000 expr 3.704 tau 0.477 tis 0.645 align 2.160]  100s
+
+  all3 fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.586 | tau AUPRC 0.631 | tissue acc 0.785
+
+==========================================================================
+all3 | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 6.8773  val 6.3877  [link 0.004 expr 4.946 tau 0.448 tis 1.124 align 2.173]  129s  <- best
+  f2 ep  1  train 5.9853  val 6.0974  [link 0.000 expr 4.739 tau 0.448 tis 0.963 align 2.173]  97s  <- best
+  f2 ep  2  train 5.6897  val 6.2209  [link 0.000 expr 4.897 tau 0.446 tis 0.897 align 2.173]  100s
+  f2 ep  3  train 5.6223  val 5.8962  [link 0.000 expr 4.598 tau 0.436 tis 0.856 align 2.173]  99s  <- best
+  f2 ep  4  train 5.4991  val 5.9131  [link 0.000 expr 4.644 tau 0.437 tis 0.797 align 2.173]  98s
+  f2 ep  5  train 5.5178  val 5.8404  [link 0.000 expr 4.578 tau 0.436 tis 0.785 align 2.173]  99s  <- best
+  f2 ep  6  train 5.4295  val 5.8441  [link 0.000 expr 4.594 tau 0.437 tis 0.760 align 2.173]  100s
+  f2 ep  7  train 5.3655  val 5.8496  [link 0.000 expr 4.603 tau 0.439 tis 0.751 align 2.173]  97s
+  f2 ep  8  train 5.4246  val 5.8208  [link 0.000 expr 4.579 tau 0.441 tis 0.738 align 2.173]  97s  <- best
+  f2 ep  9  train 5.3408  val 5.8214  [link 0.000 expr 4.581 tau 0.440 tis 0.736 align 2.173]  98s
+  f2 ep 10  train 5.3165  val 5.8101  [link 0.000 expr 4.572 tau 0.438 tis 0.734 align 2.173]  98s  <- best
+  f2 ep 11  train 5.2237  val 5.8121  [link 0.000 expr 4.575 tau 0.438 tis 0.733 align 2.173]  100s
+
+  all3 fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.577 | tau AUPRC 0.583 | tissue acc 0.779
+
+==========================================================================
+all3 | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 6.9438  val 5.3089  [link 0.007 expr 3.910 tau 0.375 tis 1.133 align 2.125]  129s  <- best
+  f3 ep  1  train 5.9247  val 5.1982  [link 0.000 expr 3.868 tau 0.373 tis 1.013 align 2.125]  100s  <- best
+  f3 ep  2  train 5.8038  val 5.0961  [link 0.000 expr 3.814 tau 0.372 tis 0.918 align 2.125]  100s  <- best
+  f3 ep  3  train 5.6693  val 5.1148  [link 0.000 expr 3.866 tau 0.369 tis 0.854 align 2.125]  98s
+  f3 ep  4  train 5.6447  val 4.9242  [link 0.000 expr 3.697 tau 0.372 tis 0.807 align 2.125]  97s  <- best
+  f3 ep  5  train 5.4841  val 4.9055  [link 0.000 expr 3.690 tau 0.370 tis 0.786 align 2.125]  99s  <- best
+  f3 ep  6  train 5.5181  val 4.8378  [link 0.000 expr 3.630 tau 0.366 tis 0.774 align 2.125]  99s  <- best
+  f3 ep  7  train 5.5213  val 4.9465  [link 0.000 expr 3.745 tau 0.369 tis 0.760 align 2.125]  99s
+  f3 ep  8  train 5.4837  val 4.8203  [link 0.000 expr 3.624 tau 0.367 tis 0.750 align 2.125]  99s  <- best
+  f3 ep  9  train 5.4537  val 4.8257  [link 0.000 expr 3.632 tau 0.368 tis 0.746 align 2.125]  100s
+  f3 ep 10  train 5.4576  val 4.8188  [link 0.000 expr 3.625 tau 0.367 tis 0.745 align 2.125]  100s  <- best
+  f3 ep 11  train 5.3868  val 4.8148  [link 0.000 expr 3.622 tau 0.367 tis 0.744 align 2.125]  99s  <- best
+
+  all3 fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.522 | tau AUPRC 0.504 | tissue acc 0.764
+
+==========================================================================
+all3 | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 174/182 tensors matched (fresh: ['fuse', 'head_tissue']), 1,111,810 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 6.8717  val 5.5522  [link 0.000 expr 4.146 tau 0.457 tis 1.072 align 2.138]  122s  <- best
+  f4 ep  1  train 5.8086  val 5.4260  [link 0.000 expr 4.095 tau 0.446 tis 0.935 align 2.138]  100s  <- best
+  f4 ep  2  train 5.6877  val 5.4236  [link 0.000 expr 4.136 tau 0.445 tis 0.848 align 2.138]  100s  <- best
+  f4 ep  3  train 5.5159  val 5.4433  [link 0.000 expr 4.177 tau 0.451 tis 0.799 align 2.138]  99s
+  f4 ep  4  train 5.4584  val 5.4220  [link 0.000 expr 4.160 tau 0.459 tis 0.782 align 2.138]  100s  <- best
+  f4 ep  5  train 5.4274  val 5.2492  [link 0.000 expr 4.019 tau 0.448 tis 0.731 align 2.138]  96s  <- best
+  f4 ep  6  train 5.4154  val 5.3472  [link 0.000 expr 4.125 tau 0.446 tis 0.716 align 2.138]  99s
+  f4 ep  7  train 5.3811  val 5.2514  [link 0.000 expr 4.036 tau 0.446 tis 0.703 align 2.138]  93s
+  f4 ep  8  train 5.2490  val 5.2474  [link 0.000 expr 4.034 tau 0.445 tis 0.699 align 2.138]  100s  <- best
+  f4 ep  9  train 5.2948  val 5.2328  [link 0.000 expr 4.024 tau 0.444 tis 0.690 align 2.138]  99s  <- best
+  f4 ep 10  train 5.2863  val 5.2383  [link 0.000 expr 4.030 tau 0.447 tis 0.688 align 2.138]  100s
+  f4 ep 11  train 5.2614  val 5.2418  [link 0.000 expr 4.033 tau 0.447 tis 0.687 align 2.138]  100s
+
+  all3 fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.571 | tau AUPRC 0.503 | tissue acc 0.759
+
+
+##########################################################################
+#  ARM: SEQ_STR    (seq + str (no epi))
+##########################################################################
+
+==========================================================================
+seq_str | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 7.6373  val 6.0117  [link 0.017 expr 4.382 tau 0.476 tis 1.097 align 2.757]  122s  <- best
+  f0 ep  1  train 6.6317  val 5.8593  [link 0.004 expr 4.279 tau 0.460 tis 1.038 align 2.757]  99s  <- best
+  f0 ep  2  train 6.6602  val 5.8831  [link 0.001 expr 4.310 tau 0.467 tis 1.023 align 2.757]  99s
+  f0 ep  3  train 6.5404  val 5.8692  [link 0.001 expr 4.305 tau 0.455 tis 1.017 align 2.757]  100s
+  f0 ep  4  train 6.5360  val 5.9160  [link 0.000 expr 4.351 tau 0.462 tis 1.012 align 2.757]  98s
+  f0 ep  5  train 6.4427  val 5.8612  [link 0.000 expr 4.313 tau 0.463 tis 0.979 align 2.757]  99s
+  f0 ep  6  train 6.4451  val 5.8609  [link 0.000 expr 4.316 tau 0.464 tis 0.972 align 2.757]  99s
+  f0 ep  7  train 6.4444  val 5.8422  [link 0.000 expr 4.303 tau 0.462 tis 0.962 align 2.757]  100s  <- best
+  f0 ep  8  train 6.3534  val 5.8296  [link 0.000 expr 4.292 tau 0.460 tis 0.960 align 2.757]  99s  <- best
+  f0 ep  9  train 6.3544  val 5.8189  [link 0.000 expr 4.284 tau 0.459 tis 0.956 align 2.757]  98s  <- best
+  f0 ep 10  train 6.3745  val 5.8225  [link 0.000 expr 4.288 tau 0.459 tis 0.955 align 2.757]  99s
+  f0 ep 11  train 6.3672  val 5.8235  [link 0.000 expr 4.289 tau 0.459 tis 0.955 align 2.757]  99s
+
+  seq_str fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.514 | tau AUPRC 0.459 | tissue acc 0.651
+
+==========================================================================
+seq_str | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 7.4687  val 5.7741  [link 0.001 expr 4.144 tau 0.481 tis 1.118 align 2.768]  129s  <- best
+  f1 ep  1  train 6.6219  val 5.6845  [link 0.000 expr 4.085 tau 0.473 tis 1.064 align 2.768]  100s  <- best
+  f1 ep  2  train 6.5769  val 5.7611  [link 0.000 expr 4.168 tau 0.485 tis 1.040 align 2.768]  100s
+  f1 ep  3  train 6.5642  val 5.7046  [link 0.000 expr 4.125 tau 0.473 tis 1.026 align 2.768]  99s
+  f1 ep  4  train 6.5030  val 5.7207  [link 0.000 expr 4.144 tau 0.473 tis 1.019 align 2.768]  99s
+  f1 ep  5  train 6.3481  val 5.6923  [link 0.000 expr 4.123 tau 0.483 tis 0.996 align 2.768]  98s
+  f1 ep  6  train 6.5094  val 5.6713  [link 0.000 expr 4.103 tau 0.480 tis 0.996 align 2.768]  99s  <- best
+  f1 ep  7  train 6.3075  val 5.6737  [link 0.000 expr 4.109 tau 0.479 tis 0.990 align 2.768]  89s
+  f1 ep  8  train 6.3682  val 5.6473  [link 0.000 expr 4.083 tau 0.478 tis 0.989 align 2.768]  49s  <- best
+  f1 ep  9  train 6.3339  val 5.7263  [link 0.000 expr 4.164 tau 0.479 tis 0.985 align 2.768]  69s
+  f1 ep 10  train 6.4288  val 5.6733  [link 0.000 expr 4.113 tau 0.478 tis 0.982 align 2.768]  91s
+  f1 ep 11  train 6.3468  val 5.6633  [link 0.000 expr 4.104 tau 0.477 tis 0.981 align 2.768]  95s
+
+  seq_str fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.533 | tau AUPRC 0.543 | tissue acc 0.693
+
+==========================================================================
+seq_str | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 7.3493  val 6.8988  [link 0.005 expr 5.243 tau 0.456 tis 1.191 align 2.757]  127s  <- best
+  f2 ep  1  train 6.6004  val 6.6939  [link 0.000 expr 5.071 tau 0.459 tis 1.132 align 2.757]  92s  <- best
+  f2 ep  2  train 6.5750  val 6.6277  [link 0.000 expr 5.027 tau 0.448 tis 1.100 align 2.757]  97s  <- best
+  f2 ep  3  train 6.4863  val 6.5156  [link 0.000 expr 4.917 tau 0.445 tis 1.099 align 2.757]  92s  <- best
+  f2 ep  4  train 6.3467  val 6.5082  [link 0.000 expr 4.918 tau 0.444 tis 1.082 align 2.757]  97s  <- best
+  f2 ep  5  train 6.5072  val 6.5815  [link 0.000 expr 4.992 tau 0.448 tis 1.077 align 2.757]  95s
+  f2 ep  6  train 6.4127  val 6.4683  [link 0.000 expr 4.892 tau 0.443 tis 1.055 align 2.757]  97s  <- best
+  f2 ep  7  train 6.3236  val 6.4735  [link 0.000 expr 4.897 tau 0.443 tis 1.056 align 2.757]  100s
+  f2 ep  8  train 6.3563  val 6.4828  [link 0.000 expr 4.908 tau 0.444 tis 1.051 align 2.757]  99s
+  f2 ep  9  train 6.2569  val 6.4839  [link 0.000 expr 4.911 tau 0.444 tis 1.047 align 2.757]  99s
+  f2 ep 10  train 6.3565  val 6.4806  [link 0.000 expr 4.908 tau 0.445 tis 1.047 align 2.757]  98s
+  f2 ep 11  train 6.2553  val 6.4778  [link 0.000 expr 4.906 tau 0.445 tis 1.046 align 2.757]  99s
+
+  seq_str fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.515 | tau AUPRC 0.498 | tissue acc 0.665
+
+==========================================================================
+seq_str | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 7.3915  val 5.9886  [link 0.010 expr 4.350 tau 0.408 tis 1.185 align 2.773]  129s  <- best
+  f3 ep  1  train 6.6502  val 5.8600  [link 0.000 expr 4.255 tau 0.402 tis 1.144 align 2.773]  99s  <- best
+  f3 ep  2  train 6.5908  val 5.6771  [link 0.000 expr 4.081 tau 0.392 tis 1.137 align 2.773]  100s  <- best
+  f3 ep  3  train 6.4934  val 5.7251  [link 0.000 expr 4.144 tau 0.391 tis 1.108 align 2.773]  86s
+  f3 ep  4  train 6.5227  val 5.6059  [link 0.000 expr 4.029 tau 0.391 tis 1.099 align 2.773]  91s  <- best
+  f3 ep  5  train 6.4322  val 5.5569  [link 0.000 expr 3.987 tau 0.394 tis 1.083 align 2.773]  99s  <- best
+  f3 ep  6  train 6.4385  val 5.4968  [link 0.000 expr 3.930 tau 0.388 tis 1.082 align 2.773]  99s  <- best
+  f3 ep  7  train 6.3154  val 5.5376  [link 0.000 expr 3.975 tau 0.389 tis 1.073 align 2.773]  93s
+  f3 ep  8  train 6.4139  val 5.5022  [link 0.000 expr 3.941 tau 0.386 tis 1.072 align 2.773]  100s
+  f3 ep  9  train 6.3667  val 5.4853  [link 0.000 expr 3.928 tau 0.385 tis 1.066 align 2.773]  100s  <- best
+  f3 ep 10  train 6.3335  val 5.4972  [link 0.000 expr 3.941 tau 0.385 tis 1.063 align 2.773]  99s
+  f3 ep 11  train 6.2950  val 5.4999  [link 0.000 expr 3.944 tau 0.385 tis 1.062 align 2.773]  100s
+
+  seq_str fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.446 | tau AUPRC 0.458 | tissue acc 0.652
+
+==========================================================================
+seq_str | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 168/176 tensors matched (fresh: ['fuse', 'head_tissue']), 1,102,274 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 7.2740  val 6.3354  [link 0.000 expr 4.677 tau 0.468 tis 1.185 align 2.771]  129s  <- best
+  f4 ep  1  train 6.5787  val 6.1628  [link 0.000 expr 4.523 tau 0.465 tis 1.151 align 2.771]  99s  <- best
+  f4 ep  2  train 6.4861  val 6.0672  [link 0.000 expr 4.447 tau 0.467 tis 1.110 align 2.771]  100s  <- best
+  f4 ep  3  train 6.4609  val 6.0861  [link 0.000 expr 4.470 tau 0.460 tis 1.109 align 2.771]  99s
+  f4 ep  4  train 6.4511  val 6.0485  [link 0.000 expr 4.444 tau 0.461 tis 1.086 align 2.771]  99s  <- best
+  f4 ep  5  train 6.4198  val 6.0659  [link 0.000 expr 4.461 tau 0.459 tis 1.088 align 2.771]  98s
+  f4 ep  6  train 6.3331  val 6.1199  [link 0.000 expr 4.519 tau 0.459 tis 1.080 align 2.771]  100s
+  f4 ep  7  train 6.2712  val 6.0411  [link 0.000 expr 4.442 tau 0.460 tis 1.075 align 2.771]  100s  <- best
+  f4 ep  8  train 6.2605  val 6.0598  [link 0.000 expr 4.468 tau 0.460 tis 1.061 align 2.771]  100s
+  f4 ep  9  train 6.3149  val 6.0356  [link 0.000 expr 4.444 tau 0.460 tis 1.060 align 2.771]  97s  <- best
+  f4 ep 10  train 6.2811  val 6.0446  [link 0.000 expr 4.453 tau 0.460 tis 1.061 align 2.771]  99s
+  f4 ep 11  train 6.2452  val 6.0421  [link 0.000 expr 4.451 tau 0.460 tis 1.060 align 2.771]  99s
+
+  seq_str fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.509 | tau AUPRC 0.454 | tissue acc 0.653
+
+
+##########################################################################
+#  ARM: SEQ_EPI    (seq + epi (no str))
+##########################################################################
+
+==========================================================================
+seq_epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 7.0363  val 5.8169  [link 0.000 expr 4.210 tau 0.443 tis 1.116 align 2.758]  130s  <- best
+  f0 ep  1  train 6.0001  val 5.6591  [link 0.000 expr 4.142 tau 0.438 tis 0.941 align 2.758]  99s  <- best
+  f0 ep  2  train 5.9698  val 5.5881  [link 0.000 expr 4.119 tau 0.428 tis 0.856 align 2.758]  98s  <- best
+  f0 ep  3  train 5.8560  val 5.5901  [link 0.000 expr 4.149 tau 0.424 tis 0.804 align 2.758]  98s
+  f0 ep  4  train 5.7667  val 5.7182  [link 0.000 expr 4.294 tau 0.428 tis 0.766 align 2.758]  99s
+  f0 ep  5  train 5.6370  val 5.5437  [link 0.000 expr 4.136 tau 0.424 tis 0.737 align 2.758]  97s  <- best
+  f0 ep  6  train 5.7079  val 5.6266  [link 0.000 expr 4.225 tau 0.429 tis 0.720 align 2.758]  96s
+  f0 ep  7  train 5.5856  val 5.6361  [link 0.000 expr 4.240 tau 0.425 tis 0.711 align 2.758]  97s
+  f0 ep  8  train 5.6156  val 5.5472  [link 0.000 expr 4.155 tau 0.426 tis 0.703 align 2.758]  97s
+  f0 ep  9  train 5.5610  val 5.5415  [link 0.000 expr 4.152 tau 0.426 tis 0.699 align 2.758]  98s  <- best
+  f0 ep 10  train 5.5395  val 5.5451  [link 0.000 expr 4.156 tau 0.426 tis 0.697 align 2.758]  97s
+  f0 ep 11  train 5.5299  val 5.5412  [link 0.000 expr 4.152 tau 0.426 tis 0.697 align 2.758]  99s  <- best
+
+  seq_epi fold 0 test:  link AUPRC nan | expr Pearson r 0.556 | tau AUPRC 0.453 | tissue acc 0.749
+
+==========================================================================
+seq_epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 6.9866  val 5.6654  [link 0.000 expr 4.047 tau 0.495 tis 1.086 align 2.759]  121s  <- best
+  f1 ep  1  train 5.9957  val 5.5399  [link 0.000 expr 4.014 tau 0.493 tis 0.902 align 2.759]  97s  <- best
+  f1 ep  2  train 5.9736  val 5.3575  [link 0.000 expr 3.883 tau 0.478 tis 0.816 align 2.759]  97s  <- best
+  f1 ep  3  train 5.7686  val 5.2449  [link 0.000 expr 3.801 tau 0.473 tis 0.760 align 2.759]  97s  <- best
+  f1 ep  4  train 5.7772  val 5.1698  [link 0.000 expr 3.744 tau 0.477 tis 0.718 align 2.759]  100s  <- best
+  f1 ep  5  train 5.7255  val 5.2158  [link 0.000 expr 3.793 tau 0.485 tis 0.705 align 2.759]  96s
+  f1 ep  6  train 5.6557  val 5.1726  [link 0.000 expr 3.767 tau 0.483 tis 0.673 align 2.759]  96s
+  f1 ep  7  train 5.5881  val 5.1144  [link 0.000 expr 3.718 tau 0.477 tis 0.660 align 2.759]  95s  <- best
+  f1 ep  8  train 5.6326  val 5.1433  [link 0.000 expr 3.750 tau 0.478 tis 0.654 align 2.759]  97s
+  f1 ep  9  train 5.5525  val 5.1496  [link 0.000 expr 3.756 tau 0.481 tis 0.651 align 2.759]  97s
+  f1 ep 10  train 5.5189  val 5.1642  [link 0.000 expr 3.771 tau 0.483 tis 0.648 align 2.759]  98s
+  f1 ep 11  train 5.5529  val 5.1616  [link 0.000 expr 3.769 tau 0.483 tis 0.647 align 2.759]  97s
+
+  seq_epi fold 1 test:  link AUPRC nan | expr Pearson r 0.592 | tau AUPRC 0.631 | tissue acc 0.766
+
+==========================================================================
+seq_epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 7.1085  val 6.4552  [link 0.000 expr 4.836 tau 0.446 tis 1.133 align 2.767]  128s  <- best
+  f2 ep  1  train 5.9831  val 6.3505  [link 0.000 expr 4.804 tau 0.442 tis 0.990 align 2.767]  98s  <- best
+  f2 ep  2  train 5.9105  val 6.2861  [link 0.000 expr 4.787 tau 0.444 tis 0.894 align 2.767]  98s  <- best
+  f2 ep  3  train 5.8155  val 6.0531  [link 0.000 expr 4.576 tau 0.442 tis 0.853 align 2.767]  99s  <- best
+  f2 ep  4  train 5.7213  val 6.1122  [link 0.000 expr 4.654 tau 0.440 tis 0.817 align 2.767]  99s
+  f2 ep  5  train 5.6480  val 5.9957  [link 0.000 expr 4.550 tau 0.436 tis 0.796 align 2.767]  99s  <- best
+  f2 ep  6  train 5.5946  val 6.0988  [link 0.000 expr 4.657 tau 0.444 tis 0.779 align 2.767]  98s
+  f2 ep  7  train 5.6297  val 6.0224  [link 0.000 expr 4.589 tau 0.439 tis 0.768 align 2.767]  96s
+  f2 ep  8  train 5.5124  val 5.9962  [link 0.000 expr 4.566 tau 0.438 tis 0.763 align 2.767]  97s
+  f2 ep  9  train 5.4431  val 6.0049  [link 0.000 expr 4.577 tau 0.439 tis 0.758 align 2.767]  96s
+  f2 ep 10  train 5.5020  val 6.0199  [link 0.000 expr 4.593 tau 0.438 tis 0.756 align 2.767]  97s
+  f2 ep 11  train 5.4384  val 6.0194  [link 0.000 expr 4.592 tau 0.438 tis 0.756 align 2.767]  96s
+
+  seq_epi fold 2 test:  link AUPRC nan | expr Pearson r 0.590 | tau AUPRC 0.561 | tissue acc 0.733
+
+==========================================================================
+seq_epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 6.8869  val 5.3586  [link 0.000 expr 3.776 tau 0.372 tis 1.126 align 2.776]  126s  <- best
+  f3 ep  1  train 6.0503  val 5.1881  [link 0.000 expr 3.695 tau 0.364 tis 0.956 align 2.776]  98s  <- best
+  f3 ep  2  train 5.9049  val 5.0918  [link 0.000 expr 3.643 tau 0.368 tis 0.864 align 2.776]  99s  <- best
+  f3 ep  3  train 5.8078  val 5.2239  [link 0.000 expr 3.796 tau 0.368 tis 0.822 align 2.776]  97s
+  f3 ep  4  train 5.7125  val 5.0244  [link 0.000 expr 3.616 tau 0.365 tis 0.786 align 2.776]  99s  <- best
+  f3 ep  5  train 5.7043  val 5.0226  [link 0.000 expr 3.615 tau 0.371 tis 0.780 align 2.776]  97s  <- best
+  f3 ep  6  train 5.6280  val 4.9718  [link 0.000 expr 3.578 tau 0.364 tis 0.758 align 2.776]  97s  <- best
+  f3 ep  7  train 5.6245  val 5.0645  [link 0.000 expr 3.678 tau 0.366 tis 0.741 align 2.776]  96s
+  f3 ep  8  train 5.6352  val 4.9981  [link 0.000 expr 3.611 tau 0.365 tis 0.744 align 2.776]  96s
+  f3 ep  9  train 5.5039  val 4.9631  [link 0.000 expr 3.578 tau 0.364 tis 0.740 align 2.776]  97s  <- best
+  f3 ep 10  train 5.5324  val 4.9615  [link 0.000 expr 3.578 tau 0.364 tis 0.738 align 2.776]  96s  <- best
+  f3 ep 11  train 5.5056  val 4.9605  [link 0.000 expr 3.577 tau 0.364 tis 0.738 align 2.776]  97s  <- best
+
+  seq_epi fold 3 test:  link AUPRC nan | expr Pearson r 0.530 | tau AUPRC 0.496 | tissue acc 0.730
+
+==========================================================================
+seq_epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 137/145 tensors matched (fresh: ['fuse', 'head_tissue']), 810,305 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 7.0731  val 5.8542  [link 0.000 expr 4.222 tau 0.464 tis 1.146 align 2.758]  128s  <- best
+  f4 ep  1  train 5.9146  val 5.6097  [link 0.000 expr 4.083 tau 0.457 tis 0.942 align 2.758]  98s  <- best
+  f4 ep  2  train 5.8072  val 5.4385  [link 0.000 expr 3.957 tau 0.454 tis 0.854 align 2.758]  99s  <- best
+  f4 ep  3  train 5.7346  val 5.5507  [link 0.000 expr 4.093 tau 0.460 tis 0.800 align 2.758]  97s
+  f4 ep  4  train 5.6581  val 5.5135  [link 0.000 expr 4.085 tau 0.443 tis 0.759 align 2.758]  99s
+  f4 ep  5  train 5.5979  val 5.4347  [link 0.000 expr 4.022 tau 0.438 tis 0.732 align 2.758]  98s  <- best
+  f4 ep  6  train 5.5704  val 5.4322  [link 0.000 expr 4.017 tau 0.454 tis 0.723 align 2.758]  98s  <- best
+  f4 ep  7  train 5.5210  val 5.3972  [link 0.000 expr 3.991 tau 0.451 tis 0.707 align 2.758]  98s  <- best
+  f4 ep  8  train 5.5137  val 5.3781  [link 0.000 expr 3.978 tau 0.446 tis 0.700 align 2.758]  97s  <- best
+  f4 ep  9  train 5.3888  val 5.3498  [link 0.000 expr 3.957 tau 0.438 tis 0.693 align 2.758]  96s  <- best
+  f4 ep 10  train 5.4578  val 5.3533  [link 0.000 expr 3.961 tau 0.440 tis 0.691 align 2.758]  94s
+  f4 ep 11  train 5.4818  val 5.3538  [link 0.000 expr 3.962 tau 0.440 tis 0.690 align 2.758]  95s
+
+  seq_epi fold 4 test:  link AUPRC nan | expr Pearson r 0.553 | tau AUPRC 0.501 | tissue acc 0.757
+
+
+##########################################################################
+#  ARM: STR_EPI    (str + epi (no seq))
+##########################################################################
+
+==========================================================================
+str_epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 6.6260  val 5.2227  [link 0.019 expr 4.191 tau 0.441 tis 0.985 align 1.001]  38s  <- best
+  f0 ep  1  train 5.5952  val 5.0948  [link 0.007 expr 4.152 tau 0.435 tis 0.836 align 1.001]  9s  <- best
+  f0 ep  2  train 5.3157  val 4.9688  [link 0.004 expr 4.064 tau 0.436 tis 0.766 align 1.001]  9s  <- best
+  f0 ep  3  train 5.2104  val 4.8915  [link 0.001 expr 4.007 tau 0.442 tis 0.724 align 1.001]  9s  <- best
+  f0 ep  4  train 5.1712  val 4.9171  [link 0.000 expr 4.049 tau 0.437 tis 0.697 align 1.001]  9s
+  f0 ep  5  train 5.1237  val 4.9545  [link 0.000 expr 4.095 tau 0.443 tis 0.676 align 1.001]  9s
+  f0 ep  6  train 5.0690  val 4.8924  [link 0.000 expr 4.038 tau 0.444 tis 0.663 align 1.001]  9s
+  f0 ep  7  train 5.0558  val 4.8825  [link 0.000 expr 4.036 tau 0.440 tis 0.653 align 1.001]  9s  <- best
+  f0 ep  8  train 4.9934  val 4.8587  [link 0.000 expr 4.016 tau 0.440 tis 0.645 align 1.001]  9s  <- best
+  f0 ep  9  train 5.0432  val 4.8255  [link 0.000 expr 3.986 tau 0.440 tis 0.639 align 1.001]  10s  <- best
+  f0 ep 10  train 4.9524  val 4.8254  [link 0.000 expr 3.987 tau 0.439 tis 0.638 align 1.001]  9s  <- best
+  f0 ep 11  train 4.9482  val 4.8220  [link 0.000 expr 3.984 tau 0.439 tis 0.637 align 1.001]  9s  <- best
+
+  str_epi fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.564 | tau AUPRC 0.466 | tissue acc 0.753
+
+==========================================================================
+str_epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 6.6186  val 5.0965  [link 0.000 expr 4.056 tau 0.497 tis 1.012 align 0.953]  35s  <- best
+  f1 ep  1  train 5.4458  val 4.8049  [link 0.000 expr 3.851 tau 0.486 tis 0.849 align 0.953]  9s  <- best
+  f1 ep  2  train 5.4323  val 4.8154  [link 0.000 expr 3.900 tau 0.488 tis 0.771 align 0.953]  9s
+  f1 ep  3  train 5.2097  val 4.5873  [link 0.000 expr 3.694 tau 0.497 tis 0.718 align 0.953]  9s  <- best
+  f1 ep  4  train 5.2749  val 4.7071  [link 0.000 expr 3.836 tau 0.482 tis 0.687 align 0.953]  9s
+  f1 ep  5  train 5.1660  val 4.6550  [link 0.000 expr 3.799 tau 0.477 tis 0.664 align 0.953]  10s
+  f1 ep  6  train 5.0978  val 4.7016  [link 0.000 expr 3.849 tau 0.485 tis 0.649 align 0.953]  9s
+  f1 ep  7  train 5.0652  val 4.6774  [link 0.000 expr 3.829 tau 0.482 tis 0.642 align 0.953]  9s
+  f1 ep  8  train 4.9692  val 4.5302  [link 0.000 expr 3.690 tau 0.477 tis 0.631 align 0.953]  9s  <- best
+  f1 ep  9  train 5.0192  val 4.5576  [link 0.000 expr 3.719 tau 0.477 tis 0.628 align 0.953]  9s
+  f1 ep 10  train 4.9510  val 4.5450  [link 0.000 expr 3.707 tau 0.477 tis 0.626 align 0.953]  9s
+  f1 ep 11  train 4.9755  val 4.5479  [link 0.000 expr 3.710 tau 0.477 tis 0.626 align 0.953]  10s
+
+  str_epi fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.587 | tau AUPRC 0.643 | tissue acc 0.781
+
+==========================================================================
+str_epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 6.5215  val 6.0023  [link 0.008 expr 4.921 tau 0.444 tis 1.104 align 0.996]  39s  <- best
+  f2 ep  1  train 5.4413  val 5.6259  [link 0.002 expr 4.640 tau 0.444 tis 0.927 align 0.996]  9s  <- best
+  f2 ep  2  train 5.3771  val 5.6095  [link 0.000 expr 4.666 tau 0.435 tis 0.854 align 0.996]  9s  <- best
+  f2 ep  3  train 5.1192  val 5.6969  [link 0.000 expr 4.768 tau 0.443 tis 0.816 align 0.996]  9s
+  f2 ep  4  train 5.1752  val 5.4721  [link 0.000 expr 4.562 tau 0.441 tis 0.782 align 0.996]  9s  <- best
+  f2 ep  5  train 5.0926  val 5.5355  [link 0.000 expr 4.642 tau 0.439 tis 0.750 align 0.996]  9s
+  f2 ep  6  train 5.0511  val 5.4230  [link 0.000 expr 4.534 tau 0.438 tis 0.742 align 0.996]  9s  <- best
+  f2 ep  7  train 4.9923  val 5.4711  [link 0.000 expr 4.588 tau 0.438 tis 0.730 align 0.996]  9s
+  f2 ep  8  train 4.9831  val 5.4749  [link 0.000 expr 4.593 tau 0.438 tis 0.728 align 0.996]  9s
+  f2 ep  9  train 4.9327  val 5.4912  [link 0.000 expr 4.610 tau 0.439 tis 0.726 align 0.996]  9s
+  f2 ep 10  train 4.8955  val 5.4825  [link 0.000 expr 4.604 tau 0.438 tis 0.722 align 0.996]  9s
+  f2 ep 11  train 4.8520  val 5.4798  [link 0.000 expr 4.601 tau 0.438 tis 0.722 align 0.996]  9s
+
+  str_epi fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.586 | tau AUPRC 0.544 | tissue acc 0.767
+
+==========================================================================
+str_epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 6.6278  val 4.8811  [link 0.007 expr 3.904 tau 0.371 tis 1.073 align 0.827]  35s  <- best
+  f3 ep  1  train 5.5776  val 4.5999  [link 0.000 expr 3.714 tau 0.367 tis 0.909 align 0.827]  9s  <- best
+  f3 ep  2  train 5.2843  val 4.5587  [link 0.000 expr 3.697 tau 0.370 tis 0.858 align 0.827]  9s  <- best
+  f3 ep  3  train 5.2600  val 4.4516  [link 0.000 expr 3.613 tau 0.372 tis 0.809 align 0.827]  9s  <- best
+  f3 ep  4  train 5.1840  val 4.5335  [link 0.000 expr 3.714 tau 0.368 tis 0.775 align 0.827]  9s
+  f3 ep  5  train 5.0782  val 4.4479  [link 0.000 expr 3.644 tau 0.364 tis 0.747 align 0.827]  9s  <- best
+  f3 ep  6  train 5.0571  val 4.4373  [link 0.000 expr 3.639 tau 0.364 tis 0.736 align 0.827]  9s  <- best
+  f3 ep  7  train 5.0148  val 4.4544  [link 0.000 expr 3.662 tau 0.363 tis 0.725 align 0.827]  9s
+  f3 ep  8  train 4.9727  val 4.4127  [link 0.000 expr 3.624 tau 0.363 tis 0.719 align 0.827]  9s  <- best
+  f3 ep  9  train 4.8810  val 4.4206  [link 0.000 expr 3.634 tau 0.363 tis 0.715 align 0.827]  9s
+  f3 ep 10  train 4.9391  val 4.4259  [link 0.000 expr 3.639 tau 0.364 tis 0.714 align 0.827]  9s
+  f3 ep 11  train 4.9747  val 4.4237  [link 0.000 expr 3.637 tau 0.363 tis 0.713 align 0.827]  9s
+
+  str_epi fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.517 | tau AUPRC 0.513 | tissue acc 0.769
+
+==========================================================================
+str_epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 52/60 tensors matched (fresh: ['fuse', 'head_tissue']), 311,041 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 6.5583  val 5.2872  [link 0.000 expr 4.258 tau 0.453 tis 1.075 align 0.884]  40s  <- best
+  f4 ep  1  train 5.5196  val 5.0461  [link 0.000 expr 4.102 tau 0.454 tis 0.902 align 0.884]  10s  <- best
+  f4 ep  2  train 5.2707  val 4.9334  [link 0.000 expr 4.052 tau 0.437 tis 0.796 align 0.884]  9s  <- best
+  f4 ep  3  train 5.1703  val 5.0197  [link 0.000 expr 4.145 tau 0.442 tis 0.777 align 0.884]  10s
+  f4 ep  4  train 5.1448  val 4.9720  [link 0.000 expr 4.118 tau 0.445 tis 0.733 align 0.884]  9s
+  f4 ep  5  train 5.1078  val 4.9225  [link 0.000 expr 4.082 tau 0.448 tis 0.701 align 0.884]  9s  <- best
+  f4 ep  6  train 5.0619  val 4.8927  [link 0.000 expr 4.059 tau 0.443 tis 0.693 align 0.884]  9s  <- best
+  f4 ep  7  train 4.9355  val 4.8940  [link 0.000 expr 4.062 tau 0.447 tis 0.685 align 0.884]  9s
+  f4 ep  8  train 4.9294  val 4.8849  [link 0.000 expr 4.062 tau 0.444 tis 0.672 align 0.884]  9s  <- best
+  f4 ep  9  train 4.9172  val 4.8926  [link 0.000 expr 4.072 tau 0.443 tis 0.668 align 0.884]  9s
+  f4 ep 10  train 4.8776  val 4.8836  [link 0.000 expr 4.064 tau 0.444 tis 0.665 align 0.884]  9s  <- best
+  f4 ep 11  train 4.9112  val 4.8820  [link 0.000 expr 4.062 tau 0.444 tis 0.665 align 0.884]  9s  <- best
+
+  str_epi fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.568 | tau AUPRC 0.511 | tissue acc 0.767
+
+
+##########################################################################
+#  ARM: SEQ        (sequence only)
+##########################################################################
+
+==========================================================================
+seq | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 9.6122  val 6.4005  [link 0.000 expr 5.355 tau 0.562 tis 1.530 align 0.000]  128s  <- best
+  f0 ep  1  train 7.2774  val 6.4121  [link 0.000 expr 5.372 tau 0.560 tis 1.521 align 0.000]  97s
+  f0 ep  2  train 7.2080  val 6.4294  [link 0.000 expr 5.388 tau 0.563 tis 1.519 align 0.000]  98s
+  f0 ep  3  train 7.1883  val 6.3698  [link 0.000 expr 5.325 tau 0.567 tis 1.522 align 0.000]  98s  <- best
+  f0 ep  4  train 7.2260  val 6.4055  [link 0.000 expr 5.363 tau 0.562 tis 1.523 align 0.000]  97s
+  f0 ep  5  train 7.2542  val 6.3867  [link 0.000 expr 5.348 tau 0.556 tis 1.522 align 0.000]  97s
+  f0 ep  6  train 7.1971  val 6.4184  [link 0.000 expr 5.375 tau 0.565 tis 1.520 align 0.000]  99s
+  f0 ep  7  train 7.2335  val 6.3877  [link 0.000 expr 5.346 tau 0.561 tis 1.521 align 0.000]  99s
+  f0 ep  8  train 7.1435  val 6.4044  [link 0.000 expr 5.362 tau 0.563 tis 1.521 align 0.000]  97s
+  f0 ep  9  train 7.1954  val 6.4044  [link 0.000 expr 5.363 tau 0.563 tis 1.521 align 0.000]  97s
+  f0 ep 10  train 7.1240  val 6.4035  [link 0.000 expr 5.362 tau 0.562 tis 1.520 align 0.000]  97s
+  f0 ep 11  train 7.1746  val 6.4039  [link 0.000 expr 5.362 tau 0.563 tis 1.520 align 0.000]  98s
+
+  seq fold 0 test:  link AUPRC nan | expr Pearson r -0.075 | tau AUPRC 0.208 | tissue acc 0.371
+
+==========================================================================
+seq | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 9.4430  val 6.2895  [link 0.000 expr 5.225 tau 0.563 tis 1.566 align 0.000]  126s  <- best
+  f1 ep  1  train 7.2776  val 6.3080  [link 0.000 expr 5.247 tau 0.563 tis 1.559 align 0.000]  98s
+  f1 ep  2  train 7.2192  val 6.3692  [link 0.000 expr 5.309 tau 0.565 tis 1.555 align 0.000]  97s
+  f1 ep  3  train 7.1147  val 6.2483  [link 0.000 expr 5.186 tau 0.569 tis 1.555 align 0.000]  98s  <- best
+  f1 ep  4  train 7.1654  val 6.2952  [link 0.000 expr 5.234 tau 0.566 tis 1.556 align 0.000]  99s
+  f1 ep  5  train 7.1507  val 6.2897  [link 0.000 expr 5.230 tau 0.570 tis 1.549 align 0.000]  98s
+  f1 ep  6  train 7.0838  val 6.3192  [link 0.000 expr 5.261 tau 0.565 tis 1.552 align 0.000]  97s
+  f1 ep  7  train 7.0693  val 6.2871  [link 0.000 expr 5.227 tau 0.567 tis 1.553 align 0.000]  97s
+  f1 ep  8  train 7.0625  val 6.3265  [link 0.000 expr 5.265 tau 0.568 tis 1.555 align 0.000]  98s
+  f1 ep  9  train 7.0825  val 6.3179  [link 0.000 expr 5.254 tau 0.569 tis 1.558 align 0.000]  98s
+  f1 ep 10  train 7.1554  val 6.3141  [link 0.000 expr 5.251 tau 0.570 tis 1.557 align 0.000]  98s
+  f1 ep 11  train 7.0707  val 6.3116  [link 0.000 expr 5.248 tau 0.570 tis 1.557 align 0.000]  96s
+
+  seq fold 1 test:  link AUPRC nan | expr Pearson r -0.074 | tau AUPRC 0.232 | tissue acc 0.364
+
+==========================================================================
+seq | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 9.4413  val 7.5381  [link 0.000 expr 6.466 tau 0.579 tis 1.566 align 0.000]  129s  <- best
+  f2 ep  1  train 7.2036  val 7.4571  [link 0.000 expr 6.394 tau 0.561 tis 1.565 align 0.000]  99s  <- best
+  f2 ep  2  train 7.1228  val 7.4398  [link 0.000 expr 6.377 tau 0.559 tis 1.567 align 0.000]  98s  <- best
+  f2 ep  3  train 7.1141  val 7.4786  [link 0.000 expr 6.411 tau 0.570 tis 1.566 align 0.000]  98s
+  f2 ep  4  train 7.1000  val 7.4506  [link 0.000 expr 6.388 tau 0.561 tis 1.565 align 0.000]  78s
+  f2 ep  5  train 7.0370  val 7.4257  [link 0.000 expr 6.362 tau 0.562 tis 1.566 align 0.000]  95s  <- best
+  f2 ep  6  train 7.1187  val 7.4309  [link 0.000 expr 6.360 tau 0.576 tis 1.567 align 0.000]  97s
+  f2 ep  7  train 7.0652  val 7.4137  [link 0.000 expr 6.348 tau 0.564 tis 1.567 align 0.000]  99s  <- best
+  f2 ep  8  train 7.0661  val 7.3930  [link 0.000 expr 6.327 tau 0.567 tis 1.566 align 0.000]  97s  <- best
+  f2 ep  9  train 7.0736  val 7.3826  [link 0.000 expr 6.318 tau 0.565 tis 1.565 align 0.000]  99s  <- best
+  f2 ep 10  train 7.0445  val 7.3847  [link 0.000 expr 6.319 tau 0.565 tis 1.566 align 0.000]  99s
+  f2 ep 11  train 7.0734  val 7.3832  [link 0.000 expr 6.318 tau 0.565 tis 1.566 align 0.000]  99s
+
+  seq fold 2 test:  link AUPRC nan | expr Pearson r 0.015 | tau AUPRC 0.195 | tissue acc 0.396
+
+==========================================================================
+seq | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 9.6719  val 6.6798  [link 0.000 expr 5.636 tau 0.517 tis 1.571 align 0.000]  129s  <- best
+  f3 ep  1  train 7.3082  val 6.6429  [link 0.000 expr 5.603 tau 0.516 tis 1.563 align 0.000]  96s  <- best
+  f3 ep  2  train 7.2642  val 6.6464  [link 0.000 expr 5.605 tau 0.517 tis 1.567 align 0.000]  99s
+  f3 ep  3  train 7.2229  val 6.6493  [link 0.000 expr 5.608 tau 0.516 tis 1.566 align 0.000]  96s
+  f3 ep  4  train 7.2610  val 6.6606  [link 0.000 expr 5.617 tau 0.517 tis 1.571 align 0.000]  97s
+  f3 ep  5  train 7.1609  val 6.6302  [link 0.000 expr 5.589 tau 0.516 tis 1.567 align 0.000]  98s  <- best
+  f3 ep  6  train 7.1872  val 6.6273  [link 0.000 expr 5.586 tau 0.515 tis 1.568 align 0.000]  99s  <- best
+  f3 ep  7  train 7.2273  val 6.6265  [link 0.000 expr 5.585 tau 0.516 tis 1.568 align 0.000]  94s  <- best
+  f3 ep  8  train 7.1612  val 6.6246  [link 0.000 expr 5.582 tau 0.516 tis 1.568 align 0.000]  97s  <- best
+  f3 ep  9  train 7.2023  val 6.6251  [link 0.000 expr 5.583 tau 0.516 tis 1.568 align 0.000]  97s
+  f3 ep 10  train 7.1804  val 6.6246  [link 0.000 expr 5.583 tau 0.516 tis 1.568 align 0.000]  97s
+  f3 ep 11  train 7.2137  val 6.6246  [link 0.000 expr 5.583 tau 0.516 tis 1.568 align 0.000]  97s
+
+  seq fold 3 test:  link AUPRC nan | expr Pearson r -0.018 | tau AUPRC 0.185 | tissue acc 0.397
+
+==========================================================================
+seq | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 131/133 tensors matched (fresh: ['head_tissue']), 800,769 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 9.3726  val 7.5284  [link 0.000 expr 6.458 tau 0.593 tis 1.547 align 0.000]  128s  <- best
+  f4 ep  1  train 7.0946  val 7.5076  [link 0.000 expr 6.434 tau 0.602 tis 1.545 align 0.000]  98s  <- best
+  f4 ep  2  train 6.9769  val 7.5069  [link 0.000 expr 6.444 tau 0.584 tis 1.542 align 0.000]  97s  <- best
+  f4 ep  3  train 6.9713  val 7.5039  [link 0.000 expr 6.438 tau 0.587 tis 1.544 align 0.000]  97s  <- best
+  f4 ep  4  train 6.9814  val 7.4726  [link 0.000 expr 6.407 tau 0.588 tis 1.544 align 0.000]  96s  <- best
+  f4 ep  5  train 6.9333  val 7.4954  [link 0.000 expr 6.431 tau 0.588 tis 1.542 align 0.000]  99s
+  f4 ep  6  train 6.9040  val 7.4420  [link 0.000 expr 6.378 tau 0.586 tis 1.543 align 0.000]  96s  <- best
+  f4 ep  7  train 6.9247  val 7.4440  [link 0.000 expr 6.379 tau 0.588 tis 1.542 align 0.000]  97s
+  f4 ep  8  train 6.9371  val 7.4594  [link 0.000 expr 6.396 tau 0.584 tis 1.542 align 0.000]  97s
+  f4 ep  9  train 6.8975  val 7.4746  [link 0.000 expr 6.410 tau 0.586 tis 1.542 align 0.000]  97s
+  f4 ep 10  train 6.9265  val 7.4713  [link 0.000 expr 6.406 tau 0.587 tis 1.542 align 0.000]  97s
+  f4 ep 11  train 6.9175  val 7.4691  [link 0.000 expr 6.404 tau 0.588 tis 1.542 align 0.000]  98s
+
+  seq fold 4 test:  link AUPRC nan | expr Pearson r 0.042 | tau AUPRC 0.252 | tissue acc 0.370
+
+
+##########################################################################
+#  ARM: STR        (structure only)
+##########################################################################
+
+==========================================================================
+str | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 9.3517  val 5.9104  [link 0.029 expr 4.963 tau 0.470 tis 1.367 align 0.000]  31s  <- best
+  f0 ep  1  train 6.5534  val 5.2765  [link 0.008 expr 4.445 tau 0.479 tis 1.168 align 0.000]  9s  <- best
+  f0 ep  2  train 6.1600  val 5.1965  [link 0.000 expr 4.407 tau 0.482 tis 1.096 align 0.000]  9s  <- best
+  f0 ep  3  train 5.9582  val 5.1121  [link 0.000 expr 4.346 tau 0.472 tis 1.060 align 0.000]  9s  <- best
+  f0 ep  4  train 5.8344  val 5.0943  [link 0.000 expr 4.337 tau 0.472 tis 1.042 align 0.000]  9s  <- best
+  f0 ep  5  train 5.8301  val 5.0750  [link 0.000 expr 4.324 tau 0.471 tis 1.030 align 0.000]  9s  <- best
+  f0 ep  6  train 5.7795  val 5.0708  [link 0.000 expr 4.324 tau 0.473 tis 1.020 align 0.000]  9s  <- best
+  f0 ep  7  train 5.8047  val 5.0457  [link 0.000 expr 4.300 tau 0.474 tis 1.016 align 0.000]  9s  <- best
+  f0 ep  8  train 5.7305  val 5.0534  [link 0.000 expr 4.310 tau 0.474 tis 1.012 align 0.000]  9s
+  f0 ep  9  train 5.7150  val 5.0499  [link 0.000 expr 4.307 tau 0.475 tis 1.011 align 0.000]  9s
+  f0 ep 10  train 5.6616  val 5.0468  [link 0.000 expr 4.305 tau 0.474 tis 1.010 align 0.000]  10s
+  f0 ep 11  train 5.6470  val 5.0469  [link 0.000 expr 4.305 tau 0.474 tis 1.010 align 0.000]  9s
+
+  str fold 0 test:  link AUPRC 1.000 | expr Pearson r 0.488 | tau AUPRC 0.463 | tissue acc 0.642
+
+==========================================================================
+str | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 9.3945  val 5.6049  [link 0.000 expr 4.665 tau 0.486 tis 1.393 align 0.000]  38s  <- best
+  f1 ep  1  train 6.6480  val 5.0960  [link 0.000 expr 4.259 tau 0.484 tis 1.191 align 0.000]  9s  <- best
+  f1 ep  2  train 6.0251  val 5.1658  [link 0.000 expr 4.363 tau 0.485 tis 1.120 align 0.000]  9s
+  f1 ep  3  train 5.9680  val 5.1231  [link 0.000 expr 4.340 tau 0.482 tis 1.084 align 0.000]  9s
+  f1 ep  4  train 5.8915  val 5.0739  [link 0.000 expr 4.302 tau 0.477 tis 1.067 align 0.000]  9s  <- best
+  f1 ep  5  train 5.8345  val 5.0660  [link 0.000 expr 4.299 tau 0.480 tis 1.054 align 0.000]  9s  <- best
+  f1 ep  6  train 5.6682  val 5.0784  [link 0.000 expr 4.314 tau 0.480 tis 1.048 align 0.000]  9s
+  f1 ep  7  train 5.7268  val 5.0610  [link 0.000 expr 4.300 tau 0.481 tis 1.042 align 0.000]  9s  <- best
+  f1 ep  8  train 5.6557  val 5.0146  [link 0.000 expr 4.256 tau 0.478 tis 1.039 align 0.000]  9s  <- best
+  f1 ep  9  train 5.7525  val 5.0052  [link 0.000 expr 4.247 tau 0.479 tis 1.038 align 0.000]  9s  <- best
+  f1 ep 10  train 5.7141  val 4.9917  [link 0.000 expr 4.234 tau 0.479 tis 1.037 align 0.000]  9s  <- best
+  f1 ep 11  train 5.6733  val 4.9931  [link 0.000 expr 4.235 tau 0.479 tis 1.037 align 0.000]  9s
+
+  str fold 1 test:  link AUPRC 1.000 | expr Pearson r 0.511 | tau AUPRC 0.549 | tissue acc 0.662
+
+==========================================================================
+str | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 9.3228  val 6.8747  [link 0.002 expr 5.894 tau 0.459 tis 1.499 align 0.000]  38s  <- best
+  f2 ep  1  train 6.5374  val 6.1615  [link 0.000 expr 5.302 tau 0.454 tis 1.264 align 0.000]  9s  <- best
+  f2 ep  2  train 5.9238  val 6.0579  [link 0.000 expr 5.237 tau 0.453 tis 1.189 align 0.000]  9s  <- best
+  f2 ep  3  train 5.9546  val 6.0020  [link 0.000 expr 5.199 tau 0.451 tis 1.154 align 0.000]  9s  <- best
+  f2 ep  4  train 5.8904  val 5.9404  [link 0.000 expr 5.148 tau 0.449 tis 1.136 align 0.000]  9s  <- best
+  f2 ep  5  train 5.7549  val 5.9169  [link 0.000 expr 5.130 tau 0.450 tis 1.123 align 0.000]  9s  <- best
+  f2 ep  6  train 5.7191  val 5.8991  [link 0.000 expr 5.117 tau 0.448 tis 1.117 align 0.000]  9s  <- best
+  f2 ep  7  train 5.8105  val 5.8911  [link 0.000 expr 5.110 tau 0.450 tis 1.113 align 0.000]  9s  <- best
+  f2 ep  8  train 5.6493  val 5.8919  [link 0.000 expr 5.112 tau 0.449 tis 1.111 align 0.000]  9s
+  f2 ep  9  train 5.6656  val 5.8897  [link 0.000 expr 5.111 tau 0.449 tis 1.109 align 0.000]  8s  <- best
+  f2 ep 10  train 5.7591  val 5.8879  [link 0.000 expr 5.109 tau 0.449 tis 1.109 align 0.000]  8s  <- best
+  f2 ep 11  train 5.5750  val 5.8877  [link 0.000 expr 5.109 tau 0.449 tis 1.109 align 0.000]  8s  <- best
+
+  str fold 2 test:  link AUPRC 1.000 | expr Pearson r 0.496 | tau AUPRC 0.484 | tissue acc 0.656
+
+==========================================================================
+str | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 9.1733  val 6.0197  [link 0.010 expr 5.056 tau 0.417 tis 1.490 align 0.000]  39s  <- best
+  f3 ep  1  train 6.6424  val 5.1584  [link 0.000 expr 4.312 tau 0.405 tis 1.286 align 0.000]  9s  <- best
+  f3 ep  2  train 6.0769  val 5.0315  [link 0.000 expr 4.229 tau 0.397 tis 1.208 align 0.000]  10s  <- best
+  f3 ep  3  train 5.9674  val 5.0661  [link 0.000 expr 4.284 tau 0.394 tis 1.170 align 0.000]  9s
+  f3 ep  4  train 5.9270  val 4.9541  [link 0.000 expr 4.183 tau 0.395 tis 1.148 align 0.000]  9s  <- best
+  f3 ep  5  train 5.7601  val 4.9082  [link 0.000 expr 4.147 tau 0.392 tis 1.131 align 0.000]  9s  <- best
+  f3 ep  6  train 5.7635  val 4.8722  [link 0.000 expr 4.116 tau 0.389 tis 1.122 align 0.000]  9s  <- best
+  f3 ep  7  train 5.7800  val 4.8382  [link 0.000 expr 4.085 tau 0.388 tis 1.118 align 0.000]  9s  <- best
+  f3 ep  8  train 5.7185  val 4.8459  [link 0.000 expr 4.094 tau 0.389 tis 1.115 align 0.000]  9s
+  f3 ep  9  train 5.6770  val 4.8366  [link 0.000 expr 4.085 tau 0.389 tis 1.114 align 0.000]  9s  <- best
+  f3 ep 10  train 5.7915  val 4.8335  [link 0.000 expr 4.083 tau 0.388 tis 1.114 align 0.000]  9s  <- best
+  f3 ep 11  train 5.6703  val 4.8326  [link 0.000 expr 4.082 tau 0.388 tis 1.113 align 0.000]  9s  <- best
+
+  str fold 3 test:  link AUPRC 1.000 | expr Pearson r 0.439 | tau AUPRC 0.483 | tissue acc 0.646
+
+==========================================================================
+str | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 46/48 tensors matched (fresh: ['head_tissue']), 301,505 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 9.2953  val 6.1796  [link 0.000 expr 5.244 tau 0.467 tis 1.405 align 0.000]  39s  <- best
+  f4 ep  1  train 6.4194  val 5.5339  [link 0.000 expr 4.675 tau 0.470 tis 1.248 align 0.000]  7s  <- best
+  f4 ep  2  train 5.8968  val 5.3563  [link 0.000 expr 4.530 tau 0.465 tis 1.188 align 0.000]  9s  <- best
+  f4 ep  3  train 5.7833  val 5.3103  [link 0.000 expr 4.504 tau 0.461 tis 1.152 align 0.000]  9s  <- best
+  f4 ep  4  train 5.7904  val 5.2859  [link 0.000 expr 4.489 tau 0.462 tis 1.131 align 0.000]  9s  <- best
+  f4 ep  5  train 5.5460  val 5.2237  [link 0.000 expr 4.432 tau 0.461 tis 1.122 align 0.000]  9s  <- best
+  f4 ep  6  train 5.7024  val 5.2268  [link 0.000 expr 4.441 tau 0.459 tis 1.113 align 0.000]  10s
+  f4 ep  7  train 5.6495  val 5.1789  [link 0.000 expr 4.397 tau 0.458 tis 1.107 align 0.000]  9s  <- best
+  f4 ep  8  train 5.6187  val 5.1692  [link 0.000 expr 4.389 tau 0.458 tis 1.103 align 0.000]  9s  <- best
+  f4 ep  9  train 5.6358  val 5.1602  [link 0.000 expr 4.380 tau 0.457 tis 1.102 align 0.000]  9s  <- best
+  f4 ep 10  train 5.6892  val 5.1603  [link 0.000 expr 4.381 tau 0.457 tis 1.102 align 0.000]  9s
+  f4 ep 11  train 5.6922  val 5.1598  [link 0.000 expr 4.380 tau 0.457 tis 1.102 align 0.000]  9s  <- best
+
+  str fold 4 test:  link AUPRC 1.000 | expr Pearson r 0.498 | tau AUPRC 0.452 | tissue acc 0.640
+
+
+##########################################################################
+#  ARM: EPI        (epigenomic only)
+##########################################################################
+
+==========================================================================
+epi | FOLD 1/5   train=2,769  test=693
+==========================================================================
+  f0 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f0 ep  0  train 7.5181  val 5.3514  [link 0.000 expr 4.489 tau 0.453 tis 1.273 align 0.000]  36s  <- best
+  f0 ep  1  train 5.6023  val 4.9182  [link 0.000 expr 4.146 tau 0.448 tis 1.096 align 0.000]  5s  <- best
+  f0 ep  2  train 5.4261  val 4.8201  [link 0.000 expr 4.089 tau 0.447 tis 1.014 align 0.000]  6s  <- best
+  f0 ep  3  train 5.2360  val 4.7621  [link 0.000 expr 4.058 tau 0.444 tis 0.963 align 0.000]  6s  <- best
+  f0 ep  4  train 5.2205  val 4.7780  [link 0.000 expr 4.088 tau 0.449 tis 0.931 align 0.000]  5s
+  f0 ep  5  train 5.0468  val 4.7722  [link 0.000 expr 4.097 tau 0.442 tis 0.908 align 0.000]  5s
+  f0 ep  6  train 5.0091  val 4.7916  [link 0.000 expr 4.125 tau 0.443 tis 0.891 align 0.000]  5s
+  f0 ep  7  train 4.9864  val 4.7796  [link 0.000 expr 4.119 tau 0.441 tis 0.880 align 0.000]  5s
+  f0 ep  8  train 4.9267  val 4.7876  [link 0.000 expr 4.130 tau 0.441 tis 0.874 align 0.000]  5s
+  f0 ep  9  train 5.0606  val 4.7792  [link 0.000 expr 4.123 tau 0.441 tis 0.871 align 0.000]  5s
+  f0 ep 10  train 4.9976  val 4.7831  [link 0.000 expr 4.128 tau 0.441 tis 0.869 align 0.000]  5s
+  f0 ep 11  train 4.9626  val 4.7839  [link 0.000 expr 4.129 tau 0.441 tis 0.869 align 0.000]  5s
+
+  epi fold 0 test:  link AUPRC nan | expr Pearson r 0.520 | tau AUPRC 0.448 | tissue acc 0.698
+
+==========================================================================
+epi | FOLD 2/5   train=2,769  test=693
+==========================================================================
+  f1 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f1 ep  0  train 7.5859  val 5.4883  [link 0.000 expr 4.574 tau 0.475 tis 1.353 align 0.000]  36s  <- best
+  f1 ep  1  train 5.6311  val 5.0507  [link 0.000 expr 4.245 tau 0.479 tis 1.133 align 0.000]  5s  <- best
+  f1 ep  2  train 5.3233  val 4.9976  [link 0.000 expr 4.241 tau 0.479 tis 1.035 align 0.000]  5s  <- best
+  f1 ep  3  train 5.2313  val 4.8740  [link 0.000 expr 4.145 tau 0.480 tis 0.979 align 0.000]  5s  <- best
+  f1 ep  4  train 5.2320  val 4.9021  [link 0.000 expr 4.199 tau 0.473 tis 0.934 align 0.000]  5s
+  f1 ep  5  train 5.1006  val 4.7439  [link 0.000 expr 4.052 tau 0.475 tis 0.908 align 0.000]  5s  <- best
+  f1 ep  6  train 5.0745  val 4.6851  [link 0.000 expr 4.004 tau 0.472 tis 0.890 align 0.000]  5s  <- best
+  f1 ep  7  train 5.0771  val 4.7021  [link 0.000 expr 4.027 tau 0.473 tis 0.878 align 0.000]  5s
+  f1 ep  8  train 5.0474  val 4.7207  [link 0.000 expr 4.049 tau 0.472 tis 0.872 align 0.000]  6s
+  f1 ep  9  train 5.0368  val 4.6824  [link 0.000 expr 4.013 tau 0.471 tis 0.867 align 0.000]  5s  <- best
+  f1 ep 10  train 5.1203  val 4.6840  [link 0.000 expr 4.016 tau 0.472 tis 0.865 align 0.000]  5s
+  f1 ep 11  train 5.0862  val 4.6859  [link 0.000 expr 4.018 tau 0.472 tis 0.865 align 0.000]  5s
+
+  epi fold 1 test:  link AUPRC nan | expr Pearson r 0.577 | tau AUPRC 0.630 | tissue acc 0.703
+
+==========================================================================
+epi | FOLD 3/5   train=2,770  test=692
+==========================================================================
+  f2 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f2 ep  0  train 7.3442  val 6.1985  [link 0.000 expr 5.308 tau 0.473 tis 1.308 align 0.000]  32s  <- best
+  f2 ep  1  train 5.5891  val 5.7699  [link 0.000 expr 4.955 tau 0.465 tis 1.165 align 0.000]  5s  <- best
+  f2 ep  2  train 5.4188  val 5.5873  [link 0.000 expr 4.807 tau 0.459 tis 1.101 align 0.000]  5s  <- best
+  f2 ep  3  train 5.2285  val 5.4837  [link 0.000 expr 4.727 tau 0.456 tis 1.057 align 0.000]  6s  <- best
+  f2 ep  4  train 5.0522  val 5.3961  [link 0.000 expr 4.658 tau 0.449 tis 1.027 align 0.000]  6s  <- best
+  f2 ep  5  train 5.1063  val 5.4116  [link 0.000 expr 4.683 tau 0.451 tis 1.006 align 0.000]  5s
+  f2 ep  6  train 5.0813  val 5.3960  [link 0.000 expr 4.676 tau 0.450 tis 0.991 align 0.000]  5s  <- best
+  f2 ep  7  train 4.9819  val 5.4013  [link 0.000 expr 4.685 tau 0.452 tis 0.981 align 0.000]  5s
+  f2 ep  8  train 4.9632  val 5.3864  [link 0.000 expr 4.674 tau 0.452 tis 0.973 align 0.000]  6s  <- best
+  f2 ep  9  train 4.9513  val 5.3809  [link 0.000 expr 4.672 tau 0.450 tis 0.969 align 0.000]  5s  <- best
+  f2 ep 10  train 4.9485  val 5.3768  [link 0.000 expr 4.669 tau 0.449 tis 0.967 align 0.000]  5s  <- best
+  f2 ep 11  train 4.9879  val 5.3753  [link 0.000 expr 4.667 tau 0.449 tis 0.967 align 0.000]  5s  <- best
+
+  epi fold 2 test:  link AUPRC nan | expr Pearson r 0.576 | tau AUPRC 0.529 | tissue acc 0.712
+
+==========================================================================
+epi | FOLD 4/5   train=2,770  test=692
+==========================================================================
+  f3 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f3 ep  0  train 7.5821  val 5.5029  [link 0.000 expr 4.639 tau 0.378 tis 1.349 align 0.000]  36s  <- best
+  f3 ep  1  train 5.6586  val 4.9322  [link 0.000 expr 4.170 tau 0.370 tis 1.154 align 0.000]  5s  <- best
+  f3 ep  2  train 5.4147  val 4.6846  [link 0.000 expr 3.970 tau 0.367 tis 1.063 align 0.000]  5s  <- best
+  f3 ep  3  train 5.2194  val 4.5707  [link 0.000 expr 3.884 tau 0.361 tis 1.012 align 0.000]  5s  <- best
+  f3 ep  4  train 5.1299  val 4.5370  [link 0.000 expr 3.867 tau 0.361 tis 0.978 align 0.000]  5s  <- best
+  f3 ep  5  train 5.1474  val 4.4742  [link 0.000 expr 3.818 tau 0.360 tis 0.951 align 0.000]  5s  <- best
+  f3 ep  6  train 5.0887  val 4.4098  [link 0.000 expr 3.763 tau 0.360 tis 0.934 align 0.000]  5s  <- best
+  f3 ep  7  train 5.0526  val 4.4287  [link 0.000 expr 3.787 tau 0.360 tis 0.924 align 0.000]  5s
+  f3 ep  8  train 5.0219  val 4.3800  [link 0.000 expr 3.741 tau 0.360 tis 0.918 align 0.000]  5s  <- best
+  f3 ep  9  train 5.0165  val 4.3706  [link 0.000 expr 3.734 tau 0.359 tis 0.913 align 0.000]  5s  <- best
+  f3 ep 10  train 5.0439  val 4.3711  [link 0.000 expr 3.736 tau 0.359 tis 0.911 align 0.000]  5s
+  f3 ep 11  train 4.9899  val 4.3704  [link 0.000 expr 3.735 tau 0.359 tis 0.911 align 0.000]  6s  <- best
+
+  epi fold 3 test:  link AUPRC nan | expr Pearson r 0.509 | tau AUPRC 0.500 | tissue acc 0.682
+
+==========================================================================
+epi | FOLD 5/5   train=2,770  test=692
+==========================================================================
+  f4 warm start <- model_fold0.pt: 15/17 tensors matched (fresh: ['head_tissue']), 9,536 encoder params frozen, lr 1.0e-03 -> 3.0e-04 for the rest
+  f4 ep  0  train 7.5972  val 5.2297  [link 0.000 expr 4.340 tau 0.472 tis 1.308 align 0.000]  34s  <- best
+  f4 ep  1  train 5.5560  val 4.9239  [link 0.000 expr 4.130 tau 0.464 tis 1.125 align 0.000]  5s  <- best
+  f4 ep  2  train 5.3005  val 4.7906  [link 0.000 expr 4.042 tau 0.460 tis 1.038 align 0.000]  5s  <- best
+  f4 ep  3  train 5.1068  val 4.6937  [link 0.000 expr 3.970 tau 0.461 tis 0.987 align 0.000]  5s  <- best
+  f4 ep  4  train 5.0534  val 4.6325  [link 0.000 expr 3.929 tau 0.452 tis 0.955 align 0.000]  6s  <- best
+  f4 ep  5  train 4.9488  val 4.6334  [link 0.000 expr 3.940 tau 0.455 tis 0.932 align 0.000]  6s
+  f4 ep  6  train 4.9701  val 4.6148  [link 0.000 expr 3.932 tau 0.450 tis 0.915 align 0.000]  6s  <- best
+  f4 ep  7  train 4.9424  val 4.6165  [link 0.000 expr 3.939 tau 0.452 tis 0.903 align 0.000]  6s
+  f4 ep  8  train 4.9933  val 4.6096  [link 0.000 expr 3.936 tau 0.451 tis 0.896 align 0.000]  6s  <- best
+  f4 ep  9  train 4.8789  val 4.6140  [link 0.000 expr 3.942 tau 0.452 tis 0.892 align 0.000]  5s
+  f4 ep 10  train 4.9675  val 4.6166  [link 0.000 expr 3.946 tau 0.452 tis 0.890 align 0.000]  5s
+  f4 ep 11  train 4.8885  val 4.6159  [link 0.000 expr 3.945 tau 0.452 tis 0.889 align 0.000]  5s
+
+  epi fold 4 test:  link AUPRC nan | expr Pearson r 0.545 | tau AUPRC 0.463 | tissue acc 0.694
+
+==========================================================================
+all 7 arms x 5 folds done in 449.9 min
+cells below report the 'all3' arm (seq + str + epi); the ablation cells compare all 7
+
+==========================================================================
+H1  link prediction   (mean +/- sd over 5 folds)
+==========================================================================
+                     mean      std     min     max
+metric                                            
+n                  1469.2  14.5327  1446.0  1486.0
+pos_rate              0.5   0.0000     0.5     0.5
+auroc                 1.0   0.0000     1.0     1.0
+auprc                 1.0   0.0000     1.0     1.0
+auprc_baseline        0.5   0.0000     0.5     0.5
+accuracy              1.0   0.0000     1.0     1.0
+balanced_accuracy     1.0   0.0000     1.0     1.0
+precision             1.0   0.0000     1.0     1.0
+recall                1.0   0.0000     1.0     1.0
+specificity           1.0   0.0000     1.0     1.0
+npv                   1.0   0.0000     1.0     1.0
+f1                    1.0   0.0000     1.0     1.0
+f2                    1.0   0.0000     1.0     1.0
+mcc                   1.0   0.0000     1.0     1.0
+kappa                 1.0   0.0000     1.0     1.0
+jaccard               1.0   0.0000     1.0     1.0
+brier                 0.0   0.0000     0.0     0.0
+logloss               0.0   0.0000     0.0     0.0
+best_threshold        1.0   0.0000     1.0     1.0
+f1_at_best            1.0   0.0000     1.0     1.0
+precision_at_best     1.0   0.0000     1.0     1.0
+recall_at_best        1.0   0.0000     1.0     1.0
+
+==========================================================================
+H2  expression signal (log2 TPM+1)   (mean +/- sd over 5 folds)
+==========================================================================
+                mean     std       min       max
+metric                                          
+n           691.6000  1.6733  689.0000  693.0000
+mean          2.8139  0.1141    2.6499    2.9689
+std           2.4280  0.0523    2.3688    2.4987
+mse           4.0372  0.1336    3.8675    4.2172
+rmse          2.0091  0.0332    1.9666    2.0536
+mae           1.5290  0.0442    1.4672    1.5892
+r2            0.3148  0.0277    0.2675    0.3375
+pearson_r     0.5638  0.0247    0.5224    0.5863
+pearson_p     0.0000  0.0000    0.0000    0.0000
+spearman_r    0.5887  0.0292    0.5480    0.6216
+spearman_p    0.0000  0.0000    0.0000    0.0000
+
+==========================================================================
+H3  tissue-restricted (tau)   (mean +/- sd over 5 folds)
+==========================================================================
+                       mean     std       min       max
+metric                                                 
+n                  688.6000  3.2094  684.0000  692.0000
+pos_rate             0.2065  0.0133    0.1959    0.2281
+auroc                0.8105  0.0341    0.7706    0.8564
+auprc                0.5368  0.0682    0.4632    0.6309
+auprc_baseline       0.2065  0.0133    0.1959    0.2281
+accuracy             0.8071  0.0304    0.7602    0.8389
+balanced_accuracy    0.6202  0.0214    0.5906    0.6477
+precision            0.5793  0.1079    0.4667    0.7049
+recall               0.3026  0.0452    0.2429    0.3590
+specificity          0.9377  0.0352    0.8788    0.9670
+npv                  0.8378  0.0125    0.8227    0.8555
+f1                   0.3937  0.0464    0.3269    0.4478
+f2                   0.3330  0.0439    0.2707    0.3763
+mcc                  0.3155  0.0692    0.2446    0.3984
+kappa                0.2915  0.0578    0.2243    0.3662
+jaccard              0.2460  0.0357    0.1954    0.2885
+brier                0.1286  0.0121    0.1168    0.1454
+logloss              0.4031  0.0326    0.3701    0.4454
+best_threshold       0.3038  0.0612    0.2597    0.4070
+f1_at_best           0.5675  0.0352    0.5238    0.6221
+precision_at_best    0.4966  0.0554    0.4160    0.5580
+recall_at_best       0.6719  0.0647    0.5704    0.7379
+
+==========================================================================
+H4  tissue classification   (mean +/- sd over 5 folds)
+==========================================================================
+                        mean     std       min       max
+metric                                                  
+n                   692.4000  0.5477  692.0000  693.0000
+n_classes_present     8.0000  0.0000    8.0000    8.0000
+accuracy              0.7692  0.0120    0.7587    0.7850
+balanced_accuracy     0.3993  0.0167    0.3748    0.4183
+kappa                 0.6722  0.0168    0.6574    0.6954
+precision_macro       0.4493  0.0480    0.4059    0.5196
+recall_macro          0.3993  0.0167    0.3748    0.4183
+f1_macro              0.4000  0.0168    0.3764    0.4213
+precision_micro       0.7692  0.0120    0.7587    0.7850
+recall_micro          0.7692  0.0120    0.7587    0.7850
+f1_micro              0.7692  0.0120    0.7587    0.7850
+precision_weighted    0.7091  0.0090    0.6992    0.7175
+recall_weighted       0.7692  0.0120    0.7587    0.7850
+f1_weighted           0.7294  0.0131    0.7151    0.7473
+auroc_macro_ovr       0.9234  0.0122    0.9108    0.9432
+auprc_macro_ovr       0.5480  0.0244    0.5154    0.5686
+
+
+==========================================================================
+HEADLINE
+==========================================================================
+                              head            primary metric secondary    tertiary  quaternary
+               H1  link prediction       acc 1.000 +/- 0.000  F1 1.000 AUROC 1.000 AUPRC 1.000
+H2  expression signal (log2 TPM+1) Pearson r 0.564 +/- 0.025 R^2 0.315   MAE 1.529  RMSE 2.009
+       H3  tissue-restricted (tau)       acc 0.807 +/- 0.030  F1 0.394 AUROC 0.811 AUPRC 0.537
+         H4  tissue classification       acc 0.769 +/- 0.012  F1 0.400 AUROC 0.923 AUPRC 0.548
+
+per-fold metrics -> metrics_per_fold.csv
+
+(H2's columns are a different metric family from H1/H3/H4 -- it is a
+regression head now, not binary classification. Not directly comparable
+row-for-row; each head's own metric is what matters.)
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/07_roc_curves.png
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/08_pr_curves.png
+read each curve against its own red baseline, not against the other panels
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/07b_h2_predicted_vs_observed.png
+Points on the y=x line are correct; a slope < 1 (a fan tilted toward the mean)
+means the model is regressing toward the mean rather than using its inputs.
+  figure -> results/results_trimodal_1mb_h2signal_fast/figures/09_confusion_matrices.png
+
+per-class report for H4 (pooled over folds):
+                                  precision    recall  f1-score   support
+
+   Cells - Mesenchymal Stem Cell       0.75      0.71      0.73       714
+            Embryo - Mesendoderm       0.00      0.00      0.00       127
+            Embryo - Trophoblast       0.78      0.91      0.84      1310
+               Muscle - Skeletal       0.00      0.00      0.00        80
+                  Nerve - Tibial       0.56      0.21      0.31       148
+                           Ovary       0.33      0.04      0.07        51
+Small Intestine - Terminal Ileum       0.43      0.36      0.39        97
+                          Spleen       0.81      0.95      0.87       935
+
+                        accuracy                           0.77      3462
+                       macro avg       0.46      0.40      0.40      3462
+                    weighted avg       0.71      0.77      0.73      3462
+
+Traceback (most recent call last):
+  File "/mnt/raid/ksengupta/pic_hic_ml/notebooks/pangenomic_gat_pipeline_trimodal_1mb_full_h2signal_complete.py", line 3896, in <module>
+    ft, mp = calibration_curve(y, p, n_bins=12, strategy="quantile")
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/sklearn/calibration.py", line 1037, in calibration_curve
+    pos_label = _check_pos_label_consistency(pos_label, y_true)
+  File "/mnt/raid/ksengupta/soft/anaconda3/envs/pangenomic-gat/lib/python3.10/site-packages/sklearn/utils/validation.py", line 2651, in _check_pos_label_consistency
+    raise ValueError(
+ValueError: y_true takes value in {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13} and pos_label is not specified: either make y_true take value in {0, 1} or {-1, 1} or pass pos_label explicitly.

@@ -1,0 +1,5 @@
+head,all3,best single,delta,delta / pooled sd,paired p,beats spread?
+H1,1.0,seq + str (no epi) 1.0000,0.0,,n/a,no
+H2,0.5638,str + epi (no seq) 0.5646,-0.0009,-0.03,0.742,no
+H3,0.5368,str + epi (no seq) 0.5352,0.0016,0.02,0.8741,no
+H4,0.548,str + epi (no seq) 0.5660,-0.0181,-0.65,0.0135,no

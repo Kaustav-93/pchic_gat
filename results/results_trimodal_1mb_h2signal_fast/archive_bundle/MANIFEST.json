@@ -1,0 +1,139 @@
+{
+  "files": [
+    {
+      "path": "checkpoints/model_fold0.pt",
+      "sha256": "76bc1bdc6fc086e69b9c8c781026e3c318b38c75984343699d81e7dca9907131",
+      "bytes": 13352750
+    },
+    {
+      "path": "checkpoints/model_fold1.pt",
+      "sha256": "d3e42e6b09bda2e953837edcc6fcd1739a84be3a2a32d149ef051752b7674daa",
+      "bytes": 13352750
+    },
+    {
+      "path": "checkpoints/model_fold2.pt",
+      "sha256": "92f6e9590e362f09ff72e80aca32cef817c04c7bd021729128a5cf4cf102949b",
+      "bytes": 13352750
+    },
+    {
+      "path": "checkpoints/model_fold3.pt",
+      "sha256": "eb10be749a22345376eab7ad3faed1b03cadaae69d9b81b9f95a813424b8f8c6",
+      "bytes": 13352750
+    },
+    {
+      "path": "checkpoints/model_fold4.pt",
+      "sha256": "28a24962e3aa91a0783f8ff0388ea52a0d7b0c28546049a68932dad6bca14e19",
+      "bytes": 13352750
+    },
+    {
+      "path": "config.json",
+      "sha256": "c10e1b3aeabb949f8262ecbe11c4a5b30fd8f5daa04491c9d4c4195d7a549ab6",
+      "bytes": 1435
+    },
+    {
+      "path": "results/ablation_fusion_verdict.csv",
+      "sha256": "8c176a5cdc300e3516de217a2d4be8027438071f0db59ba8533cbf3854886ead",
+      "bytes": 290
+    },
+    {
+      "path": "results/ablation_headline.csv",
+      "sha256": "a752fc35ab02adee5d803f62da752fa6109556019bf70c8f3496701383cf662b",
+      "bytes": 438
+    },
+    {
+      "path": "results/ablation_per_fold.csv",
+      "sha256": "4a8cbad39c9b771ff1c6a70db2d652e64721aaea3ee0e46fb5efb2dfc29f3828",
+      "bytes": 35120
+    },
+    {
+      "path": "results/ablation_training_history.csv",
+      "sha256": "3daa73c290bc036d176979b476e12a32de3335efea06a3d43884be3bb943a2a0",
+      "bytes": 104456
+    },
+    {
+      "path": "results/gcmerge_baseline_per_fold.csv",
+      "sha256": "05a3a89ff9a5482dfb9a66e9257933bdb42f959047e0c6ac1cdb4405572cb995",
+      "bytes": 1094
+    },
+    {
+      "path": "results/h1_distance_only_baseline.csv",
+      "sha256": "4e1fbedfc0f2818dbc31bcecdbd7d18e314f9f810528406dda520284dfb3d23f",
+      "bytes": 1683
+    },
+    {
+      "path": "results/housekeeping_external_validation.csv",
+      "sha256": "bb381279c802f8dd62a4343742283dd51431c7b8bacf34b2fd65049730fe7701",
+      "bytes": 94
+    },
+    {
+      "path": "results/hybrid_per_fold.csv",
+      "sha256": "9c016ec860c0e9b3664777f3bacba99654a89b83d4e469c26674199100bfffc7",
+      "bytes": 8809
+    },
+    {
+      "path": "results/hybrid_summary.csv",
+      "sha256": "5a4e823945d0dd2b3dedeeb3bc52d53ca48fd1a2b32a05542d80b58137869e48",
+      "bytes": 799
+    },
+    {
+      "path": "results/metrics_per_fold.csv",
+      "sha256": "942d5e460abdcedb77d65f430007368a3b23f50521cc90612a0f2cbf6248898e",
+      "bytes": 6252
+    },
+    {
+      "path": "results/metrics_summary_expr.csv",
+      "sha256": "9625ae2a420ea39644d34cb44c6b425ab73dfc6223d747d1022274d0fc8216ae",
+      "bytes": 918
+    },
+    {
+      "path": "results/metrics_summary_link.csv",
+      "sha256": "80c02851e8ae06cacc8461a4cb2066ff9e44ccd24f3b1d0af9650e5312074131",
+      "bytes": 787
+    },
+    {
+      "path": "results/metrics_summary_tau.csv",
+      "sha256": "6800751f4fee68eafe7f039a06bd695266edc77280ca662bda3ff6cd3b6cbcc6",
+      "bytes": 1888
+    },
+    {
+      "path": "results/metrics_summary_tissue.csv",
+      "sha256": "0d39c11f901aa31e64fbcd6b3d15f29f4625e5ae72b65d44ddc584353669fed1",
+      "bytes": 1365
+    },
+    {
+      "path": "results/multiple_comparison_correction.csv",
+      "sha256": "5874d0a5dcfc03b838aa31fa8af6ebc5c87de7c0e959730782decc86c2516f09",
+      "bytes": 515
+    },
+    {
+      "path": "results/multiseed_replication.csv",
+      "sha256": "72f2e9fdbad37e57a67a800ac4f9ea8ee79cdb926c6bf11d9014071789f27c13",
+      "bytes": 943
+    },
+    {
+      "path": "results/stratified_metrics_all_arms_all_schemes.csv",
+      "sha256": "68d2eddc51f8f2021c11b90b2a677ca1421b198c2809481b8d85fd6f36dfd5ca",
+      "bytes": 8170
+    },
+    {
+      "path": "results/training_history.csv",
+      "sha256": "28b60d29ad5e84b72e91eade7ca591ce9dce771641f33ecadd7f198c52e5bfca",
+      "bytes": 16633
+    }
+  ],
+  "generated": "2026-09-19 17:04:10",
+  "config_summary": {
+    "fast_mode": true,
+    "seed": 42,
+    "variants": [
+      "all3",
+      "seq_str",
+      "seq_epi",
+      "str_epi",
+      "seq",
+      "str",
+      "epi"
+    ],
+    "n_folds": 5
+  }
+}
