@@ -1,0 +1,42 @@
+{
+  "run_finished": "2026-11-06 13:20:55",
+  "python": "3.10.14",
+  "platform": "Linux-6.8.0-134-generic-x86_64-with-glibc2.39",
+  "device": "cuda",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.9",
+    "seaborn": "0.13.2",
+    "networkx": "3.4.2",
+    "torch": "2.5.1+cu121",
+    "torch_geometric": "2.8.0.post1",
+    "pyBigWig": "0.3.25",
+    "py2bit": "1.0.1",
+    "scikit-learn": "1.7.2",
+    "pyliftover": "0.4.1",
+    "umap": "0.5.12",
+    "torch_scatter": "2.1.2+pt25cu121"
+  },
+  "data": {
+    "tissues_used": 46,
+    "tissues_available": 46,
+    "genes": 20166,
+    "graphs": 363617,
+    "node_features": 18,
+    "edge_features": 4,
+    "histone_tracks_present": 305,
+    "histone_coverage_frac": 0.9347826086956522
+  },
+  "cv": {
+    "folds": 5,
+    "grouped_by": "gene"
+  },
+  "headline": {
+    "link_auprc": 0.9999999247692596,
+    "expr_pearson_r": 0.6284790277481079,
+    "tau_auprc": 0.6456991755499883,
+    "tissue_acc": 0.9030903185605055
+  }
+}

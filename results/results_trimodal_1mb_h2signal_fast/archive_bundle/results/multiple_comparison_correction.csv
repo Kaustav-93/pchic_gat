@@ -1,0 +1,8 @@
+test,p_raw,p_bh_adjusted,significant_at_0.05_after_correction
+h1_topological_asymmetry,1.216705421862668e-116,8.516937953038677e-116,True
+ours_vs_gcmerge_H2,0.007412760060448483,0.025944660211569694,True
+ablation_H4_all3_vs_best_single,0.0135,0.0315,True
+multiseed_all3_vs_strepi_H4,0.15148908626718185,0.26510590096756825,False
+epoch_count_all3_vs_strepi,0.2634928170690076,0.3688899438966107,False
+ablation_H2_all3_vs_best_single,0.742,0.8656666666666667,False
+ablation_H3_all3_vs_best_single,0.8741,0.8741,False

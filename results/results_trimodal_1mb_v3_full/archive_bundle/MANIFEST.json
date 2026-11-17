@@ -1,0 +1,144 @@
+{
+  "files": [
+    {
+      "path": "checkpoints/model_fold0.pt",
+      "sha256": "59165460f1b9e41de7e590283ba0b5c436d1784b7319e203fea6da35a5c99d67",
+      "bytes": 13661502
+    },
+    {
+      "path": "checkpoints/model_fold1.pt",
+      "sha256": "b137566c980494f922b0e95b2f122769b225c140a8db5a729d6451465e110e85",
+      "bytes": 13661822
+    },
+    {
+      "path": "checkpoints/model_fold2.pt",
+      "sha256": "375c11bd46a0c89d85a4dd600c9ffc671a9ccc9e05c5674d77d13b73a3c446cb",
+      "bytes": 13661694
+    },
+    {
+      "path": "checkpoints/model_fold3.pt",
+      "sha256": "39b1956f165cef35da445517994a236f3f3d6b06a5b3b832bb1abf843a514d2b",
+      "bytes": 13661502
+    },
+    {
+      "path": "checkpoints/model_fold4.pt",
+      "sha256": "5079e302403935c1db634a1295759a0935eb3c3e4a561d1cbc0cfcfc7707324e",
+      "bytes": 13661630
+    },
+    {
+      "path": "config.json",
+      "sha256": "a4b6c752b2f6bfcc810c3cdedfee09f6f39aacea5b7f8fb890f145bac1177920",
+      "bytes": 1637
+    },
+    {
+      "path": "results/ablation_fusion_verdict.csv",
+      "sha256": "04d86269533c3f2a8eb502d0ae994fa692cb9476cbcc86c5568de3af67dcd81d",
+      "bytes": 353
+    },
+    {
+      "path": "results/ablation_headline.csv",
+      "sha256": "368702a618232835d6b6b8cef31c4a2172082584fe864f8ac4b17d43b4ca98b7",
+      "bytes": 525
+    },
+    {
+      "path": "results/ablation_per_fold.csv",
+      "sha256": "5903435122b3492a737a8ce94f37a4798b554df72e16eb30404c22bfdca9d35d",
+      "bytes": 54518
+    },
+    {
+      "path": "results/ablation_training_history.csv",
+      "sha256": "4be5da562945ce12828f6b859438dbe444173213a6c148a82676e0a2f31cf043",
+      "bytes": 302811
+    },
+    {
+      "path": "results/gcmerge_baseline_per_fold.csv",
+      "sha256": "fc1f31bc1b9c90526a7f06d1a14fffb783a49ba255cccb794cfea06aedb55e72",
+      "bytes": 1257
+    },
+    {
+      "path": "results/h1_distance_only_baseline.csv",
+      "sha256": "90d7f244bdd7d5ab15bc0c82cd2e84f0efe955a033188708e6755e56e12ce73e",
+      "bytes": 2167
+    },
+    {
+      "path": "results/housekeeping_external_validation.csv",
+      "sha256": "080bcdc46a65d0dfdb554cb649e498762dbd694aeed9a66abf45753665abc99d",
+      "bytes": 544
+    },
+    {
+      "path": "results/hybrid_per_fold.csv",
+      "sha256": "3ec49aea1ff94e0b587770834d2088553139f0820299d37293e4261b69f33ce2",
+      "bytes": 9798
+    },
+    {
+      "path": "results/hybrid_summary.csv",
+      "sha256": "42cdddea71e3dc4687ac9d504a18ddff8ab26e3b48c1b7a8706598c7fcaf9400",
+      "bytes": 801
+    },
+    {
+      "path": "results/metrics_per_fold.csv",
+      "sha256": "5098919e841b0d2fb4f5b6d2b31d0c046c56ac858cef9b788455e5fad5c5ffdd",
+      "bytes": 9823
+    },
+    {
+      "path": "results/metrics_summary_expr.csv",
+      "sha256": "7502899c240f271ecdb3a796ffce14e746f5b222bf02709d7bf18e5d75422005",
+      "bytes": 1053
+    },
+    {
+      "path": "results/metrics_summary_expr_bin.csv",
+      "sha256": "dd4ca377340970226e6e1cbba5febb374259b0a9047c3fd0ecb3deeed03d9354",
+      "bytes": 1899
+    },
+    {
+      "path": "results/metrics_summary_link.csv",
+      "sha256": "c1d645acbab7786d17f34991e1a4d772cb0b3369cc9100138b946456883d6538",
+      "bytes": 1438
+    },
+    {
+      "path": "results/metrics_summary_tau.csv",
+      "sha256": "07f24d45e391a3ea0c0a39e8d4a76163185675c781741d7438e6149c02eef035",
+      "bytes": 1912
+    },
+    {
+      "path": "results/metrics_summary_tissue.csv",
+      "sha256": "bd26622abecbe31b94e5c3b5da85d1c3b091fa72e3dea32e3e3d558d189ac03d",
+      "bytes": 1383
+    },
+    {
+      "path": "results/multiple_comparison_correction.csv",
+      "sha256": "7bf5abd5e76dfe6e63d71b7f427bba3cb521c3e53078a1c32513c85480a8d840",
+      "bytes": 600
+    },
+    {
+      "path": "results/multiseed_replication.csv",
+      "sha256": "02001272469c012628fa815457ffec2511669d7fc36b16148549765c08d790e0",
+      "bytes": 946
+    },
+    {
+      "path": "results/stratified_metrics_all_arms_all_schemes.csv",
+      "sha256": "a6e909d7fd6986d83c9291eeaae12d5bb5d3be99e0e0763b6c3c7244177ef64a",
+      "bytes": 21504
+    },
+    {
+      "path": "results/training_history.csv",
+      "sha256": "c016985f9eda38364050276881f255b079100d00cb27bf620ea60bd6641cdff6",
+      "bytes": 36703
+    }
+  ],
+  "generated": "2026-11-07 09:27:44",
+  "config_summary": {
+    "fast_mode": false,
+    "seed": 42,
+    "variants": [
+      "all3",
+      "seq_str",
+      "seq_epi",
+      "str_epi",
+      "seq",
+      "str",
+      "epi"
+    ],
+    "n_folds": 5
+  }
+}
